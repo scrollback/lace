@@ -15,5 +15,22 @@
   "bugs": {
     "url": "https://github.com/scrollback/lace/issues"
   },
-  "homepage": "https://github.com/scrollback/lace"
+  "homepage": "https://github.com/scrollback/lace",
+  "devDependencies": {
+    "bower": "latest",
+    "browserify": "latest",
+    "event-stream": "latest",
+    "gulp": "latest",
+    "gulp-autoprefixer": "latest",
+    "gulp-browserify": "latest",
+    "gulp-concat": "latest",
+    "gulp-jshint": "latest",
+    "gulp-minify-css": "latest",
+    "gulp-rename": "latest",
+    "gulp-ruby-sass": "latest",
+    "gulp-streamify": "latest",
+    "gulp-uglify": "latest",
+    "gulp-util": "latest",
+    "jshint-stylish": "latest"
+  }
 }

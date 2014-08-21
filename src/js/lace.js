@@ -11,6 +11,193 @@ var Lace = (function() {
     return function() {
         var _this = this;
 
+        _this.events = {
+            /**
+             * Add css to an element and execute an action after an event.
+             * @constructor
+             * @param {{ element: String, event: String, css: String, action: Function, duration: Number, support: Boolean }} options
+             */
+            core: function(options) {
+                var $element = $(options.element);
+
+                if (typeof options.action !== "function") {
+                    options.action = function() {};
+                }
+
+                if (typeof options.duration !== "number") {
+                    options.duration = 150;
+                }
+
+                if (options.support && $element.is(":visible") && document.hasFocus()) {
+                    var onanimate = function() {
+                        if ($element.data("lace.animate")) {
+                            for (var property in options.css) {
+                                $element.css(property, "");
+                            }
+
+                            $element.data("lace.animate", false);
+                            options.action.call($element);
+
+                            // Remove event handlers
+                            $element.off(options.event);
+                            $(window).off("blur.lace.animate");
+                        }
+                    };
+
+                    $element.on(options.event, function(e) {
+                        if (e.target === e.currentTarget) {
+                            onanimate();
+                        }
+                    }).css({ transition: options.duration + "ms ease" }).css(options.css).data("lace.animate", true);
+
+                    // Fix event not firing when window not focused
+                    $(window).on("blur.lace.animate", function() {
+                        onanimate();
+                    });
+                } else {
+                    $element.css(options.css);
+                    options.action.call($element);
+                }
+            },
+
+            /**
+             * Add css to an element and execute an action after animation.
+             * @constructor
+             * @param {Object} css
+             * @param {String} element
+             * @param {Function} [action]
+             * @param {Number} [duration]
+             */
+            animationend: function(css, element, action, duration) {
+                var event = "animationend webkitAnimationEnd mozAnimationEnd MSAnimationEnd oAnimationEnd",
+                    support = typeof document.body.style.animation === "string" ||
+                    typeof document.body.style.WebkitAnimation === "string" ||
+                    typeof document.body.style.MozAnimation === "string" ||
+                    typeof document.body.style.MsAnimation === "string" ||
+                    typeof document.body.style.OAnimation === "string";
+
+                _this.events.core({
+                    css: css,
+                    element: element,
+                    action: action,
+                    duration: duration,
+                    event: event,
+                    support: support
+                });
+            },
+
+            /**
+             * Add css to an element and execute an action after transition.
+             * @constructor
+             * @param {Object} css
+             * @param {String} element
+             * @param {Function} [action]
+             * @param {Number} [duration]
+             */
+            transitionend: function(css, element, action, duration) {
+                var event = "transitionend webkitTransitionEnd mozTransitionEnd msTransitionEnd oTransitionEnd",
+                    support = typeof document.body.style.transition === "string" ||
+                    typeof document.body.style.WebkitTransition === "string" ||
+                    typeof document.body.style.MozTransition === "string" ||
+                    typeof document.body.style.MsTransition === "string" ||
+                    typeof document.body.style.OTransition === "string";
+
+                _this.events.core({
+                    css: css,
+                    element: element,
+                    action: action,
+                    duration: duration,
+                    event: event,
+                    support: support
+                });
+            }
+        };
+
+        /**
+         * Animate an element and execute an action after complete.
+         * @constructor
+         * @param {String} element
+         * @param {Function} [action]
+         * @param {Number} [duration]
+         */
+        _this.animate = function(easing, element, action, duration) {
+            var animations = {
+                    fadeIn: [
+                        { opacity: 0 },
+                        { opacity: 1 }
+                    ],
+                    fadeOut: [
+                        { opacity: 1 },
+                        { opacity: 0 }
+                    ],
+                    zoomIn: [
+                        { opacity: 0, transform: "scale(0.5)" },
+                        { opacity: 1, transform: "scale(1)" }
+                    ],
+                    zoomOut: [
+                        { opacity: 1, transform: "scale(1)" },
+                        { opacity: 0, transform: "scale(0.5)" }
+                    ],
+                    slideDownIn: [
+                        { opacity: 0, transform: "translateY(-100%)" },
+                        { opacity: 1, transform: "translateY(0)" }
+                    ],
+                    slideDownOut: [
+                        { opacity: 1, transform: "translateY(0)" },
+                        { opacity: 0, transform: "translateY(100%)" }
+                    ],
+                    slideUpIn: [
+                        { opacity: 0, transform: "translateY(100%)" },
+                        { opacity: 1, transform: "translateY(0)" }
+                    ],
+                    slideUpOut: [
+                        { opacity: 1, transform: "translateY(0)" },
+                        { opacity: 0, transform: "translateY(-100%)" }
+                    ]
+                };
+
+            if (!(easing && element)) {
+                return;
+            }
+
+            if (!animations.hasOwnProperty(easing)) {
+                if ((/.*out/i).test(easing)) {
+                    easing = "fadeOut";
+                } else if ((/.*in/i).test(easing)) {
+                    easing = "fadeIn";
+                } else {
+                    easing = null;
+                }
+            }
+
+            if (easing) {
+                if ($.fn.velocity) {
+                    for (var i = 0, l = animations[easing].length; i < l; i++) {
+                        if (animations[easing][i].hasOwnProperty("transform")) {
+                            var transforms = animations[easing][i].transform.split(","),
+                                values;
+
+                            for (var j = 0, k = transforms.length; j < k; j++) {
+                                values = transforms[j].replace(/[\)\s]$/, "").split("(");
+
+                                animations[easing][i][values[0]] = values[1];
+                            }
+
+                            delete animations[easing][i].transform;
+                        }
+                    }
+
+                    $(element).velocity("stop").velocity(animations[easing][0], 0).velocity(animations[easing][1], duration, action);
+                } else {
+                    $(element).css(animations[easing][0]);
+
+                    _this.events.transitionend(animations[easing][1], element, action, duration);
+                }
+            } else if (typeof action === "function") {
+                action();
+            }
+        };
+
         _this.progress = {
             /**
              * Show a progress indicator.

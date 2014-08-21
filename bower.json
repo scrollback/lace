@@ -1,0 +1,19 @@
+{
+  "name": "Lace",
+  "version": "0.0.1",
+  "homepage": "https://github.com/scrollback/lace",
+  "authors": [
+    "Satyajit Sahoo <satya@scrollback.io>"
+  ],
+  "description": "A mini-framework",
+  "main": "src/js/lace.js",
+  "keywords": [
+    "framework"
+  ],
+  "license": "GPL",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ]
+}

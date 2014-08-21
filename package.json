@@ -5,7 +5,7 @@
   "main": "src/js/lace.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/scrollback/lace.git"
+    "path": "git://github.com/scrollback/lace.git"
   },
   "keywords": [
     "framework"

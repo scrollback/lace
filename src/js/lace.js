@@ -11,7 +11,64 @@ var Lace = (function() {
     return function() {
         var _this = this;
 
-        _this.events = {
+        _this.event = {
+            /**
+             * Attach event handlers.
+             * @constructor
+             * @param {String} event
+             * @param {Function} handler
+             */
+            on: function(event, handler) {
+                if (!(event in this.callbacks)) {
+                    this.callbacks[event] = [];
+                }
+
+                this.callbacks[event].push(handler);
+            },
+
+            /**
+             * Detach event handlers.
+             * @constructor
+             * @param {String} event
+             * @param {Function} handler
+             */
+            off: function(event, handler) {
+                if (!this.callbacks && !this.callbacks[event]) {
+                    return;
+                }
+
+                if (arguments.length === 1) {
+                    delete this.callbacks[event];
+                    return this;
+                }
+
+                var i = this.callbacks[event].indexOf(handler);
+
+                this.callbacks.splice(i, 1);
+            },
+
+            /**
+             * Trigger an event.
+             * @constructor
+             * @param {String} event
+             * @param {Function} handler
+             */
+            trigger: function(event, args) {
+                var currentcallbacks = this.callbacks[event];
+
+                if (!currentcallbacks) {
+                    return;
+                }
+
+                for (var i = 0; i < currentcallbacks.length; i++) {
+                    if (typeof currentcallbacks[i] === "function") {
+                        currentcallbacks[i](args);
+                    }
+                }
+            }
+        };
+
+        _this.uievent = {
             /**
              * Add css to an element and execute an action after an event.
              * @constructor
@@ -76,7 +133,7 @@ var Lace = (function() {
                     typeof document.body.style.MsAnimation === "string" ||
                     typeof document.body.style.OAnimation === "string";
 
-                _this.events.core({
+                _this.uievent.core({
                     css: css,
                     element: element,
                     action: action,
@@ -102,7 +159,7 @@ var Lace = (function() {
                     typeof document.body.style.MsTransition === "string" ||
                     typeof document.body.style.OTransition === "string";
 
-                _this.events.core({
+                _this.uievent.core({
                     css: css,
                     element: element,
                     action: action,
@@ -191,7 +248,7 @@ var Lace = (function() {
                 } else {
                     $(element).css(animations[easing][0]);
 
-                    _this.events.transitionend(animations[easing][1], element, action, duration);
+                    _this.uievent.transitionend(animations[easing][1], element, action, duration);
                 }
             } else if (typeof action === "function") {
                 action();
@@ -213,6 +270,8 @@ var Lace = (function() {
                 $progress = $("<div>").addClass("progress loading");
                 $progress.appendTo("body");
 
+                _this.event.trigger("progressShow");
+
                 return $progress;
             },
 
@@ -222,7 +281,13 @@ var Lace = (function() {
              * @param {Number} amount
              */
             set: function(amount) {
-                $(".progress").removeClass("loading").css({ "width": amount + "%" });
+                var $progress = $(".progress");
+
+                $progress.removeClass("loading").css({ "width": amount + "%" });
+
+                _this.event.trigger("progressSet");
+
+                return $progress;
             },
 
             /**
@@ -230,10 +295,14 @@ var Lace = (function() {
              * @constructor
              */
             hide: function() {
+                var $progress = $(".progress");
+
                 _this.progress.set(100);
 
                 setTimeout(function() {
-                    $(".progress").remove();
+                    $progress.remove();
+
+                    _this.event.trigger("progressHide");
                 }, 500);
             }
         };
@@ -303,6 +372,8 @@ var Lace = (function() {
                     $("<span>").addClass("item").attr({ "contenteditable": true })
                 );
 
+                _this.event.trigger("multiEntryCreate");
+
                 return $multientry;
             },
 
@@ -352,6 +423,8 @@ var Lace = (function() {
 
                 _this.animate("fadeOut", $element, function() {
                     $(this).remove();
+
+                    _this.event.trigger("multiEntryRemove");
                 });
             },
 
@@ -445,6 +518,8 @@ var Lace = (function() {
 
                 $modal.find(".modal-remove").on("click", _this.modal.hide);
 
+                _this.event.trigger("modalShow");
+
                 return $modal;
             },
 
@@ -453,10 +528,22 @@ var Lace = (function() {
              * @constructor
              */
             hide: function() {
-                [ ".backdrop", ".modal" ].forEach(function(el) {
-                    _this.animate("fadeOut", el, function() {
-                        $(this).remove();
-                    });
+                var $backdrop = $(".backdrop"),
+                    $modal = $(".modal"),
+                    eventTriggered = false;
+
+                [ $backdrop, $modal ].forEach(function($el) {
+                    if ($el.length) {
+                        _this.animate("fadeOut", $el, function() {
+                            $(this).remove();
+
+                            if (!eventTriggered) {
+                                _this.event.trigger("modalHide");
+
+                                eventTriggered = true;
+                            }
+                        });
+                    }
                 });
             }
         };
@@ -513,6 +600,8 @@ var Lace = (function() {
                     "left": spaceleft
                 });
 
+                _this.event.trigger("popOverShow");
+
                 return $popover;
             },
 
@@ -524,6 +613,8 @@ var Lace = (function() {
                 _this.animate("fadeOut", ".popover-body", function() {
                     $(this).remove();
                     $(".popover-layer").remove();
+
+                    _this.event.trigger("popOverHide");
                 });
             }
         };
@@ -573,6 +664,8 @@ var Lace = (function() {
                     }, options.timeout);
                 }
 
+                _this.event.trigger("alertShow");
+
                 return $alert;
             },
 
@@ -601,6 +694,8 @@ var Lace = (function() {
                     if (!$container.children().length) {
                         $container.remove();
                     }
+
+                    _this.event.trigger("alertHide");
                 });
             }
         };

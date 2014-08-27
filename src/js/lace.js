@@ -19,11 +19,11 @@ var Lace = (function() {
              * @param {Function} handler
              */
             on: function(event, handler) {
-                if (!(event in this.callbacks)) {
-                    this.callbacks[event] = [];
+                if (!(event in _this.callbacks)) {
+                    _this.callbacks[event] = [];
                 }
 
-                this.callbacks[event].push(handler);
+                _this.callbacks[event].push(handler);
             },
 
             /**
@@ -33,18 +33,18 @@ var Lace = (function() {
              * @param {Function} handler
              */
             off: function(event, handler) {
-                if (!this.callbacks && !this.callbacks[event]) {
+                if (!_this.callbacks && !_this.callbacks[event]) {
                     return;
                 }
 
                 if (arguments.length === 1) {
-                    delete this.callbacks[event];
+                    delete _this.callbacks[event];
                     return this;
                 }
 
-                var i = this.callbacks[event].indexOf(handler);
+                var i = _this.callbacks[event].indexOf(handler);
 
-                this.callbacks.splice(i, 1);
+                _this.callbacks.splice(i, 1);
             },
 
             /**
@@ -54,7 +54,7 @@ var Lace = (function() {
              * @param {Function} handler
              */
             trigger: function(event, args) {
-                var currentcallbacks = this.callbacks[event];
+                var currentcallbacks = _this.callbacks[event];
 
                 if (!currentcallbacks) {
                     return;

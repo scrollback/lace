@@ -11,6 +11,8 @@ var Lace = (function() {
     return function() {
         var _this = this;
 
+        _this.callbacks = {};
+
         _this.event = {
             /**
              * Attach event handlers.

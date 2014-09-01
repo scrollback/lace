@@ -2,7 +2,7 @@
 @import "global";
 @import "animations";
 
-@include exports("progress") {
+@include exports("progressbar") {
 	.progress {
 		@include transition(.3s ease-out);
 

@@ -1,6 +1,7 @@
 @import "functions";
 @import "global";
 @import "animations";
+@import "linked";
 @import "spinner";
 
 @mixin buttons($bg: $accent-color, $fg: $light-color) {
@@ -49,16 +50,6 @@
 }
 
 @include exports("button") {
-	.linked {
-		&:not(:only-of-type):not(:last-of-type) { border-right: none; }
-
-		&:first-of-type { border-radius: $roundness 0 0 $roundness; }
-
-		&:last-of-type { border-radius: 0 $roundness $roundness 0; }
-
-		&:only-of-type { border-radius: $roundness; }
-	}
-
 	.button {
 		@include buttons;
 

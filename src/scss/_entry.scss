@@ -1,6 +1,7 @@
 @import "functions";
 @import "global";
 @import "animations";
+@import "linked";
 
 @include exports("entry") {
 	.entry {

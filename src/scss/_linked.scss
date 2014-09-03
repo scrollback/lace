@@ -2,7 +2,7 @@
 @import "global";
 
 @include exports("linked") {
-	.linked {
+	@mixin linked {
 		&:not(:only-of-type):not(:last-of-type) { border-right: none; }
 
 		&:first-of-type { border-radius: $roundness 0 0 $roundness; }
@@ -11,4 +11,6 @@
 
 		&:only-of-type { border-radius: $roundness; }
 	}
+
+	.linked { @include linked; }
 }

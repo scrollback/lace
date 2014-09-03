@@ -1,0 +1,14 @@
+@import "functions";
+@import "global";
+
+@include exports("linked") {
+	.linked {
+		&:not(:only-of-type):not(:last-of-type) { border-right: none; }
+
+		&:first-of-type { border-radius: $roundness 0 0 $roundness; }
+
+		&:last-of-type { border-radius: 0 $roundness $roundness 0; }
+
+		&:only-of-type { border-radius: $roundness; }
+	}
+}

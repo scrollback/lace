@@ -63,17 +63,14 @@
 		@include flex-wrap(nowrap);
 		@include align-items(center);
 		@include align-content(center);
+		@extend %snappy;
 
 		padding: 1em 1.25em;
 		cursor: pointer;
 		background-color: rgba(0,0,0,.1);
 		border-radius: 0 $roundness $roundness 0;
 
-		&:focus, &:hover {
-			@extend %transition;
-
-			background-color: rgba(0,0,0,.2);
-		}
+		&:focus, &:hover { background-color: rgba(0,0,0,.2); }
 
 		&:active { background-color: rgba(0,0,0,.3); }
 

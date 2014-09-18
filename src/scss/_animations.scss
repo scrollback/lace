@@ -113,4 +113,10 @@
     %progress { @include progress; }
 
     %transition { @include transition; }
+
+    %snappy {
+        @extend %transition;
+
+        &:focus, &:hover, &:active { @include transition(none); }
+    }
 }

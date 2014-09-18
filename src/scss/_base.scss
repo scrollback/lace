@@ -15,7 +15,7 @@ body {
 }
 
 a {
-    @extend %transition;
+    @extend %snappy;
 
     color: $link-color;
     text-decoration: none;

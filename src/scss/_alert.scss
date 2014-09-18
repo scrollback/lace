@@ -32,7 +32,7 @@
 			error: $error-color
 		);
 
-		@each $type, $color in $type {
+		@each $type, $color in $types {
 			&.#{$type} {
 				background-color: $color;
 				color: $light-color;

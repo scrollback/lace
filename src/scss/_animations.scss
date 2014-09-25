@@ -1,5 +1,5 @@
 @import "functions";
-@import "filters";
+@import "effects";
 
 @mixin transform($args) {
     @include prefix(transform, $args);

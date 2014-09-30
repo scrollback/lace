@@ -7,7 +7,7 @@ registerPlugin("progressbar", null, {
 	 * @constructor
 	 */
 	init: function() {
-		var $progressbar = $(".progressbar");
+		var $progressbar = this.element ? $(this.element) : $(".progressbar");
 
 		if ($progressbar.length) {
 			$progressbar.remove();
@@ -33,7 +33,7 @@ registerPlugin("progressbar", null, {
 			return;
 		}
 
-		$progressbar = $(".progressbar");
+		$progressbar = this.element ? $(this.element) : $(".progressbar");
 		$progressbar.removeClass("loading").css({ "width": amount + "%" });
 
 		$.event.trigger("progressbarSet", [ $progressbar, amount ]);
@@ -44,7 +44,7 @@ registerPlugin("progressbar", null, {
 	 * @constructor
 	 */
 	dismiss: function() {
-		var $progressbar = $(".progressbar");
+		var $progressbar = this.element ? $(this.element) : $(".progressbar");
 
 		setTimeout(function() {
 			$progressbar.remove();

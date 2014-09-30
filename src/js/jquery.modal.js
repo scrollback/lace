@@ -1,4 +1,4 @@
-//var registerPlugin = require("./jquery.lace.js");
+var registerPlugin = require("./jquery.lace.js");
 
 registerPlugin("modal", {
 	dismiss: true,

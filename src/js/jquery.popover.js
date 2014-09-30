@@ -1,30 +1,34 @@
 //var registerPlugin = require("./jquery.lace.js");
 
-registerPlugin("popover", null, {
+registerPlugin("popover", {
+	theme: "light"
+}, {
 
 	/**
 	 * Show a popover.
 	 * @constructor
 	 */
 	init: function() {
-		var _this = this,
-			$popover = $(_this.element).wrapAll("<div>").addClass("popover-body"),
+		var self = this,
+			settings = self.settings,
+			$popover = $(self.element).wrapAll("<div>").addClass("popover-body theme-" + settings.theme),
 			$layer = $("<div>").addClass("popover-layer"),
-			$origin = $(_this.settings.origin),
+			$origin = $(self.settings.origin),
 			spacetop, spacebottom, spaceleft, spaceright;
 
 		if (!$origin.length) {
 			return;
 		}
 
-		_this.dismiss();
+		self.dismiss();
 
 		spacetop = $origin.offset().top - $(document).scrollTop() + $origin.height();
 		spacebottom = $(window).height() - spacetop;
 		spaceleft = $origin.offset().left - $(document).scrollLeft() + ( $origin.width() / 2 );
 		spaceright = $(window).width() - spaceleft;
 
-		$layer.on("click", _this.popover.hide).appendTo("body");
+		$layer.on("click", self.popover.hide).appendTo("body");
+
 		$popover.appendTo("body");
 
 		if ($popover.outerWidth() >= spaceleft) {
@@ -58,7 +62,14 @@ registerPlugin("popover", null, {
 	 * @constructor
 	 */
 	dismiss: function() {
-		$(".popover-body").remove();
-		$(".popover-layer").remove();
+		var $element = $(".popover-body, .popover-layer");
+
+		if ($.fn.velocity) {
+			$element.velocity("fadeOut", 150, function() {
+				$element.remove();
+			})
+		} else {
+			$element.remove();
+		}
 	}
 });

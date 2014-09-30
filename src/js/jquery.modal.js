@@ -10,14 +10,14 @@ registerPlugin("modal", {
 	 * @constructor
 	 */
 	init: function() {
-		var _this = this,
-			settings = _this.settings,
-			$modal = $(_this.element).wrapAll("<div>").addClass("modal"),
+		var self = this,
+			settings = self.settings,
+			$modal = $(self.element).wrapAll("<div>").addClass("modal"),
 			$backdrop = (settings.backdrop) ? $("<div>").addClass("backdrop") : null;
 
-		_this.dismiss();
+		self.dismiss();
 
-		$modal.find(".modal-remove").on("click", _this.dismiss);
+		$modal.find(".modal-remove").on("click", self.dismiss);
 
 		$modal.appendTo("body");
 
@@ -33,7 +33,7 @@ registerPlugin("modal", {
 		$(document).off("keydown.modal");
 		$(document).on("keydown.modal", function(e) {
 			if (e.keyCode === 27 && settings.dismiss) {
-				_this.dismiss();
+				self.dismiss();
 			}
 		});
 	},
@@ -43,7 +43,14 @@ registerPlugin("modal", {
 	 * @constructor
 	 */
 	dismiss: function() {
-		$(".modal").remove();
-		$(".backdrop").remove();
+		var $element = $(".modal, .backdrop");
+
+		if ($.fn.velocity) {
+			$element.velocity("fadeOut", 150, function() {
+				$element.remove();
+			})
+		} else {
+			$element.remove();
+		}
 	}
 });

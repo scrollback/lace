@@ -23,6 +23,12 @@ registerPlugin("progressbar", null, {
 	 * @param {Number} amount
 	 */
 	set: function(amount) {
+		amount = parseInt(amount);
+
+		if (isNaN(amount)) {
+			return;
+		}
+
 		var $progress = $(".progressbar");
 
 		$progress.removeClass("loading").css({ "width": amount + "%" });

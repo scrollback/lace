@@ -6,28 +6,28 @@ registerPlugin("multientry", null, {
 	 * @constructor
 	 */
 	init: function() {
-		var _this = this;
+		var self = this;
 
 		$(document).off("blur.multientry");
 		$(document).on("blur.multientry", ".multientry", function() {
-			_this.add($(this), $(this).children().last().text());
+			self.add($(this), $(this).children().last().text());
 		});
 
 		$(document).off("keydown.multientryitem");
 		$(document).on("keydown.multientryitem", ".multientry .item", function(e) {
 			if (e.keyCode === 13 || e.keyCode === 32 || e.keyCode === 188) {
 				e.preventDefault();
-				_this.add($(this).parent(".multientry"), $(this).text());
+				self.add($(this).parent(".multientry"), $(this).text());
 			}
 		});
 
-		$(document).off("paste.multientryitem");
-		$(document).on("paste.multientryitem", ".multientry .item", function(e) {
+		$(document).off("input.multientryitem paste.multientryitem");
+		$(document).on("input.multientryitem paste.multientryitem", ".multientry .item", function(e) {
 			e.preventDefault();
 
 			var items = e.originalEvent.clipboardData.getData("Text");
 
-			_this.add($(this).parent(".multientry"), items);
+			self.add($(this).parent(".multientry"), items);
 		});
 
 		$(document).off("keydown.multientryitem");
@@ -46,7 +46,7 @@ registerPlugin("multientry", null, {
 
 		$(document).off("click.multientryremove");
 		$(document).on("click.multientryremove", ".multientry .item-remove", function() {
-			_this.remove($(this).parent());
+			self.remove($(this).parent());
 		});
 
 		$(document).off("click.multientry");
@@ -61,9 +61,9 @@ registerPlugin("multientry", null, {
 	 * @return {Object}
 	 */
 	create: function() {
-		var _this = this;
+		var self = this;
 
-		$(_this.element).empty().addClass("multientry").append(
+		$(self.element).empty().addClass("multientry").append(
 			$("<span>").addClass("item").attr({ "contenteditable": true })
 		);
 	},

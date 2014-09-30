@@ -8,11 +8,11 @@ registerPlugin("alertbar", {
 	 * @constructor
 	 */
 	init: function() {
-		var _this = this,
-			settings = _this.settings,
+		var self = this,
+			settings = self.settings,
 			$container = $(".alert-container"),
 			$wrapper = $("<div>").addClass("alert-bar " + settings.type),
-			$elem = $(_this.element).addClass("alert-content"),
+			$elem = $(self.element).addClass("alert-content"),
 			$alert = settings.id ? $("#" + settings.id) : $();
 
 		$elem = $wrapper.append(
@@ -31,7 +31,7 @@ registerPlugin("alertbar", {
 			$alert = $elem;
 
 			$alert.find(".alert-remove").on("click", function() {
-				_this.dismiss(settings.id);
+				self.dismiss(settings.id);
 			});
 
 			$alert.appendTo($container);
@@ -39,7 +39,7 @@ registerPlugin("alertbar", {
 
 		if (settings.timeout && typeof settings.timeout === "number") {
 			setTimeout(function() {
-				_this.dismiss(settings.id);
+				self.dismiss(settings.id);
 			}, settings.timeout);
 		}
 	},
@@ -53,7 +53,13 @@ registerPlugin("alertbar", {
 		var $element = id ? $("#" + id) : $(".alert-bar"),
 			$container = $(".alert-container");
 
-		$element.remove();
+		if ($.fn.velocity) {
+			$element.velocity("fadeOut", 150, function() {
+				$element.remove();
+			})
+		} else {
+			$element.remove();
+		}
 
 		if (!$container.children().length) {
 			$container.remove();

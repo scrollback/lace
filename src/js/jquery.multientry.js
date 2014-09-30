@@ -53,6 +53,8 @@ registerPlugin("multientry", null, {
 		$(document).on("click.multientry", ".multientry", function() {
 			$(this).children().last().focus();
 		});
+
+		$.event.trigger("multientryInited", [ $(self.element) ]);
 	},
 
 	/**
@@ -75,7 +77,7 @@ registerPlugin("multientry", null, {
 	 * @param {String[]} content
 	 */
 	add: function(element, content) {
-		var $element = $(element);
+		var $element = element ? $(element) : this.element ? $(this.element) : $(".multientry");
 
 		if (content) {
 			if (!(content instanceof Array)) {
@@ -92,6 +94,8 @@ registerPlugin("multientry", null, {
 				}
 			});
 		}
+
+		$.event.trigger("multientryElementAdded", [ $element, content ]);
 	},
 
 	/**
@@ -100,19 +104,15 @@ registerPlugin("multientry", null, {
 	 * @param {String} [element]
 	 */
 	remove: function(element) {
-		var $element;
-
-		if (element) {
-			$element = $(element);
-		} else {
-			$element = $(".multientry .item.done");
-		}
+		var $element = element ? $(element) : this.element ? $(this.element).closest(".multientry .item.done") : $(".multientry .item.done");
 
 		if (!$element.hasClass("item")) {
 			return;
 		}
 
 		$element.remove();
+
+		$.event.trigger("multientryElementRemoved", [ $element ]);
 	},
 
 	/**
@@ -122,15 +122,8 @@ registerPlugin("multientry", null, {
 	 * @return {String[]}
 	 */
 	items: function(element) {
-		var $element;
-
-		if (element) {
-			$element = $(element);
-		} else {
-			$element = $(".multientry");
-		}
-
-		var elems = $element.find(".item-text"),
+		var $element = element ? $(element) : this.element ? $(this.element) : $(".multientry"),
+			elems = $element.find(".item-text"),
 			items = new Array(elems.length);
 
 		for (var i = 0; i < elems.length; i++) {

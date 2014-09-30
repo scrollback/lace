@@ -36,6 +36,8 @@ registerPlugin("modal", {
 				self.dismiss();
 			}
 		});
+
+		$.event.trigger("modalInited", [ $(self.element) ]);
 	},
 
 	/**
@@ -48,9 +50,11 @@ registerPlugin("modal", {
 		if ($.fn.velocity) {
 			$element.velocity("fadeOut", 150, function() {
 				$(this).remove();
-			})
+			});
 		} else {
 			$element.remove();
 		}
+
+		$.event.trigger("modalDismissed", [ $element ]);
 	}
 });

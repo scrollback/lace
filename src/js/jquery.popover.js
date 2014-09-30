@@ -55,6 +55,8 @@ registerPlugin("popover", {
 			"top": spacetop,
 			"left": spaceleft
 		});
+
+		$.event.trigger("popoverInited", [ $(self.element) ]);
 	},
 
 	/**
@@ -67,9 +69,11 @@ registerPlugin("popover", {
 		if ($.fn.velocity) {
 			$element.velocity("fadeOut", 150, function() {
 				$(this).remove();
-			})
+			});
 		} else {
 			$element.remove();
 		}
+
+		$.event.trigger("popoverDismissed", [ $element ]);
 	}
 });

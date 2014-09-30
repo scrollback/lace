@@ -31,7 +31,7 @@ registerPlugin("alertbar", {
 			$alert = $elem;
 
 			$alert.find(".alert-remove").on("click", function() {
-				self.dismiss($alert);
+				self.dismiss();
 			});
 
 			$alert.appendTo($container);
@@ -39,25 +39,21 @@ registerPlugin("alertbar", {
 
 		if (settings.timeout && typeof settings.timeout === "number") {
 			setTimeout(function() {
-				self.dismiss($alert);
+				self.dismiss();
 			}, settings.timeout);
 		}
+
+		$.event.trigger("alertbarInited", [ $(self.element) ]);
 	},
 
 	/**
 	 * Dismiss alert message(s).
 	 * @constructor
-	 * @param {String} [id]
+	 * @param {String} [element]
 	 */
 	dismiss: function(element) {
-		var $element, $container;
-
-		if (!element) {
-			return;
-		}
-
-		$element = $(element);
-		$container = $(".alert-container");
+		var $element = element ? $(element) : this.element ? $(this.element).closest(".alert-bar") : $(".alert-bar"),
+			$container = $(".alert-container");
 
 		if ($.fn.velocity) {
 			$element.velocity({
@@ -69,7 +65,7 @@ registerPlugin("alertbar", {
 				marginBottom: 0
 			}, 150, function() {
 				$(this).remove();
-			})
+			});
 		} else {
 			$element.remove();
 		}
@@ -77,5 +73,7 @@ registerPlugin("alertbar", {
 		if (!$container.children().length) {
 			$container.remove();
 		}
+
+		$.event.trigger("alertDismissed", [ $element ]);
 	}
 });

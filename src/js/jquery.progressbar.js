@@ -15,6 +15,8 @@ registerPlugin("progressbar", null, {
 
 		$progress = $(this.element).empty().addClass("progressbar loading");
 		$progress.appendTo("body");
+
+		$.event.trigger("progressbarInited", [ $progress ]);
 	},
 
 	/**
@@ -23,15 +25,18 @@ registerPlugin("progressbar", null, {
 	 * @param {Number} amount
 	 */
 	set: function(amount) {
+		var $progress;
+
 		amount = parseInt(amount);
 
 		if (isNaN(amount)) {
 			return;
 		}
 
-		var $progress = $(".progressbar");
-
+		$progress = $(".progressbar");
 		$progress.removeClass("loading").css({ "width": amount + "%" });
+
+		$.event.trigger("progressbarSet", [ $progress, amount ]);
 	},
 
 	/**
@@ -44,5 +49,7 @@ registerPlugin("progressbar", null, {
 		setTimeout(function() {
 			$progress.remove();
 		}, 500);
+
+		$.event.trigger("progressbarDismissed", [ $progress ]);
 	}
 });

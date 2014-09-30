@@ -47,7 +47,7 @@ registerPlugin("modal", {
 
 		if ($.fn.velocity) {
 			$element.velocity("fadeOut", 150, function() {
-				$element.remove();
+				$(this).remove();
 			})
 		} else {
 			$element.remove();

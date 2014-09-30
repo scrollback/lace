@@ -31,7 +31,7 @@ registerPlugin("alertbar", {
 			$alert = $elem;
 
 			$alert.find(".alert-remove").on("click", function() {
-				self.dismiss(settings.id);
+				self.dismiss($alert);
 			});
 
 			$alert.appendTo($container);
@@ -39,7 +39,7 @@ registerPlugin("alertbar", {
 
 		if (settings.timeout && typeof settings.timeout === "number") {
 			setTimeout(function() {
-				self.dismiss(settings.id);
+				self.dismiss($alert);
 			}, settings.timeout);
 		}
 	},
@@ -49,13 +49,26 @@ registerPlugin("alertbar", {
 	 * @constructor
 	 * @param {String} [id]
 	 */
-	dismiss: function(id) {
-		var $element = id ? $("#" + id) : $(".alert-bar"),
-			$container = $(".alert-container");
+	dismiss: function(element) {
+		var $element, $container;
+
+		if (!element) {
+			return;
+		}
+
+		$element = $(element);
+		$container = $(".alert-container");
 
 		if ($.fn.velocity) {
-			$element.velocity("fadeOut", 150, function() {
-				$element.remove();
+			$element.velocity({
+				opacity: 0,
+				height: 0,
+				paddingTop: 0,
+				paddingBottom: 0,
+				marginTop: 0,
+				marginBottom: 0
+			}, 150, function() {
+				$(this).remove();
 			})
 		} else {
 			$element.remove();

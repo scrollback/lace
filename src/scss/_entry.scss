@@ -1,16 +1,17 @@
 @import "functions";
 @import "global";
 @import "animations";
+@import "linked";
 
 @include exports("entry") {
 	.entry {
+		@extend %snappy;
+
 		border: 1px solid darken($light-color, 20%);
 		border-top-color: darken($light-color, 30%);
 		border-radius: $roundness;
 		background-color: $light-color;
 		color: $dark-color;
-
-		&:hover, &:focus { @extend %transition; }
 
 		&:hover, &:focus, &:active {
 			border-color: $accent-color;

@@ -1,5 +1,5 @@
 @import "functions";
-@import "filters";
+@import "effects";
 
 @mixin transform($args) {
     @include prefix(transform, $args);
@@ -113,4 +113,10 @@
     %progress { @include progress; }
 
     %transition { @include transition; }
+
+    %snappy {
+        @extend %transition;
+
+        &:focus, &:hover, &:active { @include transition(none); }
+    }
 }

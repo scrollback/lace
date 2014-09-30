@@ -27,7 +27,7 @@ registerPlugin("popover", {
 		spaceleft = $origin.offset().left - $(document).scrollLeft() + ( $origin.width() / 2 );
 		spaceright = $(window).width() - spaceleft;
 
-		$layer.on("click", self.popover.hide).appendTo("body");
+		$layer.on("click", self.dismiss).appendTo("body");
 
 		$popover.appendTo("body");
 
@@ -60,7 +60,7 @@ registerPlugin("popover", {
 	},
 
 	/**
-	 * Hide popover.
+	 * Dismiss popover.
 	 * @constructor
 	 */
 	dismiss: function() {

@@ -35,8 +35,8 @@
     @include prefix(animation, fadein $args);
 }
 
-@mixin progress($args: 3s ease) {
-    @include prefix(animation, progress $args);
+@mixin progressbar($args: 3s ease) {
+    @include prefix(animation, progressbar $args);
 }
 
 @mixin transition($duration: .3s, $timing: ease) {
@@ -88,7 +88,7 @@
         100%  { @include opacity(1); }
     }
 
-    @include keyframes(progress) {
+    @include keyframes(progressbar) {
         0% { width: 0; }
 
         10% { width: 30%; }
@@ -110,7 +110,7 @@
 
     %fadein { @include fadein; }
 
-    %progress { @include progress; }
+    %progressbar { @include progressbar; }
 
     %transition { @include transition; }
 

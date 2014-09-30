@@ -7,16 +7,16 @@ registerPlugin("progressbar", null, {
 	 * @constructor
 	 */
 	init: function() {
-		var $progress = $(".progressbar");
+		var $progressbar = $(".progressbar");
 
-		if ($progress.length) {
-			$progress.remove();
+		if ($progressbar.length) {
+			$progressbar.remove();
 		}
 
-		$progress = $(this.element).empty().addClass("progressbar loading");
-		$progress.appendTo("body");
+		$progressbar = $(this.element).empty().addClass("progressbar loading");
+		$progressbar.appendTo("body");
 
-		$.event.trigger("progressbarInited", [ $progress ]);
+		$.event.trigger("progressbarInited", [ $progressbar ]);
 	},
 
 	/**
@@ -25,7 +25,7 @@ registerPlugin("progressbar", null, {
 	 * @param {Number} amount
 	 */
 	set: function(amount) {
-		var $progress;
+		var $progressbar;
 
 		amount = parseInt(amount);
 
@@ -33,10 +33,10 @@ registerPlugin("progressbar", null, {
 			return;
 		}
 
-		$progress = $(".progressbar");
-		$progress.removeClass("loading").css({ "width": amount + "%" });
+		$progressbar = $(".progressbar");
+		$progressbar.removeClass("loading").css({ "width": amount + "%" });
 
-		$.event.trigger("progressbarSet", [ $progress, amount ]);
+		$.event.trigger("progressbarSet", [ $progressbar, amount ]);
 	},
 
 	/**
@@ -44,12 +44,12 @@ registerPlugin("progressbar", null, {
 	 * @constructor
 	 */
 	dismiss: function() {
-		var $progress = $(".progressbar");
+		var $progressbar = $(".progressbar");
 
 		setTimeout(function() {
-			$progress.remove();
+			$progressbar.remove();
 		}, 500);
 
-		$.event.trigger("progressbarDismissed", [ $progress ]);
+		$.event.trigger("progressbarDismissed", [ $progressbar ]);
 	}
 });

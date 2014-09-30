@@ -3,7 +3,7 @@
 @import "animations";
 
 @include exports("progressbar") {
-	.progress {
+	.progressbar {
 		@include transition(.3s ease-out);
 
 		position: fixed;
@@ -14,7 +14,7 @@
 		z-index: 500;
 		background-color: $accent-color;
 
-		&.loading { @extend %progress; }
+		&.loading { @extend %progressbar; }
 
 		&.complete { width: 100%; }
 	}

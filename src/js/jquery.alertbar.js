@@ -75,6 +75,6 @@ registerPlugin("alertbar", {
 			$container.remove();
 		}
 
-		$.event.trigger("alertDismissed", [ $element ]);
+		$.event.trigger("alertbarDismissed", [ $element ]);
 	}
 });

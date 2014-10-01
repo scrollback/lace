@@ -12,7 +12,7 @@ registerPlugin("modal", {
 	init: function() {
 		var self = this,
 			settings = self.settings,
-			$modal = $(self.element).wrapAll("<div>").addClass("modal"),
+			$modal = $(self.element).addClass("modal"),
 			$backdrop = (settings.backdrop) ? $("<div>").addClass("backdrop") : null;
 
 		self.dismiss();

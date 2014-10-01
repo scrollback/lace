@@ -11,12 +11,16 @@ function registerPlugin(pluginName, defaults, methods) {
 		function Plugin(element, options) {
 			this.element = element;
 
+			// Set plugin options
 			this.settings = $.extend({}, defaults, options);
 
 			this._defaults = defaults;
 			this._name = pluginName;
 
-			this.init();
+			// Initialize only if called with an element
+			if (element) {
+				this.init();
+			}
 		}
 
 		$.extend(Plugin.prototype, methods);
@@ -52,6 +56,7 @@ function registerPlugin(pluginName, defaults, methods) {
 			var $element = element ? $(element) : $("<div>"),
 				args = arguments;
 
+			// Check if plugin called with a method instead of an element
 			if (!options && typeof element === "string" && typeof methods[element] === "function") {
 				return methods[element].apply(new Plugin(), Array.prototype.slice.call(args, 1));
 			} else {

@@ -1,8 +1,6 @@
 var registerPlugin = require("./jquery.lace.js");
 
-registerPlugin("popover", {
-	theme: "light"
-}, {
+registerPlugin("popover", null, {
 
 	/**
 	 * Show a popover.
@@ -11,7 +9,7 @@ registerPlugin("popover", {
 	init: function() {
 		var self = this,
 			settings = self.settings,
-			$popover = $(self.element).wrapAll("<div>").addClass("popover-body theme-" + settings.theme),
+			$popover = $(self.element).addClass("popover-body"),
 			$layer = $("<div>").addClass("popover-layer"),
 			$origin = $(self.settings.origin),
 			spacetop, spacebottom, spaceleft, spaceright;

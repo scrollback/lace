@@ -9,7 +9,15 @@ registerPlugin("progressbar", null, {
 	init: function() {
 		var $progressbar = $(this.element);
 
-		$progressbar = $(this.element).addClass("progressbar loading").appendTo("body");
+		$progressbar.removeClass("loading").addClass("progressbar").width(0).appendTo("body");
+
+		$progressbar.data("progressbarInterval", setInterval(function() {
+			var width = parseInt(($progressbar.width() / $progressbar.parent().width()) * 100) || 0;
+
+			width += (100 - Math.round(width).toFixed(2)) * Math.random() * 0.5;
+
+			$progressbar.width(width + "%");
+		}, 1000));
 
 		$.event.trigger("progressbarInited", [ $progressbar ]);
 	},
@@ -29,7 +37,10 @@ registerPlugin("progressbar", null, {
 		}
 
 		$progressbar = ($progressbar.hasClass(".progressbar") && $progressbar.length) ? $progressbar : $(".progressbar");
-		$progressbar.removeClass("loading").css({ "width": amount + "%" });
+
+		clearInterval($progressbar.data("progressbarInterval"));
+
+		$progressbar.removeClass("loading").width(amount + "%");
 
 		$.event.trigger("progressbarSet", [ $progressbar, amount ]);
 	},

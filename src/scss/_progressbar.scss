@@ -1,10 +1,9 @@
 @import "functions";
 @import "global";
-@import "animations";
 
 @include exports("progressbar") {
 	.progressbar {
-		@include transition(.3s ease-out);
+		@include transition;
 
 		position: fixed;
 		top: 0;
@@ -15,7 +14,5 @@
 		background-color: $accent-color;
 
 		&.loading { @extend %progressbar; }
-
-		&.complete { width: 100%; }
 	}
 }

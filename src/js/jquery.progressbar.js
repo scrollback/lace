@@ -7,14 +7,9 @@ registerPlugin("progressbar", null, {
 	 * @constructor
 	 */
 	init: function() {
-		var $progressbar = this.element ? $(this.element) : $(".progressbar");
+		var $progressbar = $(this.element);
 
-		if ($progressbar.length) {
-			$progressbar.remove();
-		}
-
-		$progressbar = $(this.element).empty().addClass("progressbar loading");
-		$progressbar.appendTo("body");
+		$progressbar = $(this.element).addClass("progressbar loading").appendTo("body");
 
 		$.event.trigger("progressbarInited", [ $progressbar ]);
 	},
@@ -25,7 +20,7 @@ registerPlugin("progressbar", null, {
 	 * @param {Number} amount
 	 */
 	set: function(amount) {
-		var $progressbar;
+		var $progressbar = $(this.element);
 
 		amount = parseInt(amount);
 
@@ -33,7 +28,7 @@ registerPlugin("progressbar", null, {
 			return;
 		}
 
-		$progressbar = this.element ? $(this.element) : $(".progressbar");
+		$progressbar = ($progressbar.hasClass(".progressbar") && $progressbar.length) ? $progressbar : $(".progressbar");
 		$progressbar.removeClass("loading").css({ "width": amount + "%" });
 
 		$.event.trigger("progressbarSet", [ $progressbar, amount ]);
@@ -44,7 +39,12 @@ registerPlugin("progressbar", null, {
 	 * @constructor
 	 */
 	dismiss: function() {
-		var $progressbar = this.element ? $(this.element) : $(".progressbar");
+		var self = this,
+			$progressbar = $(this.element);
+
+		$progressbar = ($progressbar.hasClass(".progressbar") && $progressbar.length) ? $progressbar : $(".progressbar");
+
+		self.set(100);
 
 		setTimeout(function() {
 			$progressbar.remove();

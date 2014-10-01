@@ -57,7 +57,8 @@ registerPlugin("alertbar", {
 
 		if ($.fn.velocity) {
 			$element.velocity({
-				opacity: 0,
+				opacity: 0
+			}, 150).velocity({
 				height: 0,
 				paddingTop: 0,
 				paddingBottom: 0,

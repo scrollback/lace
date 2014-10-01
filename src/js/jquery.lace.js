@@ -31,7 +31,7 @@ function registerPlugin(pluginName, defaults, methods) {
 						$.data(this, "plugin_" + pluginName, new Plugin(this, options));
 					}
 				});
-			} else if (typeof options === "string" && options[0] !== "_" && options !== "init") {
+			} else if (typeof options === "string" && options !== "init" && !(/^_/).test(options)) {
 				this.each(function() {
 					instance = $.data(this, "plugin_" + pluginName);
 
@@ -49,9 +49,14 @@ function registerPlugin(pluginName, defaults, methods) {
 		};
 
 		$[pluginName] = function(element, options) {
-			element = element || "<div>";
+			var $element = element ? $(element) : $("<div>"),
+				args = arguments;
 
-			return $(element)[pluginName](options);
+			if (!options && typeof element === "string" && typeof methods[element] === "function") {
+				return methods[element].apply(new Plugin(), Array.prototype.slice.call(args, 1));
+			} else {
+				return $element[pluginName](options);
+			}
 		};
 
 	})(jQuery, window, document);

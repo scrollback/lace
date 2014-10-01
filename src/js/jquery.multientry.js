@@ -18,21 +18,7 @@ registerPlugin("multientry", null, {
 			if (e.keyCode === 13 || e.keyCode === 32 || e.keyCode === 188) {
 				e.preventDefault();
 				self.add($(this).parent(".multientry"), $(this).text());
-			}
-		});
-
-		$(document).off("input.multientryitem paste.multientryitem");
-		$(document).on("input.multientryitem paste.multientryitem", ".multientry .item", function(e) {
-			e.preventDefault();
-
-			var items = e.originalEvent.clipboardData.getData("Text");
-
-			self.add($(this).parent(".multientry"), items);
-		});
-
-		$(document).off("keydown.multientryitem");
-		$(document).on("keydown.multientryitem", ".multientry .item", function(e) {
-			if (e.keyCode === 8 && $(this).text().match(/^\s*$/)) {
+			} else if (e.keyCode === 8 && $(this).text().match(/^\s*$/)) {
 				e.preventDefault();
 
 				$(this).text($(this).prev().find(".item-text").text());
@@ -42,6 +28,15 @@ registerPlugin("multientry", null, {
 					$(this).setCursorEnd();
 				}
 			}
+		});
+
+		$(document).off("paste.multientryitem");
+		$(document).on("paste.multientryitem", ".multientry .item", function(e) {
+			e.preventDefault();
+
+			var items = e.originalEvent.clipboardData.getData("Text");
+
+			self.add($(this).parent(".multientry"), items);
 		});
 
 		$(document).off("click.multientryremove");
@@ -63,11 +58,9 @@ registerPlugin("multientry", null, {
 	 * @return {Object}
 	 */
 	create: function() {
-		var self = this;
-
-		$(self.element).empty().addClass("multientry").append(
+		return $("<div>").addClass("multientry").append(
 			$("<span>").addClass("item").attr({ "contenteditable": true })
-		);
+		).multientry();
 	},
 
 	/**
@@ -77,7 +70,11 @@ registerPlugin("multientry", null, {
 	 * @param {String[]} content
 	 */
 	add: function(element, content) {
-		var $element = element ? $(element) : this.element ? $(this.element) : $(".multientry");
+		var $element = (element && content) ? $(element) : this.element ? $(this.element) : $(".multientry");
+
+		if (typeof element === "string" && !content) {
+		    content = element;
+		}
 
 		if (content) {
 			if (!(content instanceof Array)) {

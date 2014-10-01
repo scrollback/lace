@@ -27,6 +27,10 @@ registerPlugin("modal", {
 		});
 
 		if ($backdrop) {
+			if (settings.dismiss) {
+				$backdrop.on("click", self.dismiss);
+			}
+
 			$backdrop.appendTo("body");
 		}
 

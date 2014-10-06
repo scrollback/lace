@@ -2,7 +2,8 @@ var registerPlugin = require("./jquery.lace.js");
 
 registerPlugin("modal", {
 	dismiss: true,
-	backdrop: true
+	backdrop: true,
+	parent: "body"
 }, {
 
 	/**
@@ -19,7 +20,7 @@ registerPlugin("modal", {
 
 		$modal.find(".modal-remove").on("click", self.dismiss);
 
-		$modal.appendTo("body");
+		$modal.appendTo(settings.parent);
 
 		$modal.css({
 			"margin-top": $modal.outerHeight() / -2,
@@ -31,7 +32,7 @@ registerPlugin("modal", {
 				$backdrop.on("click", self.dismiss);
 			}
 
-			$backdrop.appendTo("body");
+			$backdrop.appendTo(settings.parent);
 		}
 
 		$(document).off("keydown.modal");

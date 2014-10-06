@@ -41,7 +41,7 @@ registerPlugin("multientry", null, {
 
 		$(document).off("click.multientryremove");
 		$(document).on("click.multientryremove", ".multientry .item-remove", function() {
-			self.remove($(this).parent());
+			self.remove($(this).parent().text());
 		});
 
 		$(document).off("click.multientry");
@@ -72,44 +72,62 @@ registerPlugin("multientry", null, {
 	add: function(element, content) {
 		var $element = (element && content) ? $(element) : this.element ? $(this.element) : $(".multientry");
 
-		if (typeof element === "string" && !content) {
+		if (!content && (typeof element === "string" || element instanceof Array)) {
 		    content = element;
 		}
 
-		if (content) {
-			if (!(content instanceof Array)) {
-				content = content.split(/[\s,]+/);
-			}
-
-			content.forEach(function(text) {
-				if (!text.match(/^\s*$/) ) {
-					$("<span>")
-					.addClass("item done")
-					.append($("<span>").addClass("item-text").text(text.trim()))
-					.append($("<span>").addClass("item-remove"))
-					.insertBefore(($element.children().last()).empty());
-				}
-			});
+		if (!content) {
+			return;
 		}
+
+		if (!(content instanceof Array)) {
+			content = content.split(/[\s,]+/);
+		}
+
+		content = content.filter(function(value, index, self) {
+			return self.indexOf(value) === index;
+		});
+
+		content.forEach(function(text) {
+			if (!text.match(/^\s*$/)) {
+				$("<span>")
+				.addClass("item done")
+				.append($("<span>").addClass("item-text").text(text.trim()))
+				.append($("<span>").addClass("item-remove"))
+				.insertBefore(($element.children().last()).empty());
+			}
+		});
 
 		$.event.trigger("multientryElementAdded", [ $element, content ]);
 	},
 
 	/**
-	 * Remove an item from multientry.
+	 * Remove items from multientry.
 	 * @constructor
-	 * @param {String} [element]
+	 * @param {String[]} [content]
 	 */
-	remove: function(element) {
-		var $element = element ? $(element) : this.element ? $(this.element).closest(".multientry .item.done") : $(".multientry .item.done");
+	remove: function(element, content) {
+		var $element = (element && content) ? $(element) : this.element ? $(this.element) : $(".multientry");
 
-		if (!$element.hasClass("item")) {
+		if (!content && (typeof element === "string" || element instanceof Array)) {
+			content = element;
+		}
+
+		if (!content) {
 			return;
 		}
 
-		$element.remove();
+		if (!(content instanceof Array)) {
+			content = content.split(/[\s,]+/);
+		}
 
-		$.event.trigger("multientryElementRemoved", [ $element ]);
+		content.forEach(function(text) {
+			if (!text.match(/^\s*$/) ) {
+				$element.find(".item-text:contains(" + text.trim() + ")").parent(".item").remove();
+			}
+		});
+
+		$.event.trigger("multientryElementRemoved", [ $element, content ]);
 	},
 
 	/**

@@ -1,7 +1,8 @@
 var registerPlugin = require("./jquery.lace.js");
 
 registerPlugin("alertbar", {
-	type: "info"
+	type: "info",
+	parent: "body"
 }, {
 	/**
 	 * Show an alert message.
@@ -22,7 +23,7 @@ registerPlugin("alertbar", {
 
 		if (!$container.length) {
 			$container = $("<div>").addClass("alert-container");
-			$container.appendTo("body");
+			$container.appendTo(settings.parent);
 		}
 
 		if ($alert.length && $alert.hasClass("alert-bar")) {

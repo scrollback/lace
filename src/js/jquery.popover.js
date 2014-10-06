@@ -1,6 +1,8 @@
 var registerPlugin = require("./jquery.lace.js");
 
-registerPlugin("popover", null, {
+registerPlugin("popover", {
+	parent: "body"
+}, {
 
 	/**
 	 * Show a popover.
@@ -35,15 +37,16 @@ registerPlugin("popover", null, {
 		spaceleft = originoffset.left - $(document).scrollLeft() + ( originwidth / 2 );
 		spaceright = winwidth - spaceleft;
 
-		$layer.on("click", self.dismiss).appendTo("body");
+		$layer.on("click", self.dismiss).appendTo(settings.parent);
 
-		$popover.appendTo("body");
+		$popover.appendTo(settings.parent);
 
 		popoverwidth = $popover.outerWidth();
 		popoverheight = $popover.outerHeight();
 
 		if (spaceleft <= (popoverwidth / 2)) {
 			$popover.addClass("arrow-left");
+			spaceleft = originwidth / 2;
 			spaceleft = originwidth / 2;
 		} else if (spaceright <= (popoverwidth / 2)) {
 			$popover.addClass("arrow-right");

@@ -18,6 +18,7 @@
   ],
   "dependencies": {
     "jquery": "1",
-    "velocity": "~0.7.0"
+    "velocity": "~0.7.0",
+    "qunit": "~1.15.0"
   }
 }

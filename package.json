@@ -26,11 +26,14 @@
     "gulp-concat": "latest",
     "gulp-jshint": "latest",
     "gulp-minify-css": "latest",
+    "gulp-plumber": "^0.6.6",
+    "gulp-qunit": "^0.3.3",
     "gulp-rename": "latest",
     "gulp-ruby-sass": "latest",
     "gulp-streamify": "latest",
     "gulp-uglify": "latest",
     "gulp-util": "latest",
-    "jshint-stylish": "latest"
+    "jshint-stylish": "latest",
+    "vinyl-source-stream": "latest"
   }
 }

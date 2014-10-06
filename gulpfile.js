@@ -1,38 +1,61 @@
-/* jshint node: true */
-
 // Load plugins and declare variables
 var gulp = require("gulp"),
+	browserify = require("browserify"),
+	source = require("vinyl-source-stream"),
+	es = require("event-stream"),
 	gutil = require("gulp-util"),
-	jshint = require("gulp-jshint"),
+	plumber = require("gulp-plumber"),
 	concat = require("gulp-concat"),
 	streamify = require("gulp-streamify"),
 	uglify = require("gulp-uglify"),
 	rename = require("gulp-rename"),
 	sass = require("gulp-ruby-sass"),
 	prefix = require("gulp-autoprefixer"),
-	minify = require("gulp-minify-css");
+	minify = require("gulp-minify-css"),
+	jshint = require("gulp-jshint"),
+	qunit = require("gulp-qunit");
 
-// Lint JavaScript files
-gulp.task("lint", function() {
-	return gulp.src("src/js/*.js")
-	.pipe(jshint())
-	.pipe(jshint.reporter("jshint-stylish"));
-});
+// Make browserify bundle
+function bundle(files, opts) {
+	var streams = [],
+		bundler = function(file) {
+			opts.entries = "./" + file;
+
+			return browserify(opts).bundle()
+			.pipe(source(file.split(/[\\/]/).pop()))
+			.on("error", gutil.log);
+		};
+
+	opts = opts || {};
+
+	if (files && files instanceof Array) {
+		for (var i = 0, l = files.length; i < l; i++) {
+			if (typeof files[i] === "string") {
+				streams.push(bundler(files[i]));
+			}
+		}
+	} else if (typeof files === "string") {
+		streams.push(bundler(files));
+	}
+
+	return es.merge.apply(null, streams);
+}
 
 // Combine and minify scripts
 gulp.task("scripts", function() {
-	return gulp.src("src/js/*.js")
-	.pipe(concat("lace.js"))
+	return bundle("test/test.js", { debug: true })
 	.pipe(streamify(uglify()))
-	.pipe(rename({ suffix: ".min" }))
+	.pipe(plumber())
+	.pipe(rename("test.min.js"))
 	.pipe(gulp.dest("dist/scripts"))
 	.on("error", gutil.log);
 });
 
 // Generate styles
 gulp.task("styles", function() {
-	return gulp.src("src/scss/*.scss")
-	.pipe(sass({ sourcemapPath: "../scss" }))
+	return gulp.src("test/test.scss")
+	.pipe(plumber())
+	.pipe(sass({ sourcemapPath: "../src/scss" }))
 	.on("error", function(e) { gutil.log(e.message); })
 	.pipe(prefix())
 	.pipe(minify())
@@ -40,10 +63,25 @@ gulp.task("styles", function() {
 	.on("error", gutil.log);
 });
 
+// Lint JavaScript files
+gulp.task("lint", function() {
+	return gulp.src([ "src/js/**/*.js", "test/**/*.js" ])
+	.pipe(plumber())
+	.pipe(jshint())
+	.pipe(jshint.reporter("jshint-stylish"));
+});
+
+// Run unit tests with phantom.js
+gulp.task("test", [ "scripts", "styles" ], function() {
+	return gulp.src("test/index.html")
+	.pipe(plumber())
+	.pipe(qunit());
+});
+
 gulp.task("watch", function() {
-	gulp.watch("src/js/*.js", [ "scripts" ]);
-	gulp.watch("src/scss/*.scss", [ "styles" ]);
+	gulp.watch([ "src/js/**/*.js", "test/**/*.js" ], [ "scripts" ]);
+	gulp.watch([ "src/scss/**/*.scss", "test/**/*.scss" ], [ "styles" ]);
 });
 
 // Default Task
-gulp.task("default", [ "scripts", "styles" ]);
+gulp.task("default", [ "lint", "test", "scripts", "styles" ]);

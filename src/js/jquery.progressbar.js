@@ -1,15 +1,19 @@
 var registerPlugin = require("./jquery.lace.js");
 
-registerPlugin("progressbar", null, {
+registerPlugin("progressbar", {
+	parent: "body"
+}, {
 
 	/**
 	 * Show a progress indicator.
 	 * @constructor
 	 */
 	init: function() {
-		var $progressbar = $(this.element);
+		var self = this,
+			settings = self.settings,
+			$progressbar = $(self.element);
 
-		$progressbar.removeClass("loading").addClass("progressbar").width(0).appendTo("body");
+		$progressbar.removeClass("loading").addClass("progressbar").width(0).appendTo(settings.parent);
 
 		$progressbar.data("progressbarInterval", setInterval(function() {
 			var width = parseInt(($progressbar.width() / $progressbar.parent().width()) * 100) || 0;

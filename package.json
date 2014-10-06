@@ -1,15 +1,16 @@
 {
   "name": "Lace",
   "version": "0.0.1",
-  "description": "A mini-framework",
-  "main": "src/js/lace.js",
+  "description": "A collection of jquery plugins and stylesheets",
+  "keywords": [
+    "framework",
+    "jquery",
+    "plugin"
+  ],
   "repository": {
     "type": "git",
     "path": "git://github.com/scrollback/lace.git"
   },
-  "keywords": [
-    "framework"
-  ],
   "author": "Satyajit Sahoo <satya@scrollback.io>",
   "license": "GPL",
   "bugs": {
@@ -26,8 +27,8 @@
     "gulp-concat": "latest",
     "gulp-jshint": "latest",
     "gulp-minify-css": "latest",
-    "gulp-plumber": "^0.6.6",
-    "gulp-qunit": "^0.3.3",
+    "gulp-plumber": "latest",
+    "gulp-qunit": "latest",
     "gulp-rename": "latest",
     "gulp-ruby-sass": "latest",
     "gulp-streamify": "latest",

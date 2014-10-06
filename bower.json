@@ -5,20 +5,25 @@
   "authors": [
     "Satyajit Sahoo <satya@scrollback.io>"
   ],
-  "description": "A mini-framework",
-  "main": "src/js/lace.js",
+  "description": "A collection of jquery plugins and stylesheets",
   "keywords": [
-    "framework"
+    "framework",
+    "jquery",
+    "plugin"
   ],
   "license": "GPL",
   "ignore": [
     "**/.*",
     "node_modules",
-    "bower_components"
+    "bower_components",
+    "test",
+    "gulpfile.js"
   ],
   "dependencies": {
     "jquery": "1",
-    "velocity": "~0.7.0",
+    "velocity": "~0.7.0"
+  },
+  "devDependencies": {
     "qunit": "~1.15.0"
   }
 }

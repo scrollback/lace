@@ -1,5 +1,6 @@
 // Load plugins and declare variables
 var gulp = require("gulp"),
+	bower = require("bower"),
 	browserify = require("browserify"),
 	source = require("vinyl-source-stream"),
 	es = require("event-stream"),
@@ -41,11 +42,17 @@ function bundle(files, opts) {
 	return es.merge.apply(null, streams);
 }
 
+// Install and copy third-party libraries
+gulp.task("bower", function() {
+	return bower.commands.install([], { save: true }, {})
+	.on("error", gutil.log);
+});
+
 // Combine and minify scripts
-gulp.task("scripts", function() {
-	return bundle("test/test.js", { debug: true })
-	.pipe(streamify(uglify()))
+gulp.task("scripts", [ "bower" ], function() {
+	return bundle("test/test.js", { debug: !gutil.env.production })
 	.pipe(plumber())
+	.pipe(gutil.env.production ? streamify(uglify()) : gutil.noop())
 	.pipe(rename("test.min.js"))
 	.pipe(gulp.dest("dist/scripts"))
 	.on("error", gutil.log);
@@ -58,7 +65,7 @@ gulp.task("styles", function() {
 	.pipe(sass({ sourcemapPath: "../src/scss" }))
 	.on("error", function(e) { gutil.log(e.message); })
 	.pipe(prefix())
-	.pipe(minify())
+	.pipe(gutil.env.production ? minify() : gutil.noop())
 	.pipe(gulp.dest("dist/styles"))
 	.on("error", gutil.log);
 });
@@ -68,14 +75,16 @@ gulp.task("lint", function() {
 	return gulp.src([ "src/js/**/*.js", "test/**/*.js" ])
 	.pipe(plumber())
 	.pipe(jshint())
-	.pipe(jshint.reporter("jshint-stylish"));
+	.pipe(jshint.reporter("jshint-stylish"))
+	.on("error", gutil.log);
 });
 
 // Run unit tests with phantom.js
 gulp.task("test", [ "scripts", "styles" ], function() {
 	return gulp.src("test/index.html")
 	.pipe(plumber())
-	.pipe(qunit());
+	.pipe(qunit())
+	.on("error", gutil.log);
 });
 
 gulp.task("watch", function() {

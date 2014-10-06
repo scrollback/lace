@@ -1,4 +1,4 @@
-lace
+Lace
 ====
 
-A framework for client-side interfaces
+A collection of jquery plugins and stylesheets.

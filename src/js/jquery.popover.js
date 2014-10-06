@@ -12,6 +12,9 @@ registerPlugin("popover", null, {
 			$popover = $(self.element).addClass("popover-body"),
 			$layer = $("<div>").addClass("popover-layer"),
 			$origin = $(self.settings.origin),
+			winheight, winwidth,
+			originoffset, originheight, originwidth,
+			popoverheight, popoverwidth,
 			spacetop, spacebottom, spaceleft, spaceright;
 
 		if (!$origin.length) {
@@ -20,31 +23,41 @@ registerPlugin("popover", null, {
 
 		self.dismiss();
 
-		spacetop = $origin.offset().top - $(document).scrollTop() + $origin.height();
-		spacebottom = $(window).height() - spacetop;
-		spaceleft = $origin.offset().left - $(document).scrollLeft() + ( $origin.width() / 2 );
-		spaceright = $(window).width() - spaceleft;
+		winheight = $(window).height();
+		winwidth = $(window).width();
+
+		originoffset = $origin.offset();
+		originheight = $origin.height();
+		originwidth = $origin.width();
+
+		spacetop = originoffset.top - $(document).scrollTop() + originheight;
+		spacebottom = winheight - spacetop;
+		spaceleft = originoffset.left - $(document).scrollLeft() + ( originwidth / 2 );
+		spaceright = winwidth - spaceleft;
 
 		$layer.on("click", self.dismiss).appendTo("body");
 
 		$popover.appendTo("body");
 
-		if ($popover.outerWidth() >= spaceleft) {
+		popoverwidth = $popover.outerWidth();
+		popoverheight = $popover.outerHeight();
+
+		if (spaceleft <= (popoverwidth / 2)) {
 			$popover.addClass("arrow-left");
-			spaceleft = $origin.width() / 2;
-		} else if ($popover.outerWidth() >= spaceright) {
+			spaceleft = originwidth / 2;
+		} else if (spaceright <= (popoverwidth / 2)) {
 			$popover.addClass("arrow-right");
-			spaceleft = $(window).width() - ( $origin.width() / 2 ) - $popover.outerWidth();
+			spaceleft = winwidth - ( originwidth / 2 ) - popoverwidth;
 		} else {
-			spaceleft = spaceleft - ( $popover.outerWidth() / 2 );
+			spaceleft = spaceleft - ( popoverwidth / 2 );
 		}
 
-		if ($origin.height() >= $(window).height()) {
+		if (originheight >= winheight) {
 			$popover.addClass("popover-bottom");
-			spacetop = $(window).height() / 2;
-		} else if ($popover.outerHeight() >= spacebottom) {
+			spacetop = winheight / 2;
+		} else if (popoverheight >= spacebottom) {
 			$popover.addClass("popover-top");
-			spacetop = spacetop - $origin.height() - $popover.outerHeight();
+			spacetop = spacetop - originheight - popoverheight;
 		} else {
 			$popover.addClass("popover-bottom");
 		}

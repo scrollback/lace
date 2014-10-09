@@ -84,6 +84,10 @@ registerPlugin("multientry", null, {
 			content = content.split(/[\s,]+/);
 		}
 
+		// Process the items to remove any spaces or new lines
+		content = content.join(" ").replace(/(?:\r\n|\r|\n)/g, " ").split(/[\s,]+/);
+
+		// Only have unique items
 		content = content.filter(function(value, index, self) {
 			return self.indexOf(value) === index;
 		});
@@ -123,7 +127,9 @@ registerPlugin("multientry", null, {
 
 		content.forEach(function(text) {
 			if (!text.match(/^\s*$/) ) {
-				$element.find(".item-text:contains(" + text.trim() + ")").parent(".item").remove();
+				$element.find(".item-text").filter(function() {
+					return $(this).text().trim() === text.trim();
+				}).parent(".item").remove();
 			}
 		});
 

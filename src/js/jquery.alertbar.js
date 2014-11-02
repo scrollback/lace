@@ -56,6 +56,10 @@ registerPlugin("alertbar", {
 		var $element = element ? $(element) : this.element ? $(this.element).closest(".alert-bar") : $(".alert-bar"),
 			$container = $(".alert-container");
 
+		if (!$element.length) {
+			return;
+		}
+
 		if ($.fn.velocity) {
 			$element.velocity({
 				opacity: 0

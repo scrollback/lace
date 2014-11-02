@@ -51,6 +51,10 @@ registerPlugin("modal", {
 	dismiss: function() {
 		var $element = $(".modal, .backdrop");
 
+		if (!$element.length) {
+			return;
+		}
+
 		if ($.fn.velocity) {
 			$element.velocity("fadeOut", 150, function() {
 				$(this).remove();

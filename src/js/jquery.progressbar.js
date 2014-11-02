@@ -9,9 +9,8 @@ registerPlugin("progressbar", {
 	 * @constructor
 	 */
 	init: function() {
-		var self = this,
-			settings = self.settings,
-			$progressbar = $(self.element);
+		var settings = this.settings,
+			$progressbar = $(this.element);
 
 		$progressbar.removeClass("loading").addClass("progressbar").width(0).appendTo(settings.parent);
 
@@ -53,18 +52,19 @@ registerPlugin("progressbar", {
 	 * Dismiss progress indicator.
 	 * @constructor
 	 */
-	dismiss: function() {
-		var self = this,
-			$progressbar = $(this.element);
+	dismiss: function(element) {
+		var $element = element ? $(element) : this.element ? $(this.element).closest(".progressbar") : $(".progressbar");
 
-		$progressbar = ($progressbar.hasClass(".progressbar") && $progressbar.length) ? $progressbar : $(".progressbar");
+		if (!$element.length) {
+			return;
+		}
 
-		self.set(100);
+		this.set(100);
 
 		setTimeout(function() {
-			$progressbar.remove();
+			$element.remove();
 		}, 500);
 
-		$.event.trigger("progressbarDismissed", [ $progressbar ]);
+		$.event.trigger("progressbarDismissed", [ $element ]);
 	}
 });

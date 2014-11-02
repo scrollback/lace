@@ -23,7 +23,7 @@ registerPlugin("popover", {
 			return;
 		}
 
-		if (origindata && $(origindata).closest($origin).length) {
+		if (origindata && $(origindata).get(0) === $origin.get(0)) {
 			return;
 		}
 
@@ -90,7 +90,11 @@ registerPlugin("popover", {
 	 * @constructor
 	 */
 	dismiss: function() {
-		var $element = $(".popover-body, .popover-layer");
+		var $element = $(".popover-body");
+
+		if (!$element.length) {
+			return;
+		}
 
 		if ($.fn.velocity) {
 			$element.velocity("fadeOut", 150, function() {

@@ -13,12 +13,17 @@ registerPlugin("popover", {
 			settings = self.settings,
 			$popover = $(self.element).addClass("popover-body"),
 			$origin = $(self.settings.origin),
+			origindata = $(document).data("origin.popover"),
 			winheight, winwidth,
 			originoffset, originheight, originwidth,
 			popoverheight, popoverwidth,
 			spacetop, spacebottom, spaceleft, spaceright;
 
 		if (!$origin.length) {
+			return;
+		}
+
+		if (origindata && $(origindata).closest($origin).length) {
 			return;
 		}
 
@@ -37,16 +42,14 @@ registerPlugin("popover", {
 		spaceright = winwidth - spaceleft;
 
 		$(document).on("click.popover", function(e) {
-			if (!$(e.target).closest(".popover-body").length) {
+			if (!$(e.target).closest($popover).length) {
 				self.dismiss();
 			}
-		});
-
-		$(document).on("keydown.popover", function(e) {
+		}).on("keydown.popover", function(e) {
 			if (e.keyCode === 27) {
 				self.dismiss();
 			}
-		});
+		}).data("origin.popover", $origin);
 
 		$popover.appendTo(settings.parent);
 
@@ -97,7 +100,7 @@ registerPlugin("popover", {
 			$element.remove();
 		}
 
-		$(document).off("click.popover keydown.popover");
+		$(document).data("origin.popover", false).off("click.popover keydown.popover");
 
 		$.event.trigger("popoverDismissed", [ $element ]);
 	}

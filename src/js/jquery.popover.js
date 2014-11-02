@@ -82,14 +82,13 @@ registerPlugin("popover", {
 		}
 
 		// Popover should be towards bottom or top?
-		if (originheight >= winheight) {
-			$popover.addClass("popover-bottom");
-			spacetop = winheight / 2;
-		} else if (popoverheight >= spacebottom) {
+		// The arrow points to the opposite direction
+		if (popoverheight >= spacebottom) {
 			$popover.addClass("popover-top");
 			spacetop = spacetop - originheight - popoverheight;
 		} else {
-			$popover.addClass("popover-top");
+			$popover.addClass("popover-bottom");
+			spacetop = (originheight <= winheight) ? spacetop : (winheight / 2);
 		}
 
 		// Add the necessary positioning styles

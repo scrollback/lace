@@ -14,6 +14,7 @@ var gulp = require("gulp"),
 	prefix = require("gulp-autoprefixer"),
 	minify = require("gulp-minify-css"),
 	jshint = require("gulp-jshint"),
+	jscs = require("gulp-jscs"),
 	qunit = require("gulp-qunit");
 
 // Make browserify bundle
@@ -79,6 +80,7 @@ gulp.task("lint", function() {
 	.pipe(plumber())
 	.pipe(jshint())
 	.pipe(jshint.reporter("jshint-stylish"))
+	.pipe(jscs())
 	.on("error", gutil.log);
 });
 

@@ -25,6 +25,7 @@
     "gulp-autoprefixer": "latest",
     "gulp-browserify": "latest",
     "gulp-concat": "latest",
+    "gulp-jscs": "latest",
     "gulp-jshint": "latest",
     "gulp-minify-css": "latest",
     "gulp-plumber": "latest",

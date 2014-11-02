@@ -11,23 +11,25 @@ registerPlugin("popover", {
 	init: function() {
 		var self = this,
 			settings = self.settings,
-			$popover = $(self.element).addClass("popover-body"),
 			$origin = $(self.settings.origin),
-			origindata = $(document).data("origin.popover"),
+			$popover = $(self.element).addClass("popover-body"),
 			winheight, winwidth,
 			originoffset, originheight, originwidth,
 			popoverheight, popoverwidth,
-			spacetop, spacebottom, spaceleft, spaceright;
+			spacetop, spacebottom, spaceleft, spaceright,
+			id = new Date().getTime();
 
 		if (!$origin.length) {
 			return;
 		}
 
-		if (origindata && $(origindata).get(0) === $origin.get(0)) {
+		if ($origin.data("popover")) {
 			return;
 		}
 
-		self.dismiss();
+		$popover.data("id", id);
+		$popover.data("origin", $origin);
+		$origin.data("popover", $popover);
 
 		winheight = $(window).height();
 		winwidth = $(window).width();
@@ -41,15 +43,15 @@ registerPlugin("popover", {
 		spaceleft = originoffset.left - $(document).scrollLeft() + ( originwidth / 2 );
 		spaceright = winwidth - spaceleft;
 
-		$(document).on("click.popover", function(e) {
+		$(document).on("click.popover-" + id, function(e) {
 			if (!$(e.target).closest($popover).length) {
 				self.dismiss();
 			}
-		}).on("keydown.popover", function(e) {
+		}).on("keydown.popover-" + id, function(e) {
 			if (e.keyCode === 27) {
 				self.dismiss();
 			}
-		}).data("origin.popover", $origin);
+		});
 
 		$popover.appendTo(settings.parent);
 
@@ -89,11 +91,21 @@ registerPlugin("popover", {
 	 * Dismiss popover.
 	 * @constructor
 	 */
-	dismiss: function() {
-		var $element = $(".popover-body");
+	dismiss: function(element) {
+		var $element = element ? $(element) : this.element ? $(this.element).closest(".popover-body") : $(".popover-body"),
+			$el, id;
 
 		if (!$element.length) {
 			return;
+		}
+
+		for (var i = 0, l = $element.length; i < l; i++) {
+			$el = $element.eq(i);
+
+			id = $el.data("id");
+
+			$(document).off("click.popover-" + id + " keydown.popover-" + id);
+			$($el.data("origin")).data("popover", false);
 		}
 
 		if ($.fn.velocity) {
@@ -103,8 +115,6 @@ registerPlugin("popover", {
 		} else {
 			$element.remove();
 		}
-
-		$(document).data("origin.popover", false).off("click.popover keydown.popover");
 
 		$.event.trigger("popoverDismissed", [ $element ]);
 	}

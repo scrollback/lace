@@ -19,18 +19,25 @@ registerPlugin("popover", {
 			spacetop, spacebottom, spaceleft, spaceright,
 			id = new Date().getTime();
 
+		// If origin doesn't exist, return
 		if (!$origin.length) {
 			return;
 		}
 
+		// A popover is already shown for the current origin
+		// Probably the user is trying to close the popover
 		if ($origin.data("popover")) {
 			return;
 		}
 
+		// Add info to popover so that we can properly remove events
 		$popover.data("id", id);
 		$popover.data("origin", $origin);
+
+		// Add popover info to origin so that we can know when it has a popover
 		$origin.data("popover", $popover);
 
+		// Get various height, width and offset values
 		winheight = $(window).height();
 		winwidth = $(window).width();
 
@@ -43,6 +50,8 @@ registerPlugin("popover", {
 		spaceleft = originoffset.left - $(document).scrollLeft() + ( originwidth / 2 );
 		spaceright = winwidth - spaceleft;
 
+		// Add event listeners to the document for dismissing the popover
+		// Namspace the event listeners so we can safely remove them later
 		$(document).on("click.popover-" + id, function(e) {
 			if (!$(e.target).closest($popover).length) {
 				self.dismiss();
@@ -53,14 +62,17 @@ registerPlugin("popover", {
 			}
 		});
 
+		// Add the popover to the DOM
+		// We are attaching it early so we can get width and height
+		// Which is needed for calculating position
 		$popover.appendTo(settings.parent);
 
 		popoverwidth = $popover.outerWidth();
 		popoverheight = $popover.outerHeight();
 
+		// Arrow should be displayed towards left, right or center?
 		if (spaceleft <= (popoverwidth / 2)) {
 			$popover.addClass("arrow-left");
-			spaceleft = originwidth / 2;
 			spaceleft = originwidth / 2;
 		} else if (spaceright <= (popoverwidth / 2)) {
 			$popover.addClass("arrow-right");
@@ -69,6 +81,7 @@ registerPlugin("popover", {
 			spaceleft = spaceleft - ( popoverwidth / 2 );
 		}
 
+		// Popover should be towards bottom or top?
 		if (originheight >= winheight) {
 			$popover.addClass("popover-bottom");
 			spacetop = winheight / 2;
@@ -76,14 +89,16 @@ registerPlugin("popover", {
 			$popover.addClass("popover-top");
 			spacetop = spacetop - originheight - popoverheight;
 		} else {
-			$popover.addClass("popover-bottom");
+			$popover.addClass("popover-top");
 		}
 
+		// Add the necessary positioning styles
 		$popover.css({
 			"top": spacetop,
 			"left": spaceleft
 		});
 
+		// Popover is now initialized
 		$.event.trigger("popoverInited", [ $(self.element) ]);
 	},
 
@@ -95,10 +110,12 @@ registerPlugin("popover", {
 		var $element = element ? $(element) : this.element ? $(this.element).closest(".popover-body") : $(".popover-body"),
 			$el, id;
 
+		// The element doesn't exist
 		if (!$element.length) {
 			return;
 		}
 
+		// Loop through all elements and cleanup one by one
 		for (var i = 0, l = $element.length; i < l; i++) {
 			$el = $element.eq(i);
 
@@ -108,6 +125,7 @@ registerPlugin("popover", {
 			$($el.data("origin")).data("popover", false);
 		}
 
+		// Remove the element from DOM
 		if ($.fn.velocity) {
 			$element.velocity("fadeOut", 150, function() {
 				$(this).remove();
@@ -116,6 +134,7 @@ registerPlugin("popover", {
 			$element.remove();
 		}
 
+		// Popover is now dismissed
 		$.event.trigger("popoverDismissed", [ $element ]);
 	}
 });

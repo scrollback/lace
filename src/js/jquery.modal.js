@@ -16,17 +16,24 @@ registerPlugin("modal", {
 			$modal = $(self.element).addClass("modal"),
 			$backdrop = (settings.backdrop) ? $("<div>").addClass("backdrop") : null;
 
+		// There can be only one modal, so dismiss others
 		self.dismiss();
 
+		// Add event listener to buttons which can dismiss the modal
 		$modal.find(".modal-remove").on("click", self.dismiss);
 
+		// Add the modal to the DOM
+		// We are attaching it early so we can get width and height
+		// Which is needed for calculating position for centering
 		$modal.appendTo(settings.parent);
 
+		// Center the modal in the window
 		$modal.css({
 			"margin-top": $modal.outerHeight() / -2,
 			"margin-left": $modal.outerWidth() / -2
 		});
 
+		// Add a dark semi-transparent backdrop if specified
 		if ($backdrop) {
 			if (settings.dismiss) {
 				$backdrop.on("click", self.dismiss);
@@ -35,12 +42,14 @@ registerPlugin("modal", {
 			$backdrop.appendTo(settings.parent);
 		}
 
+		// Add event listener to dismiss the modal
 		$(document).on("keydown.modal", function(e) {
 			if (e.keyCode === 27 && settings.dismiss) {
 				self.dismiss();
 			}
 		});
 
+		// Modal is now initialized
 		$.event.trigger("modalInited", [ $(self.element) ]);
 	},
 
@@ -51,10 +60,12 @@ registerPlugin("modal", {
 	dismiss: function() {
 		var $element = $(".modal, .backdrop");
 
+		// Element doesn't exist
 		if (!$element.length) {
 			return;
 		}
 
+		// Remove the element from DOM
 		if ($.fn.velocity) {
 			$element.velocity("fadeOut", 150, function() {
 				$(this).remove();
@@ -63,8 +74,10 @@ registerPlugin("modal", {
 			$element.remove();
 		}
 
+		// Remove event listeners
 		$(document).off("keydown.modal");
 
+		// Modal is now dismissed
 		$.event.trigger("modalDismissed", [ $element ]);
 	}
 });

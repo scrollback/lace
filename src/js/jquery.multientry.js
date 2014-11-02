@@ -8,34 +8,47 @@ registerPlugin("multientry", null, {
 	init: function() {
 		var self = this;
 
+		// Add event listeners for mutlientry to the document
 		$(document).off("blur.multientry").on("blur.multientry", ".multientry", function() {
+			// When focus moves out of multientry, add the text to multientry
 			self.add($(this), $(this).children().last().text());
 		}).off("keydown.multientryitem").on("keydown.multientryitem", ".multientry .item", function(e) {
 			if (e.keyCode === 13 || e.keyCode === 32 || e.keyCode === 188) {
+				// Return (13), space (32) or comma (188) pressed
+				// Prevent default action and add the text to multientry
 				e.preventDefault();
+
 				self.add($(this).parent(".multientry"), $(this).text());
 			} else if (e.keyCode === 8 && $(this).text().match(/^\s*$/)) {
+				// Backspace (8) pressed and text is non-space character
+				// Prevent default action and make previous text editable
 				e.preventDefault();
 
 				$(this).text($(this).prev().find(".item-text").text());
 				$(this).prev().remove();
 
+				// Move cursor to end if plugin available
 				if ($.fn.setCursorEnd) {
 					$(this).setCursorEnd();
 				}
 			}
 		}).off("paste.multientryitem").on("paste.multientryitem", ".multientry .item", function(e) {
+			// Text is pasted into multientry
+			// Prevent default action and manually add the clipboard text
 			e.preventDefault();
 
 			var items = e.originalEvent.clipboardData.getData("Text");
 
 			self.add($(this).parent(".multientry"), items);
 		}).off("click.multientryremove").on("click.multientryremove", ".multientry .item-remove", function() {
+			// Remove the multientry item
 			self.remove($(this).parent().text());
 		}).off("click.multientry").on("click.multientry", ".multientry", function() {
+			// Focus the editable part of multientry
 			$(this).children().last().focus();
 		});
 
+		// Multientry is now initialized
 		$.event.trigger("multientryInited", [ $(self.element) ]);
 	},
 
@@ -45,6 +58,7 @@ registerPlugin("multientry", null, {
 	 * @return {Object}
 	 */
 	create: function() {
+		// Create and initialize as multientry
 		return $("<div>").addClass("multientry").append(
 			$("<span>").addClass("item").attr({ "contenteditable": true })
 		).multientry();
@@ -59,14 +73,17 @@ registerPlugin("multientry", null, {
 	add: function(element, content) {
 		var $element = (element && content) ? $(element) : this.element ? $(this.element) : $(".multientry");
 
+		// The first argument is not element, but content to add
 		if (!content && (typeof element === "string" || element instanceof Array)) {
 		    content = element;
 		}
 
+		// No content given
 		if (!content) {
 			return;
 		}
 
+		// If content is plain text, then split into an array
 		if (!(content instanceof Array)) {
 			content = content.split(/[\s,]+/);
 		}
@@ -79,6 +96,7 @@ registerPlugin("multientry", null, {
 			return self.indexOf(value) === index;
 		});
 
+		// Add each word as a new multientry item
 		content.forEach(function(text) {
 			if (!text.match(/^\s*$/)) {
 				$("<span>")
@@ -89,6 +107,7 @@ registerPlugin("multientry", null, {
 			}
 		});
 
+		// New multientry items are now added
 		$.event.trigger("multientryElementAdded", [ $element, content ]);
 	},
 
@@ -100,18 +119,22 @@ registerPlugin("multientry", null, {
 	remove: function(element, content) {
 		var $element = (element && content) ? $(element) : this.element ? $(this.element) : $(".multientry");
 
+		// The first argument is not element, but content to remove
 		if (!content && (typeof element === "string" || element instanceof Array)) {
 			content = element;
 		}
 
+		// No content given
 		if (!content) {
 			return;
 		}
 
+		// If content is plain text, then split into an array
 		if (!(content instanceof Array)) {
 			content = content.split(/[\s,]+/);
 		}
 
+		// Find and remove multientry items containing same word
 		content.forEach(function(text) {
 			if (!text.match(/^\s*$/) ) {
 				$element.find(".item-text").filter(function() {
@@ -120,6 +143,7 @@ registerPlugin("multientry", null, {
 			}
 		});
 
+		// Multientry items are now removed
 		$.event.trigger("multientryElementRemoved", [ $element, content ]);
 	},
 
@@ -132,12 +156,14 @@ registerPlugin("multientry", null, {
 	items: function(element) {
 		var $element = element ? $(element) : this.element ? $(this.element) : $(".multientry"),
 			elems = $element.find(".item-text"),
-			items = new Array(elems.length);
+			items = new Array(elems.length); // We already know the no. of elements, so we can make it faster
 
+		// Get the items from the multientry
 		for (var i = 0; i < elems.length; i++) {
 			items[i] = $(elems[i]).text();
 		}
 
+		// Return the items
 		return items;
 	}
 });

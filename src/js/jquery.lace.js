@@ -14,6 +14,7 @@ function registerPlugin(pluginName, defaults, methods) {
 			// Set plugin options
 			this.settings = $.extend({}, defaults, options);
 
+			// Provide access to the default options and plugin name
 			this._defaults = defaults;
 			this._name = pluginName;
 
@@ -77,4 +78,5 @@ if (typeof define === "function" && define.amd) {
 	module.exports = registerPlugin;
 } else {
 	window.registerPlugin = registerPlugin;
+	window.require = function() {}; // Override "require" so the plugins don't give an error
 }

@@ -3,11 +3,11 @@ var gulp = require("gulp"),
 	bower = require("bower"),
 	browserify = require("browserify"),
 	source = require("vinyl-source-stream"),
+	buffer = require("vinyl-buffer"),
 	es = require("event-stream"),
 	gutil = require("gulp-util"),
 	plumber = require("gulp-plumber"),
 	concat = require("gulp-concat"),
-	streamify = require("gulp-streamify"),
 	uglify = require("gulp-uglify"),
 	rename = require("gulp-rename"),
 	sass = require("gulp-ruby-sass"),
@@ -39,7 +39,7 @@ function bundle(files, opts) {
 		streams.push(bundler(files));
 	}
 
-	return es.merge.apply(null, streams);
+	return es.merge.apply(null, streams).pipe(buffer());
 }
 
 // Install and copy third-party libraries
@@ -52,7 +52,7 @@ gulp.task("bower", function() {
 gulp.task("scripts", [ "bower" ], function() {
 	return bundle("test/test.js", { debug: !gutil.env.production })
 	.pipe(plumber())
-	.pipe(gutil.env.production ? streamify(uglify()) : gutil.noop())
+	.pipe(gutil.env.production ? uglify() : gutil.noop())
 	.pipe(rename("test.min.js"))
 	.pipe(gulp.dest("dist/scripts"))
 	.on("error", gutil.log);
@@ -62,7 +62,10 @@ gulp.task("scripts", [ "bower" ], function() {
 gulp.task("styles", function() {
 	return gulp.src("test/test.scss")
 	.pipe(plumber())
-	.pipe(sass({ sourcemapPath: "../src/scss" }))
+	.pipe(sass({
+		style: gutil.env.production ? "compressed" : "expanded",
+		sourcemapPath: "../src/scss"
+	}))
 	.on("error", function(e) { gutil.log(e.message); })
 	.pipe(prefix())
 	.pipe(gutil.env.production ? minify() : gutil.noop())

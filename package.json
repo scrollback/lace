@@ -31,10 +31,10 @@
     "gulp-qunit": "latest",
     "gulp-rename": "latest",
     "gulp-ruby-sass": "latest",
-    "gulp-streamify": "latest",
     "gulp-uglify": "latest",
     "gulp-util": "latest",
     "jshint-stylish": "latest",
+    "vinyl-buffer": "latest",
     "vinyl-source-stream": "latest"
   }
 }

@@ -25,7 +25,7 @@ registerPlugin("alertbar", {
 			$container.appendTo(settings.parent);
 		}
 
-		// If an alertbar with same ID exits, replace it, or show a new alertbar
+		// If an alertbar with same ID exists, replace it, or show a new alertbar
 		if ($alert.length && $alert.hasClass("alert-bar")) {
 			$alert.replaceWith($elem);
 		} else {

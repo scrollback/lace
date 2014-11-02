@@ -8,13 +8,11 @@ registerPlugin("multientry", null, {
 	init: function() {
 		var self = this;
 
-		$(document).off("blur.multientry");
-		$(document).on("blur.multientry", ".multientry", function() {
+		$(document).off("blur.multientry").on("blur.multientry", ".multientry", function() {
 			self.add($(this), $(this).children().last().text());
 		});
 
-		$(document).off("keydown.multientryitem");
-		$(document).on("keydown.multientryitem", ".multientry .item", function(e) {
+		$(document).off("keydown.multientryitem").on("keydown.multientryitem", ".multientry .item", function(e) {
 			if (e.keyCode === 13 || e.keyCode === 32 || e.keyCode === 188) {
 				e.preventDefault();
 				self.add($(this).parent(".multientry"), $(this).text());
@@ -30,8 +28,7 @@ registerPlugin("multientry", null, {
 			}
 		});
 
-		$(document).off("paste.multientryitem");
-		$(document).on("paste.multientryitem", ".multientry .item", function(e) {
+		$(document).off("paste.multientryitem").on("paste.multientryitem", ".multientry .item", function(e) {
 			e.preventDefault();
 
 			var items = e.originalEvent.clipboardData.getData("Text");
@@ -39,13 +36,11 @@ registerPlugin("multientry", null, {
 			self.add($(this).parent(".multientry"), items);
 		});
 
-		$(document).off("click.multientryremove");
-		$(document).on("click.multientryremove", ".multientry .item-remove", function() {
+		$(document).off("click.multientryremove").on("click.multientryremove", ".multientry .item-remove", function() {
 			self.remove($(this).parent().text());
 		});
 
-		$(document).off("click.multientry");
-		$(document).on("click.multientry", ".multientry", function() {
+		$(document).off("click.multientry").on("click.multientry", ".multientry", function() {
 			$(this).children().last().focus();
 		});
 

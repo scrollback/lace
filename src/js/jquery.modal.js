@@ -35,8 +35,7 @@ registerPlugin("modal", {
 			$backdrop.appendTo(settings.parent);
 		}
 
-		$(document).off("keydown.modal");
-		$(document).on("keydown.modal", function(e) {
+		$(document).off("keydown.modal").on("keydown.modal", function(e) {
 			if (e.keyCode === 27 && settings.dismiss) {
 				self.dismiss();
 			}

@@ -10,9 +10,7 @@ registerPlugin("multientry", null, {
 
 		$(document).off("blur.multientry").on("blur.multientry", ".multientry", function() {
 			self.add($(this), $(this).children().last().text());
-		});
-
-		$(document).off("keydown.multientryitem").on("keydown.multientryitem", ".multientry .item", function(e) {
+		}).off("keydown.multientryitem").on("keydown.multientryitem", ".multientry .item", function(e) {
 			if (e.keyCode === 13 || e.keyCode === 32 || e.keyCode === 188) {
 				e.preventDefault();
 				self.add($(this).parent(".multientry"), $(this).text());
@@ -26,21 +24,15 @@ registerPlugin("multientry", null, {
 					$(this).setCursorEnd();
 				}
 			}
-		});
-
-		$(document).off("paste.multientryitem").on("paste.multientryitem", ".multientry .item", function(e) {
+		}).off("paste.multientryitem").on("paste.multientryitem", ".multientry .item", function(e) {
 			e.preventDefault();
 
 			var items = e.originalEvent.clipboardData.getData("Text");
 
 			self.add($(this).parent(".multientry"), items);
-		});
-
-		$(document).off("click.multientryremove").on("click.multientryremove", ".multientry .item-remove", function() {
+		}).off("click.multientryremove").on("click.multientryremove", ".multientry .item-remove", function() {
 			self.remove($(this).parent().text());
-		});
-
-		$(document).off("click.multientry").on("click.multientry", ".multientry", function() {
+		}).off("click.multientry").on("click.multientry", ".multientry", function() {
 			$(this).children().last().focus();
 		});
 

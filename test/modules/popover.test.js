@@ -64,3 +64,24 @@ QUnit.asyncTest("should dismiss on click on outside", function(assert) {
 		QUnit.start();
 	}, 500);
 });
+
+QUnit.asyncTest("should dismiss on escape", function(assert) {
+	var $fixture = $("#qunit-fixture"),
+		$origin = $("<div>").css({
+			width: "1em",
+			height: "1em",
+			margin: "auto"
+		}).appendTo($fixture),
+		$popover = $("<div>").text("A test popover").popover({
+			parent: $fixture,
+			origin: $origin
+		});
+
+	$(document).trigger($.Event("keydown", { keyCode: 27 }));
+
+	setTimeout(function() {
+		assert.equal($popover.is(":visible"), false, "dismissed successfully!");
+
+		QUnit.start();
+	}, 500);
+});

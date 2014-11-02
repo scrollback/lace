@@ -78,5 +78,12 @@ if (typeof define === "function" && define.amd) {
 	module.exports = registerPlugin;
 } else {
 	window.registerPlugin = registerPlugin;
-	window.require = function() {}; // Override "require" so the plugins don't give an error
+	window.require = function(file) {
+		// Polyfill "require" function so that the plugins work in normal environment
+		if (file === "./jquery.lace.js") {
+			return registerPlugin;
+		} else {
+			return function() {};
+		}
+	};
 }

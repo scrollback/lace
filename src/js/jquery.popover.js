@@ -12,7 +12,6 @@ registerPlugin("popover", {
 		var self = this,
 			settings = self.settings,
 			$popover = $(self.element).addClass("popover-body"),
-			$layer = $("<div>").addClass("popover-layer"),
 			$origin = $(self.settings.origin),
 			winheight, winwidth,
 			originoffset, originheight, originwidth,
@@ -37,7 +36,17 @@ registerPlugin("popover", {
 		spaceleft = originoffset.left - $(document).scrollLeft() + ( originwidth / 2 );
 		spaceright = winwidth - spaceleft;
 
-		$layer.on("click", self.dismiss).appendTo(settings.parent);
+		$(document).on("click.popover", function(e) {
+			if (!$(e.target).closest(".popover-body").length) {
+				self.dismiss();
+			}
+		});
+
+		$(document).on("keydown.popover", function(e) {
+			if (e.keyCode === 27) {
+				self.dismiss();
+			}
+		});
 
 		$popover.appendTo(settings.parent);
 
@@ -87,6 +96,8 @@ registerPlugin("popover", {
 		} else {
 			$element.remove();
 		}
+
+		$(document).off("click.popover keydown.popover");
 
 		$.event.trigger("popoverDismissed", [ $element ]);
 	}

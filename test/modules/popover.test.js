@@ -41,6 +41,11 @@ QUnit.asyncTest("should dismiss", function(assert) {
 
 QUnit.asyncTest("should dismiss on click on outside", function(assert) {
 	var $fixture = $("#qunit-fixture"),
+		$outside = $("<div>").css({
+			width: "1em",
+			height: "1em",
+			margin: "auto"
+		}).appendTo($fixture),
 		$origin = $("<div>").css({
 			width: "1em",
 			height: "1em",
@@ -51,7 +56,7 @@ QUnit.asyncTest("should dismiss on click on outside", function(assert) {
 			origin: $origin
 		});
 
-	$fixture.find(".popover-layer").click();
+	$outside.click();
 
 	setTimeout(function() {
 		assert.equal($popover.is(":visible"), false, "dismissed successfully!");

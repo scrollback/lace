@@ -29,12 +29,12 @@
     "gulp-jshint": "latest",
     "gulp-minify-css": "latest",
     "gulp-plumber": "latest",
-    "gulp-qunit": "latest",
     "gulp-rename": "latest",
     "gulp-ruby-sass": "latest",
     "gulp-uglify": "latest",
     "gulp-util": "latest",
     "jshint-stylish": "latest",
+    "node-qunit-phantomjs": "latest",
     "vinyl-buffer": "latest",
     "vinyl-source-stream": "latest"
   }

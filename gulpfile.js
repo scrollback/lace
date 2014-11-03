@@ -5,6 +5,7 @@ var gulp = require("gulp"),
 	source = require("vinyl-source-stream"),
 	buffer = require("vinyl-buffer"),
 	es = require("event-stream"),
+	qunit = require("node-qunit-phantomjs"),
 	gutil = require("gulp-util"),
 	plumber = require("gulp-plumber"),
 	concat = require("gulp-concat"),
@@ -14,8 +15,7 @@ var gulp = require("gulp"),
 	prefix = require("gulp-autoprefixer"),
 	minify = require("gulp-minify-css"),
 	jshint = require("gulp-jshint"),
-	jscs = require("gulp-jscs"),
-	qunit = require("gulp-qunit");
+	jscs = require("gulp-jscs");
 
 // Make browserify bundle
 function bundle(files, opts) {
@@ -86,10 +86,7 @@ gulp.task("lint", function() {
 
 // Run unit tests with phantom.js
 gulp.task("test", [ "scripts", "styles" ], function() {
-	return gulp.src("test/index.html")
-	.pipe(plumber())
-	.pipe(qunit())
-	.on("error", gutil.log);
+	return qunit("./test/index.html");
 });
 
 gulp.task("watch", function() {

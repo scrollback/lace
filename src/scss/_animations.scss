@@ -19,12 +19,20 @@
     @include prefix(animation, spin $args);
 }
 
+@mixin slideup($args: .3s 1) {
+    @include prefix(animation, slideup $args);
+}
+
+@mixin slideright($args: .3s 1) {
+    @include prefix(animation, slideright $args);
+}
+
 @mixin slidedown($args: .3s 1) {
     @include prefix(animation, slidedown $args);
 }
 
-@mixin slideup($args: .3s 1) {
-    @include prefix(animation, slideup $args);
+@mixin slideleft($args: .3s 1) {
+    @include prefix(animation, slideleft $args);
 }
 
 @mixin appear($args: .5s 1) {
@@ -48,6 +56,30 @@
         to  { @include transform(rotate(360deg)); }
     }
 
+    @include keyframes(slideup) {
+        0% {
+            @include opacity(0);
+            @include transform(translate3d(0, 10%, 0));
+        }
+
+        100% {
+            @include opacity(1);
+            @include transform(translate3d(0, 0, 0));
+        }
+    }
+
+    @include keyframes(slideright) {
+        0% {
+            @include opacity(0);
+            @include transform(translate3d(-10%, 0, 0));
+        }
+
+        100% {
+            @include opacity(1);
+            @include transform(translate3d(0, 0, 0));
+        }
+    }
+
     @include keyframes(slidedown) {
         0% {
             @include opacity(0);
@@ -60,10 +92,10 @@
         }
     }
 
-    @include keyframes(slideup) {
+    @include keyframes(slideleft) {
         0% {
             @include opacity(0);
-            @include transform(translate3d(0, 10%, 0));
+            @include transform(translate3d(10%, 0, 0));
         }
 
         100% {
@@ -102,9 +134,13 @@
 
     %spin { @include spin; }
 
+    %slideup { @include slideup; }
+
+    %slideright { @include slideright; }
+
     %slidedown { @include slidedown; }
 
-    %slideup { @include slideup; }
+    %slideleft { @include slideleft; }
 
     %appear { @include appear; }
 

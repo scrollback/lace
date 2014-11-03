@@ -7,8 +7,6 @@
 		position: absolute;
 		display: block;
 		content: "";
-		left: 50%;
-		margin-left: -8px;
 		height: 14px;
 		width: 14px;
 		background-color: transparent;
@@ -32,6 +30,8 @@
 		z-index: 900;
 
 		&:before {
+			@extend %popover-arrow;
+
 			background-image: linear-gradient(135deg, $light-color 60%, $light-color 60%, transparent 60%);
 			border-color: darken($light-color, 30%);
 		}
@@ -61,9 +61,18 @@
 
 			&:before {
 				@include transform(rotate(225deg));
-				@extend %popover-arrow;
 
 				bottom: -8px;
+			}
+		}
+
+		&.popover-left {
+			@extend %slideleft;
+
+			&:before {
+				@include transform(rotate(135deg));
+
+				right: -8px;
 			}
 		}
 
@@ -72,23 +81,52 @@
 
 			&:before {
 				@include transform(rotate(45deg));
-				@extend %popover-arrow;
 
 				top: -8px;
 			}
 		}
 
-		&.arrow-left {
+		&.popover-right {
+			@extend %slideright;
+
 			&:before {
-				left: 1em;
-				right: auto;
+				@include transform(rotate(315deg));
+
+				left: -8px;
 			}
 		}
 
-		&.arrow-right {
+		&.arrow-x {
 			&:before {
-				left: auto;
-				right: 1em;
+				left: 50%;
+				margin-left: -8px;
+
+				.arrow-left & {
+					left: 1em;
+					right: auto;
+				}
+
+				.arrow-right & {
+					left: auto;
+					right: 1em;
+				}
+			}
+		}
+
+		&.arrow-y {
+			&:before {
+				top: 50%;
+				margin-top: -8px;
+
+				.arrow-top & {
+					top: 1em;
+					bottom: auto;
+				}
+
+				.arrow-bottom & {
+					top: auto;
+					bottom: 1em;
+				}
 			}
 		}
 

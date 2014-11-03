@@ -53,10 +53,12 @@ registerPlugin("popover", {
 		// Add event listeners to the document for dismissing the popover
 		// Namspace the event listeners so we can safely remove them later
 		$(document).on("click.popover-" + id, function(e) {
+			// Dismiss when clicked on outside of popover
 			if (!$(e.target).closest($popover).length) {
 				self.dismiss();
 			}
 		}).on("keydown.popover-" + id, function(e) {
+			// Dismiss when escape (27) is pressed
 			if (e.keyCode === 27) {
 				self.dismiss();
 			}
@@ -72,10 +74,10 @@ registerPlugin("popover", {
 
 		// Arrow should be displayed towards left, right or center?
 		if (spaceleft <= (popoverwidth / 2)) {
-			$popover.addClass("arrow-left");
+			$popover.addClass("arrow-x arrow-left");
 			spaceleft = originwidth / 2;
 		} else if (spaceright <= (popoverwidth / 2)) {
-			$popover.addClass("arrow-right");
+			$popover.addClass("arrow-x arrow-right");
 			spaceleft = winwidth - ( originwidth / 2 ) - popoverwidth;
 		} else {
 			spaceleft = spaceleft - ( popoverwidth / 2 );

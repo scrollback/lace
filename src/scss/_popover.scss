@@ -100,13 +100,17 @@
 			&:before {
 				left: 50%;
 				margin-left: -8px;
+			}
 
-				.arrow-left & {
+			&.arrow-left {
+				&:before {
 					left: 1em;
 					right: auto;
 				}
+			}
 
-				.arrow-right & {
+			&.arrow-right {
+				&:before {
 					left: auto;
 					right: 1em;
 				}
@@ -117,13 +121,17 @@
 			&:before {
 				top: 50%;
 				margin-top: -8px;
+			}
 
-				.arrow-top & {
+			&.arrow-top {
+				&:before {
 					top: 1em;
 					bottom: auto;
 				}
+			}
 
-				.arrow-bottom & {
+			&.arrow-bottom {
+				&:before {
 					top: auto;
 					bottom: 1em;
 				}

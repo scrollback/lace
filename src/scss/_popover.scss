@@ -1,6 +1,7 @@
 @import "functions";
 @import "global";
 @import "animations";
+@import "dropshadow";
 
 @include exports("popover") {
 	%popover-arrow {
@@ -16,6 +17,8 @@
 	}
 
 	.popover-body {
+		@include dropshadow(4);
+
 		position: absolute;
 		display: block;
 		width: 15em;
@@ -25,7 +28,6 @@
 		border: 1px solid darken($light-color, 20%);
 		background-color: $light-color;
 		color: $dark-color;
-		box-shadow: 0 0 10px 0 rgba(0,0,0,.15);
 		text-transform: none;
 		z-index: 900;
 

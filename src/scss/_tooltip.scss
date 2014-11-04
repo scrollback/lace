@@ -1,6 +1,7 @@
 @import "functions";
 @import "global";
 @import "animations";
+@import "dropshadow";
 
 @include exports("tooltip") {
 	[data-tooltip] {
@@ -16,6 +17,8 @@
 		}
 
 		&:after {
+			@include dropshadow(2);
+
 			content: attr(data-tooltip);
 			color: $light-color;
 			background: $dark-color;
@@ -23,7 +26,6 @@
 			white-space: nowrap;
 			margin-left: -50%;
 			border-radius: $roundness;
-			box-shadow: 0 0 10px 0 rgba(0,0,0,.15);
 		}
 
 		&:before, &:after {

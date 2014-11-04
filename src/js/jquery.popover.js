@@ -71,38 +71,73 @@ registerPlugin("popover", {
 
 		popoverwidth = $popover.outerWidth();
 		popoverheight = $popover.outerHeight();
+		
+		if ( originoffset.left < 0 || originoffset.left > winwidth) {
+			console.log("outside of screen");
+			$popover.addClass('origin-outside');
+			$popover.addClass('arrow-y');
+			if (originoffset.top < winheight / 2) {
+				$popover.addClass("arrow-top");
+			} else {
+				$popover.addClass("arrow-bottom");
+			}
+			
+			if (originoffset.left < 0) {
+				$popover.addClass('popover-right');
+				spaceleft = 0;
+			} else {
+				$popover.addClass('popover-left');
+				spaceleft = winwidth - popoverwidth - 10;
+			}
+		} else if (originoffset.top < 0 || originoffset.top > winheight) {
+			console.log("outside of screen");
+			$popover.addClass('origin-outside');
+			$popover.addClass('arrow-x');
+			if (originoffset.left < winwidth / 2) {
+				$popover.addClass("arrow-left");
+			} else {
+				$popover.addClass("arrow-right");
+			}
+			
+			if (originoffset.top < 0) {
+				spacetop = 0;
+				$popover.addClass('popover-bottom');
+			} else {
+				spacetop = winheight - popoverheight - 10;
+				$popover.addClass('popover-top');
+			}
+		} else {//origin is inside visible area
+			if (spaceleft <= (popoverwidth / 2)) {
+				$popover.addClass("arrow-x arrow-left");
+				spaceleft = originwidth / 2;
+			} else if (spaceright <= (popoverwidth / 2)) {
+				$popover.addClass("arrow-x arrow-right");
+				spaceleft = winwidth - ( originwidth / 2 ) - popoverwidth;
+			} else {
+				spaceleft = spaceleft - ( popoverwidth / 2 );
+			}
 
-		// Arrow should be displayed towards left, right or center?
-		if (spaceleft <= (popoverwidth / 2)) {
-			$popover.addClass("arrow-x arrow-left");
-			spaceleft = originwidth / 2;
-		} else if (spaceright <= (popoverwidth / 2)) {
-			$popover.addClass("arrow-x arrow-right");
-			spaceleft = winwidth - ( originwidth / 2 ) - popoverwidth;
-		} else {
-			spaceleft = spaceleft - ( popoverwidth / 2 );
+			// Popover should be towards bottom or top?
+			// The arrow points to the opposite direction
+			if (popoverheight >= spacebottom) {
+				$popover.addClass("popover-top");
+				spacetop = spacetop - originheight - popoverheight;
+			} else {
+				$popover.addClass("popover-bottom");
+				spacetop = (originheight <= winheight) ? spacetop : (winheight / 2);
+			}
 		}
-
-		// Popover should be towards bottom or top?
-		// The arrow points to the opposite direction
-		if (popoverheight >= spacebottom) {
-			$popover.addClass("popover-top");
-			spacetop = spacetop - originheight - popoverheight;
-		} else {
-			$popover.addClass("popover-bottom");
-			spacetop = (originheight <= winheight) ? spacetop : (winheight / 2);
-		}
-
+		
 		// Add the necessary positioning styles
 		$popover.css({
 			"top": spacetop,
 			"left": spaceleft
 		});
-
+		
 		// Popover is now initialized
 		$.event.trigger("popoverInited", [ $(self.element) ]);
 	},
-
+	
 	/**
 	 * Dismiss popover.
 	 * @constructor

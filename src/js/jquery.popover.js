@@ -69,8 +69,9 @@ registerPlugin("popover", {
 		// Which is needed for calculating position
 		$popover.appendTo(settings.parent);
 
-		popoverwidth = $popover.outerWidth();
-		popoverheight = $popover.outerHeight();
+		// Let's also include the margin in the height
+		popoverwidth = $popover.outerWidth(true);
+		popoverheight = $popover.outerHeight(true);
 
 		// Arrow should be displayed towards left, right or center?
 		if (spaceleft <= (popoverwidth / 2)) {

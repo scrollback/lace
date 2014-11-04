@@ -80,6 +80,7 @@ registerPlugin("popover", {
 			$popover.addClass("arrow-x arrow-right");
 			spaceleft = winwidth - ( originwidth / 2 ) - popoverwidth;
 		} else {
+			$popover.addClass("arrow-x");
 			spaceleft = spaceleft - ( popoverwidth / 2 );
 		}
 

@@ -81,12 +81,12 @@ registerPlugin("alertbar", {
 				marginTop: 0,
 				marginBottom: 0
 			}, 150, function() {
-				$(this).remove();
 				cleanup();
+				$(this).remove();
 			});
 		} else {
-			$element.remove();
 			cleanup();
+			$element.remove();
 		}
 
 		// No alertbars left, safe to remove the container

@@ -15,7 +15,7 @@ registerPlugin("popover", {
 			$popover = $(self.element).addClass("popover-body"),
 			winheight, winwidth,
 			originoffset, originheight, originwidth,
-			popoverheight, popoverwidth,
+			popoverheight, popoverwidth, popovermargin,
 			spacetop, spacebottom, spaceleft, spaceright,
 			id = new Date().getTime();
 
@@ -45,7 +45,7 @@ registerPlugin("popover", {
 		originheight = $origin.outerHeight();
 		originwidth = $origin.outerWidth();
 
-		spacetop = originoffset.top - $(document).scrollTop() + originheight;
+		spacetop = originoffset.top - $(document).scrollTop() + (originheight / 2);
 		spacebottom = winheight - spacetop;
 		spaceleft = originoffset.left - $(document).scrollLeft() + ( originwidth / 2 );
 		spaceright = winwidth - spaceleft;
@@ -72,14 +72,14 @@ registerPlugin("popover", {
 		// Let's also include the margin in the height
 		popoverwidth = $popover.outerWidth(true);
 		popoverheight = $popover.outerHeight(true);
+		popovermargin = popoverwidth - $popover.outerWidth();
 		
 		if ( originoffset.left < 0 || originoffset.left > winwidth) {
-			console.log("outside of screen");
-			$popover.addClass('origin-outside');
+			$popover.addClass('popover-origin-outside');
 			$popover.addClass('arrow-y');
-			if (originoffset.top < winheight / 2) {
+			if (spacetop <= (popoverheight / 2)) {
 				$popover.addClass("arrow-top");
-			} else {
+			} else if (spacebottom <= popoverheight / 2) {
 				$popover.addClass("arrow-bottom");
 			}
 			
@@ -88,15 +88,14 @@ registerPlugin("popover", {
 				spaceleft = 0;
 			} else {
 				$popover.addClass('popover-left');
-				spaceleft = winwidth - popoverwidth - 10;
+				spaceleft = winwidth - popoverwidth;
 			}
 		} else if (originoffset.top < 0 || originoffset.top > winheight) {
-			console.log("outside of screen");
-			$popover.addClass('origin-outside');
+			$popover.addClass('popover-origin-outside');
 			$popover.addClass('arrow-x');
-			if (originoffset.left < winwidth / 2) {
+			if (spaceleft < originwidth / 2) {
 				$popover.addClass("arrow-left");
-			} else {
+			} else if (spaceright < originwidth / 2) {
 				$popover.addClass("arrow-right");
 			}
 			
@@ -104,7 +103,7 @@ registerPlugin("popover", {
 				spacetop = 0;
 				$popover.addClass('popover-bottom');
 			} else {
-				spacetop = winheight - popoverheight - 10;
+				spacetop = winheight - popoverheight;
 				$popover.addClass('popover-top');
 			}
 		} else {//origin is inside visible area
@@ -115,6 +114,7 @@ registerPlugin("popover", {
 				$popover.addClass("arrow-x arrow-right");
 				spaceleft = winwidth - ( originwidth / 2 ) - popoverwidth;
 			} else {
+				$popover.addClass("arrow-x");
 				spaceleft = spaceleft - ( popoverwidth / 2 );
 			}
 
@@ -127,6 +127,7 @@ registerPlugin("popover", {
 				$popover.addClass("popover-bottom");
 				spacetop = (originheight <= winheight) ? spacetop : (winheight / 2);
 			}
+			spacetop += originheight / 2;
 		}
 		
 		// Add the necessary positioning styles

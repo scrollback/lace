@@ -57,11 +57,7 @@ registerPlugin("alertbar", {
 	 */
 	dismiss: function(element) {
 		var $element = element ? $(element) : this.element ? $(this.element).closest(".alert-bar") : $(".alert-bar"),
-			$container = $(".alert-container"),
-			cleanup = function() {
-				// Alertbar is now dismissed
-				$.event.trigger("alertbarDismissed", [ $element ]);
-			};
+			$container = $(".alert-container");
 
 		// Element doesn't exist
 		if (!$element.length) {
@@ -82,16 +78,17 @@ registerPlugin("alertbar", {
 				marginBottom: 0
 			}, 150, function() {
 				$(this).remove();
-				cleanup();
 			});
 		} else {
 			$element.remove();
-			cleanup();
 		}
 
 		// No alertbars left, safe to remove the container
 		if (!$container.children().length) {
 			$container.remove();
 		}
+
+		// Alertbar is now dismissed
+		$.event.trigger("alertbarDismissed", [ $element ]);
 	}
 });

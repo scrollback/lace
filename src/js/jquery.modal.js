@@ -58,14 +58,7 @@ registerPlugin("modal", {
 	 * @constructor
 	 */
 	dismiss: function() {
-		var $element = $(".modal, .backdrop"),
-			cleanup = function() {
-				// Remove event listeners
-				$(document).off("keydown.modal");
-
-				// Modal is now dismissed
-				$.event.trigger("modalDismissed", [ $element ]);
-			};
+		var $element = $(".modal, .backdrop");
 
 		// Element doesn't exist
 		if (!$element.length) {
@@ -76,11 +69,15 @@ registerPlugin("modal", {
 		if ($.fn.velocity) {
 			$element.velocity("fadeOut", 150, function() {
 				$(this).remove();
-				cleanup();
 			});
 		} else {
 			$element.remove();
-			cleanup();
 		}
+
+		// Remove event listeners
+		$(document).off("keydown.modal");
+
+		// Modal is now dismissed
+		$.event.trigger("modalDismissed", [ $element ]);
 	}
 });

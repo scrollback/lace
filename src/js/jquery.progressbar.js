@@ -65,11 +65,7 @@ registerPlugin("progressbar", {
 	 * @constructor
 	 */
 	dismiss: function(element) {
-		var $element = element ? $(element) : this.element ? $(this.element).closest(".progressbar") : $(".progressbar"),
-			cleanup = function() {
-				// Progressbar is now dismissed
-				$.event.trigger("progressbarDismissed", [ $element ]);
-			};
+		var $element = element ? $(element) : this.element ? $(this.element).closest(".progressbar") : $(".progressbar");
 
 		// Element doesn't exist
 		if (!$element.length) {
@@ -82,7 +78,9 @@ registerPlugin("progressbar", {
 		// Remove the element from DOM
 		setTimeout(function() {
 			$element.remove();
-			cleanup();
 		}, 500);
+
+		// Progressbar is now dismissed
+		$.event.trigger("progressbarDismissed", [ $element ]);
 	}
 });

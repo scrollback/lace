@@ -17,6 +17,7 @@ registerPlugin("popover", {
 			originoffset, originheight, originwidth,
 			popoverheight, popoverwidth, popovermargin,
 			spacetop, spacebottom, spaceleft, spaceright,
+			classnames = "",
 			id = new Date().getTime();
 
 		// If origin doesn't exist, return
@@ -68,78 +69,82 @@ registerPlugin("popover", {
 		// We are attaching it early so we can get width and height
 		// Which is needed for calculating position
 		$popover.appendTo(settings.parent);
-		
-		// Let's also include the margin in the height
+
+		// Let's also include the margin in the height and width (flag: true)
 		popoverwidth = $popover.outerWidth(true);
 		popoverheight = $popover.outerHeight(true);
 		popovermargin = popoverwidth - $popover.outerWidth();
-		
-		if ( originoffset.left < 0 || originoffset.left > winwidth) {
-			$popover.addClass('popover-origin-outside');
-			$popover.addClass('arrow-y');
+
+		if (originoffset.left < 0 || originoffset.left > winwidth) {
+			// Origin is outside of visible area, towards left/right
+			classnames += " arrow-y popover-origin-outside";
+
 			if (spacetop <= (popoverheight / 2)) {
-				$popover.addClass("arrow-top");
-			} else if (spacebottom <= popoverheight / 2) {
-				$popover.addClass("arrow-bottom");
+				classnames += " arrow-top";
+			} else if (spacebottom <= (popoverheight / 2)) {
+				classnames += " arrow-bottom";
 			}
-			
+
+			// The arrow points to the opposite direction of popover direction
 			if (originoffset.left < 0) {
-				$popover.addClass('popover-right');
+				classnames += " popover-right";
 				spaceleft = 0;
 			} else {
-				$popover.addClass('popover-left');
+				classnames += " popover-left";
 				spaceleft = winwidth - popoverwidth;
 			}
 		} else if (originoffset.top < 0 || originoffset.top > winheight) {
-			$popover.addClass('popover-origin-outside');
-			$popover.addClass('arrow-x');
+			// Origin is outside of visible area, towards top/right
+			classnames += " arrow-x popover-origin-outside";
+
 			if (spaceleft < originwidth / 2) {
-				$popover.addClass("arrow-left");
+				classnames += " arrow-left";
 			} else if (spaceright < originwidth / 2) {
-				$popover.addClass("arrow-right");
+				classnames += " arrow-right";
 			}
-			
+
 			if (originoffset.top < 0) {
+				classnames += " popover-bottom";
 				spacetop = 0;
-				$popover.addClass('popover-bottom');
 			} else {
+				classnames += " popover-top";
 				spacetop = winheight - popoverheight;
-				$popover.addClass('popover-top');
 			}
-		} else {//origin is inside visible area
+		} else {
+			// Origin is inside visible area
+			classnames += " arrow-x";
+
 			if (spaceleft <= (popoverwidth / 2)) {
-				$popover.addClass("arrow-x arrow-left");
+				classnames += " arrow-left";
 				spaceleft = originwidth / 2;
 			} else if (spaceright <= (popoverwidth / 2)) {
-				$popover.addClass("arrow-x arrow-right");
+				classnames += " arrow-right";
 				spaceleft = winwidth - ( originwidth / 2 ) - popoverwidth;
 			} else {
-				$popover.addClass("arrow-x");
 				spaceleft = spaceleft - ( popoverwidth / 2 );
 			}
 
-			// Popover should be towards bottom or top?
-			// The arrow points to the opposite direction
 			if (popoverheight >= spacebottom) {
-				$popover.addClass("popover-top");
+				classnames += " popover-top";
 				spacetop = spacetop - originheight - popoverheight;
 			} else {
-				$popover.addClass("popover-bottom");
+				classnames += " popover-bottom";
 				spacetop = (originheight <= winheight) ? spacetop : (winheight / 2);
 			}
+
 			spacetop += originheight / 2;
 		}
-		
+
 		// Add the necessary positioning styles
-		$popover.css({
+		$popover.addClass(classnames).css({
 			"top": spacetop,
 			"left": spaceleft
 		});
-		
+
 		// Popover is now initialized
 		$.event.trigger("popoverInited", [ $(self.element) ]);
 	},
-	
+
 	/**
 	 * Dismiss popover.
 	 * @constructor

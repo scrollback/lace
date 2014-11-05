@@ -75,12 +75,12 @@ registerPlugin("modal", {
 		// Remove the element from DOM
 		if ($.fn.velocity) {
 			$element.velocity("fadeOut", 150, function() {
-				cleanup();
 				$(this).remove();
+				cleanup();
 			});
 		} else {
-			cleanup();
 			$element.remove();
+			cleanup();
 		}
 	}
 });

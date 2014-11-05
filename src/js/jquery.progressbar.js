@@ -81,8 +81,8 @@ registerPlugin("progressbar", {
 
 		// Remove the element from DOM
 		setTimeout(function() {
-			cleanup();
 			$element.remove();
+			cleanup();
 		}, 500);
 	}
 });

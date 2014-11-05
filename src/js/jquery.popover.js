@@ -151,37 +151,33 @@ registerPlugin("popover", {
 	 */
 	dismiss: function(element) {
 		var $element = element ? $(element) : this.element ? $(this.element).closest(".popover-body") : $(".popover-body"),
-			cleanup = function() {
-				var $el, id;
-
-				// Loop through all elements and cleanup one by one
-				for (var i = 0, l = $element.length; i < l; i++) {
-					$el = $element.eq(i);
-
-					id = $el.data("id");
-
-					$(document).off("click.popover-" + id + " keydown.popover-" + id);
-					$($el.data("origin")).data("popover", false);
-				}
-
-				// Popover is now dismissed
-				$.event.trigger("popoverDismissed", [ $element ]);
-			};
+			$el, id;
 
 		// The element doesn't exist
 		if (!$element.length) {
 			return;
 		}
 
+		// Loop through all elements and cleanup one by one
+		for (var i = 0, l = $element.length; i < l; i++) {
+			$el = $element.eq(i);
+
+			id = $el.data("id");
+
+			$(document).off("click.popover-" + id + " keydown.popover-" + id);
+			$($el.data("origin")).data("popover", false);
+		}
+
 		// Remove the element from DOM
 		if ($.fn.velocity) {
 			$element.velocity("fadeOut", 150, function() {
 				$(this).remove();
-				cleanup();
 			});
 		} else {
 			$element.remove();
-			cleanup();
 		}
+
+		// Popover is now dismissed
+		$.event.trigger("popoverDismissed", [ $element ]);
 	}
 });

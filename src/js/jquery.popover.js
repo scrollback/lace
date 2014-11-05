@@ -68,9 +68,10 @@ registerPlugin("popover", {
 		// We are attaching it early so we can get width and height
 		// Which is needed for calculating position
 		$popover.appendTo(settings.parent);
-
-		popoverwidth = $popover.outerWidth();
-		popoverheight = $popover.outerHeight();
+		
+		// Let's also include the margin in the height
+		popoverwidth = $popover.outerWidth(true);
+		popoverheight = $popover.outerHeight(true);
 		
 		if ( originoffset.left < 0 || originoffset.left > winwidth) {
 			console.log("outside of screen");

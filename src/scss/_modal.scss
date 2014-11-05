@@ -1,6 +1,7 @@
 @import "functions";
 @import "global";
 @import "animations";
+@import "dropshadow";
 
 @include exports("modal") {
 	.backdrop {
@@ -17,6 +18,7 @@
 	}
 
 	.modal {
+		@include dropshadow(3);
 		@extend %appear;
 
 		display: block;
@@ -30,18 +32,18 @@
 		background: $light-color;
 		border-radius: $roundness;
 		padding: 2em;
-		box-shadow: 0 0 10px 0 rgba(0,0,0,.3);
 
 		@media #{$mobile-break-point} {
 			@include slideup;
 
-			bottom: 0;
+			top: auto;
 			left: 0;
+			bottom: 0;
 			margin-top: 0!important;
 			margin-left: 0!important;
 			min-width: 100%;
 			width: 100%;
-			padding: 1.2em;
+			padding: 1.5em;
 			border-radius: 0;
 		}
 	}

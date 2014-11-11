@@ -25,19 +25,17 @@ registerPlugin("alertbar", {
 			$container.appendTo(settings.parent);
 		}
 
-		// If an alertbar with same ID exists, replace it, or show a new alertbar
+		// If an alertbar with same ID exists, remove it
 		if ($alert.length && $alert.hasClass("alert-bar")) {
-			$alert.replaceWith($elem);
-		} else {
-			$alert = $elem;
-
-			// Add a close button to dismiss the alertbar
-			$alert.find(".alert-remove").on("click", function() {
-				self.dismiss();
-			});
-
-			$alert.appendTo($container);
+			$alert.remove();
 		}
+
+		$elem.appendTo($container);
+
+		// Add a close button to dismiss the alertbar
+		$elem.find(".alert-remove").on("click", function() {
+			self.dismiss();
+		});
 
 		// If a timeout is given, hide the alertbar after the given period
 		if (settings.timeout && typeof settings.timeout === "number") {

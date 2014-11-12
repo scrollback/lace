@@ -1,27 +1,8 @@
 @import "functions";
 
-$grid-block-size: 10em !default;
-$grid-columns: 12 !default;
-$grid-gutter: 1.5em !default;
-
 $small: "only screen" !default;
 $medium: "only screen and (min-width: 40.063em)" !default;
 $large: "only screen and (min-width: 64.063em)" !default;
-
-@mixin grid-classes($size) {
-    $dirs: left, right;
-
-    @each $dir in $dirs {
-        .#{$size}-#{$dir} { float: $dir; }
-    }
-
-    @for $i from 1 through $grid-columns {
-        .#{$size}-#{$i} {
-            float: left;
-            width: ($i * 100% / $grid-columns);
-        }
-    }
-}
 
 @include exports("grid") {
     %clearfix {
@@ -34,41 +15,60 @@ $large: "only screen and (min-width: 64.063em)" !default;
 
         &:after { clear: both; }
     }
+}
 
+@mixin grid-classes($size, $columns) {
+    $dirs: left, right;
+
+    @each $dir in $dirs {
+        .#{$size}-#{$dir} { float: $dir; }
+    }
+
+    @for $i from 1 through $columns {
+        .#{$size}-#{$i} {
+            float: left;
+            width: ($i * 100% / $columns);
+        }
+    }
+}
+
+@mixin grid($block-size: 10em, $columns: 12, $gutter: 1.5em) {
     .row {
         @extend %clearfix;
 
-        margin-right: $grid-gutter * -1;
-        margin-left: $grid-gutter * -1;
+        padding-right: $gutter;
+        padding-left: $gutter;
+        margin-right: $gutter * -1;
+        margin-left: $gutter * -1;
         margin-top: 0;
         margin-bottom: 0;
     }
 
     .col {
-        padding-right: $grid-gutter;
-        padding-left: $grid-gutter;
+        padding-right: $gutter;
+        padding-left: $gutter;
     }
 
     @media #{$small} {
-        @include grid-classes($size: small);
+        @include grid-classes($size: small, $columns: $columns);
     }
 
     @media #{$medium} {
-        @include grid-classes($size: medium);
+        @include grid-classes($size: medium, $columns: $columns);
     }
 
     @media #{$large} {
-        @include grid-classes($size: large);
+        @include grid-classes($size: large, $columns: $columns);
     }
 
-    @for $i from 1 through $grid-columns {
+    @for $i from 1 through $columns {
         .block-#{$i} {
             display: inline-block;
             vertical-align: top;
-            width: $i * $grid-block-size;
+            width: $i * $block-size;
             max-width: 100%;
-            padding-right: $grid-gutter;
-            padding-left: $grid-gutter;
+            padding-right: $gutter;
+            padding-left: $gutter;
         }
     }
 }

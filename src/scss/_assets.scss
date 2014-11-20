@@ -1,4 +1,6 @@
 @function asset($name, $color: #fff) {
+    $color: fade-out($color, 0.001); // Hack to convert HEX to RGBA since Firefox doesn't support "#" inside SVG
+
     $assets: (
         check: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 16 16"><g transform="translate(0,-1036.3622)"><g transform="translate(-0.5,-2)"><path d="m 14 1040.36 2 2 -10 10 -2 -2 z" stroke="none" fill="#{$color}"/><path d="m 1 1047.36 2 -2 5 5 -2 2 z" stroke="none" fill="#{$color}"/></g></g></svg>',
         close: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 16 16"><g transform="translate(0,-1036.3622)"><g><path d="m 12 1038.36 2 2 -10 10 -2 -2 z" fill="#{$color}" stroke="none"/><path d="m 4 1038.36 -2 2 10 10 2 -2 z" fill="#{$color}" stroke="none"/></g></g></svg>',

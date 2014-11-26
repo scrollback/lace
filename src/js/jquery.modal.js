@@ -67,8 +67,12 @@ registerPlugin("modal", {
 
 		// Remove the element from DOM
 		if ($.fn.velocity) {
-			$element.velocity("fadeOut", 150, function() {
-				$(this).remove();
+			$element.not(".modal").velocity("fadeOut", 150);
+			$element.not(".backdrop").velocity({
+				opacity: 0,
+				scale: "70%"
+			}, 150, function() {
+				$element.remove();
 			});
 		} else {
 			$element.remove();

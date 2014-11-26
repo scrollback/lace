@@ -75,7 +75,7 @@ registerPlugin("alertbar", {
 				marginTop: 0,
 				marginBottom: 0
 			}, 150, function() {
-				$(this).remove();
+				$element.remove();
 			});
 		} else {
 			$element.remove();

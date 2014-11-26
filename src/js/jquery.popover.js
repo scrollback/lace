@@ -171,7 +171,7 @@ registerPlugin("popover", {
 		// Remove the element from DOM
 		if ($.fn.velocity) {
 			$element.velocity("fadeOut", 150, function() {
-				$(this).remove();
+				$element.remove();
 			});
 		} else {
 			$element.remove();

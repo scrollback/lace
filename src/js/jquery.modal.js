@@ -17,7 +17,7 @@ registerPlugin("modal", {
 			$backdrop = (settings.backdrop) ? $("<div>").addClass("backdrop") : null;
 
 		// There can be only one modal, so dismiss others
-		self.dismiss();
+		self.dismiss(true);
 
 		// Add event listener to buttons which can dismiss the modal
 		$modal.find(".modal-remove").on("click", self.dismiss);
@@ -57,7 +57,7 @@ registerPlugin("modal", {
 	 * Dismiss modal dialog.
 	 * @constructor
 	 */
-	dismiss: function() {
+	dismiss: function(replacing) {
 		var $element = $(".modal, .backdrop");
 
 		// Element doesn't exist
@@ -70,7 +70,7 @@ registerPlugin("modal", {
 			$element.not(".modal").velocity("fadeOut", 150);
 			$element.not(".backdrop").velocity({
 				opacity: 0,
-				scale: "70%"
+				scale: (replacing === true) ? "120%" : "70%"
 			}, 150, function() {
 				$element.remove();
 			});
@@ -82,6 +82,10 @@ registerPlugin("modal", {
 		$(document).off("keydown.modal");
 
 		// Modal is now dismissed
-		$.event.trigger("modalDismissed", [ $element ]);
+		if (replacing === true) {
+			$.event.trigger("previousModalDismissed", [ $element ]);
+		} else {
+			$.event.trigger("modalDismissed", [ $element ]);
+		}
 	}
 });

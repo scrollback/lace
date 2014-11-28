@@ -78,9 +78,9 @@ registerPlugin("progressbar", {
 		// Remove the element from DOM
 		setTimeout(function() {
 			$element.remove();
-		}, 500);
 
-		// Progressbar is now dismissed
-		$.event.trigger("progressbarDismissed", [ $element ]);
+			// Progressbar is now dismissed
+			$.event.trigger("progressbarDismissed", [ $element ]);
+		}, 500);
 	}
 });

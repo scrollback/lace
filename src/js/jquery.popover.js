@@ -151,7 +151,11 @@ registerPlugin("popover", {
 	 */
 	dismiss: function(element) {
 		var $element = element ? $(element) : this.element ? $(this.element).closest(".popover-body") : $(".popover-body"),
-			$el, id;
+			$el, id,
+			triggerEvents = function() {
+				// Popover is now dismissed
+				$.event.trigger("popoverDismissed", [ $element ]);
+			};
 
 		// The element doesn't exist
 		if (!$element.length) {
@@ -172,12 +176,11 @@ registerPlugin("popover", {
 		if ($.fn.velocity) {
 			$element.velocity("fadeOut", 150, function() {
 				$element.remove();
+				triggerEvents();
 			});
 		} else {
 			$element.remove();
+			triggerEvents();
 		}
-
-		// Popover is now dismissed
-		$.event.trigger("popoverDismissed", [ $element ]);
 	}
 });

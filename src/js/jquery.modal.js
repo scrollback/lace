@@ -60,8 +60,10 @@ registerPlugin("modal", {
 	dismiss: function(replacing, callback) {
 		var $element = $(".modal, .backdrop"),
 			triggerEvents = function(callback) {
+				var type = (replacing === true) ? "previousModalDismissed" : "modalDismissed";
+
 				// Modal is now dismissed
-				$.event.trigger((replacing ? "previousModalDismissed" : "modalDismissed"), [ $element ]);
+				$.event.trigger(type, [ $element ]);
 
 				// Remove event listeners
 				$(document).off("keydown.modal");

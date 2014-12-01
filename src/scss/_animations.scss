@@ -15,7 +15,7 @@
     @keyframes #{$animation} { @content; }
 }
 
-@mixin spin($args: 1s ease infinite) {
+@mixin spin($args: 1s linear infinite) {
     @include prefix(animation, spin $args);
 }
 

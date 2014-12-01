@@ -1,4 +1,5 @@
 @import "functions";
+@import "easings";
 @import "effects";
 
 @mixin transform($args) {
@@ -19,27 +20,27 @@
     @include prefix(animation, spin $args);
 }
 
-@mixin slideup($args: .3s 1) {
+@mixin slideup($args: .3s $easeOutSine) {
     @include prefix(animation, slideup $args);
 }
 
-@mixin slideright($args: .3s 1) {
+@mixin slideright($args: .3s $easeOutSine) {
     @include prefix(animation, slideright $args);
 }
 
-@mixin slidedown($args: .3s 1) {
+@mixin slidedown($args: .3s $easeOutSine) {
     @include prefix(animation, slidedown $args);
 }
 
-@mixin slideleft($args: .3s 1) {
+@mixin slideleft($args: .3s $easeOutSine) {
     @include prefix(animation, slideleft $args);
 }
 
-@mixin appear($args: .5s 1) {
+@mixin appear($args: .5s $easeOutQuad) {
     @include prefix(animation, appear $args);
 }
 
-@mixin fadein($args: .5s 1) {
+@mixin fadein($args: .5s $easeOutQuad) {
     @include prefix(animation, fadein $args);
 }
 
@@ -47,8 +48,8 @@
     @include prefix(animation, progressbar $args);
 }
 
-@mixin transition($duration: .3s, $timing: ease) {
-    @include prefix(transition, $duration $timing);
+@mixin transition($args: .3s ease) {
+    @include prefix(transition, $args);
 }
 
 @include exports("animations") {
@@ -151,7 +152,7 @@
     %transition { @include transition; }
 
     %snappy {
-        @extend %transition;
+        @include transition(.3s $easeOutQuad);
 
         &:focus, &:hover, &:active { @include transition(none); }
     }

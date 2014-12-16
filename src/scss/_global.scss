@@ -1,4 +1,4 @@
-/* font settings */
+// Font settings
 $font-family-normal: "Open Sans", "Myriad Pro", Helvetica, Tahoma, "Nimbus Sans", Arial, sans-serif !default;
 $font-family-headings: "Open Sans", "Open Sans Light", Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif !default;
 $font-family-monospace: Consolas, "Andale Mono", "Lucida Console", "Nimbus Mono", "Courier New", monospace !default;
@@ -6,7 +6,7 @@ $font-size: 14px !default;
 $font-size-mobile: 14px !default;
 $font-line-height: 21px !default;
 
-/* colors */
+// Colors
 $accent-color: #3ca !default;
 $dark-color: mix($accent-color, #444, 5%) !default;
 $light-color: #fff !default;
@@ -16,6 +16,6 @@ $success-color: #43b43b !default;
 $warning-color: #e77f1b !default;
 $error-color: #ef513d !default;
 
-/* misc */
+// Misc
 $roundness: 2px !default;
 $mobile-break-point: "only screen and (max-width: 27em)" !default;

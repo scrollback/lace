@@ -24,8 +24,12 @@ function bundle(files, opts) {
 			opts.entries = "./" + file;
 
 			return browserify(opts).bundle()
-			.pipe(source(file.split(/[\\/]/).pop()))
-			.on("error", gutil.log);
+			.on("error", function(err) {
+				gutil.log(err);
+				// End the stream to prevent gulp from crashing
+				this.end();
+			})
+			.pipe(source(file.split(/[\\/]/).pop()));
 		};
 
 	opts = opts || {};

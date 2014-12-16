@@ -42,7 +42,7 @@
 			font-weight: 400;
 		}
 
-		&:focus, &:hover {
+		&:hover, &:active {
 			&:before, &:after {
 				@include opacity(1);
 				@include transform(translate3d(0, 0, 0));

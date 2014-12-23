@@ -16,13 +16,13 @@ registerPlugin("multientry", null, {
 			var range, selection,
 				$this = $(this);
 
-			if (e.keyCode === 13 || e.keyCode === 32 || e.keyCode === 188) {
+			if (e.which === 13 || e.which === 32 || e.which === 188) {
 				// Return (13), space (32) or comma (188) pressed
 				// Prevent default action and add the text to multientry
 				e.preventDefault();
 
 				self.add($this.parent(".multientry"), $this.text());
-			} else if (e.keyCode === 8 && $this.text().match(/^\s*$/)) {
+			} else if (e.which === 8 && $this.text().match(/^\s*$/)) {
 				// Backspace (8) pressed and text is non-space character
 				// Prevent default action and make previous text editable
 				e.preventDefault();

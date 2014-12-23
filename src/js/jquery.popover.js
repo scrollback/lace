@@ -60,7 +60,7 @@ registerPlugin("popover", {
 			}
 		}).on("keydown.popover-" + id, function(e) {
 			// Dismiss when escape (27) is pressed
-			if (e.keyCode === 27) {
+			if (e.which === 27) {
 				self.dismiss();
 			}
 		});

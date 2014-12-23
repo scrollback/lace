@@ -34,7 +34,7 @@ QUnit.test("should add values on text entry", function(assert) {
 
 	keycodes.forEach(function(code) {
 		elems.forEach(function(elem) {
-			$multientry.find("[contenteditable=true]").text(elem + " ").trigger($.Event("keydown", { keyCode: code }));
+			$multientry.find("[contenteditable=true]").text(elem + " ").trigger($.Event("keydown", { which: code }));
 
 			vals = $multientry.multientry("items");
 

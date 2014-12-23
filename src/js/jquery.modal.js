@@ -43,7 +43,7 @@ registerPlugin("modal", {
 
 			// Add event listener to dismiss the modal
 			$(document).on("keydown.modal", function(e) {
-				if (e.keyCode === 27 && settings.dismiss) {
+				if (e.which === 27 && settings.dismiss) {
 					self.dismiss();
 				}
 			});

@@ -77,7 +77,7 @@ QUnit.asyncTest("should dismiss on escape", function(assert) {
 			origin: $origin
 		});
 
-	$(document).trigger($.Event("keydown", { keyCode: 27 }));
+	$(document).trigger($.Event("keydown", { which: 27 }));
 
 	setTimeout(function() {
 		assert.equal($popover.is(":visible"), false, "dismissed successfully!");

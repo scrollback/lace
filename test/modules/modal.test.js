@@ -66,7 +66,7 @@ QUnit.asyncTest("should dismiss on escape", function(assert) {
 			dismiss: true
 		});
 
-	$(document).trigger($.Event("keydown", { keyCode: 27 }));
+	$(document).trigger($.Event("keydown", { which: 27 }));
 
 	setTimeout(function() {
 		assert.equal($modal.is(":visible"), false, "dismissed successfully!");
@@ -82,7 +82,7 @@ QUnit.asyncTest("should not dismiss on escape", function(assert) {
 			dismiss: false
 		});
 
-	$(document).trigger($.Event("keydown", { keyCode: 27 }));
+	$(document).trigger($.Event("keydown", { which: 27 }));
 
 	setTimeout(function() {
 		assert.ok($modal.is(":visible"), "not dismissed!");

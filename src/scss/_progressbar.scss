@@ -1,9 +1,10 @@
 @import "functions";
 @import "global";
+@import "animations";
 
 @include exports("progressbar") {
 	.progressbar {
-		@include transition;
+		@extend %transition;
 
 		position: fixed;
 		top: 0;

@@ -67,7 +67,7 @@ QUnit.test("should remove values on click on close", function(assert) {
 		$multientry = $.multientry("create").multientry("add", elems).appendTo($fixture);
 
 	elems.forEach(function(elem) {
-		$multientry.find(".item-text:contains(" + elem + ")").parent().find(".item-remove").click();
+		$multientry.find(".segment-text:contains(" + elem + ")").parent().find(".segment-remove").click();
 
 		vals = $multientry.multientry("items");
 

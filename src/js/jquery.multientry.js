@@ -13,6 +13,8 @@ registerPlugin("multientry", null, {
 			// When focus moves out of multientry, add the text to multientry
 			self.add($(this), $(this).children().last().text());
 		}).off("keydown.multientryitem").on("keydown.multientryitem", ".multientry .item", function(e) {
+			var range, selection;
+
 			if (e.keyCode === 13 || e.keyCode === 32 || e.keyCode === 188) {
 				// Return (13), space (32) or comma (188) pressed
 				// Prevent default action and add the text to multientry
@@ -27,9 +29,20 @@ registerPlugin("multientry", null, {
 				$(this).text($(this).prev().find(".item-text").text());
 				$(this).prev().remove();
 
-				// Move cursor to end if plugin available
-				if ($.fn.setCursorEnd) {
-					$(this).setCursorEnd();
+				// Move cursor to end of input
+				if (document.createRange) {
+					range = document.createRange();
+					range.selectNodeContents(this[0]);
+					range.collapse(false);
+
+					selection = window.getSelection();
+					selection.removeAllRanges();
+					selection.addRange(range);
+				} else if (document.selection) {
+					range = document.body.createTextRange();
+					range.moveToElementText(this[0]);
+					range.collapse(false);
+					range.select();
 				}
 			}
 		}).off("paste.multientryitem").on("paste.multientryitem", ".multientry .item", function(e) {

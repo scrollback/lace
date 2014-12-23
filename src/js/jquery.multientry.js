@@ -11,23 +11,24 @@ registerPlugin("multientry", null, {
 		// Add event listeners for mutlientry to the document
 		$(document).off("blur.multientry").on("blur.multientry", ".multientry", function() {
 			// When focus moves out of multientry, add the text to multientry
-			self.add($(this), $(this).children().last().text());
+			self.add(this, $(this).children().last().text());
 		}).off("keydown.multientryitem").on("keydown.multientryitem", ".multientry .item", function(e) {
-			var range, selection;
+			var range, selection,
+				$this = $(this);
 
 			if (e.keyCode === 13 || e.keyCode === 32 || e.keyCode === 188) {
 				// Return (13), space (32) or comma (188) pressed
 				// Prevent default action and add the text to multientry
 				e.preventDefault();
 
-				self.add($(this).parent(".multientry"), $(this).text());
-			} else if (e.keyCode === 8 && $(this).text().match(/^\s*$/)) {
+				self.add($this.parent(".multientry"), $this.text());
+			} else if (e.keyCode === 8 && $this.text().match(/^\s*$/)) {
 				// Backspace (8) pressed and text is non-space character
 				// Prevent default action and make previous text editable
 				e.preventDefault();
 
-				$(this).text($(this).prev().find(".item-text").text());
-				$(this).prev().remove();
+				$this.text($this.prev().find(".item-text").text());
+				$this.prev().remove();
 
 				// Move cursor to end of input
 				if (document.createRange) {

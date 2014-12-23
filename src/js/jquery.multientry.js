@@ -10,9 +10,13 @@ registerPlugin("multientry", null, {
 
 		// Add event listeners for mutlientry to the document
 		$(document).off("blur.multientry").on("blur.multientry", ".multientry", function() {
+			var $entry = $(this).find(".entry");
+
 			// When focus moves out of multientry, add the text to multientry
-			self.add(this, $(this).children().last().text());
-		}).off("keydown.multientryitem").on("keydown.multientryitem", ".multientry .item", function(e) {
+			self.add(this, $entry.text());
+
+			$entry.empty();
+		}).off("keydown.multientryitem").on("keydown.multientryitem", ".multientry .entry", function(e) {
 			var range, selection,
 				$this = $(this);
 
@@ -22,18 +26,20 @@ registerPlugin("multientry", null, {
 				e.preventDefault();
 
 				self.add($this.parent(".multientry"), $this.text());
+
+				$this.empty();
 			} else if (e.which === 8 && $this.text().match(/^\s*$/)) {
 				// Backspace (8) pressed and text is non-space character
 				// Prevent default action and make previous text editable
 				e.preventDefault();
 
-				$this.text($this.prev().find(".item-text").text());
+				$this.text($this.prev().find(".segment-text").text());
 				$this.prev().remove();
 
-				// Move cursor to end of input
+				// Move caret to end of input
 				if (document.createRange) {
 					range = document.createRange();
-					range.selectNodeContents(this[0]);
+					range.selectNodeContents($(this).get(0));
 					range.collapse(false);
 
 					selection = window.getSelection();
@@ -41,7 +47,7 @@ registerPlugin("multientry", null, {
 					selection.addRange(range);
 				} else if (document.selection) {
 					range = document.body.createTextRange();
-					range.moveToElementText(this[0]);
+					range.moveToElementText($(this).get(0));
 					range.collapse(false);
 					range.select();
 				}
@@ -54,12 +60,12 @@ registerPlugin("multientry", null, {
 			var items = e.originalEvent.clipboardData.getData("Text");
 
 			self.add($(this).parent(".multientry"), items);
-		}).off("click.multientryremove").on("click.multientryremove", ".multientry .item-remove", function() {
+		}).off("click.multientryremove").on("click.multientryremove", ".multientry .segment-remove", function() {
 			// Remove the multientry item
 			self.remove($(this).parent().text());
 		}).off("click.multientry").on("click.multientry", ".multientry", function() {
 			// Focus the editable part of multientry
-			$(this).children().last().focus();
+			$(this).find(".entry").focus();
 		});
 
 		// Multientry is now initialized
@@ -74,7 +80,7 @@ registerPlugin("multientry", null, {
 	create: function() {
 		// Create and initialize as multientry
 		return $("<div>").addClass("multientry").append(
-			$("<span>").addClass("item").attr({ "contenteditable": true })
+			$("<span>").attr("contenteditable", true).addClass("item entry")
 		).multientry();
 	},
 
@@ -85,7 +91,8 @@ registerPlugin("multientry", null, {
 	 * @param {String[]} content
 	 */
 	add: function(element, content) {
-		var $element = (element && content) ? $(element) : this.element ? $(this.element) : $(".multientry");
+		var $element = (element && content) ? $(element) : this.element ? $(this.element) : $(".multientry"),
+			items;
 
 		// The first argument is not element, but content to add
 		if (!content && (typeof element === "string" || element instanceof Array)) {
@@ -115,15 +122,23 @@ registerPlugin("multientry", null, {
 			return self.indexOf(value) === index;
 		});
 
+		// Get already existing items
+		items = this.items($element);
+
 		// Add each word as a new multientry item
 		content.forEach(function(text) {
-			if (!text.match(/^\s*$/)) {
-				$("<span>")
-				.addClass("item done")
-				.append($("<span>").addClass("item-text").text(text.trim()))
-				.append($("<span>").addClass("item-remove"))
-				.insertBefore(($element.children().last()).empty());
+			text = text.trim();
+
+			// Don't add the item if it's already in the list
+			if (!text || (items.indexOf(text) > -1)) {
+				return;
 			}
+
+			$("<span>")
+			.addClass("item segment")
+			.append($("<span>").addClass("segment-text").text(text))
+			.append($("<span>").addClass("segment-remove"))
+			.insertBefore($element.find(".entry"));
 		});
 
 		// New multientry items are now added
@@ -160,11 +175,15 @@ registerPlugin("multientry", null, {
 
 		// Find and remove multientry items containing same word
 		content.forEach(function(text) {
-			if (!text.match(/^\s*$/) ) {
-				$element.find(".item-text").filter(function() {
-					return $(this).text().trim() === text.trim();
-				}).parent(".item").remove();
+			text = text.trim();
+
+			if (!text) {
+				return;
 			}
+
+			$element.find(".segment-text").filter(function() {
+				return $(this).text().trim() === text;
+			}).parent(".item").remove();
 		});
 
 		// Multientry items are now removed
@@ -179,7 +198,7 @@ registerPlugin("multientry", null, {
 	 */
 	items: function(element) {
 		var $element = element ? $(element) : this.element ? $(this.element) : $(".multientry"),
-			elems = $element.find(".item-text"),
+			elems = $element.find(".segment-text"),
 			items = [];
 
 		// Element doesn't exist

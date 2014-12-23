@@ -17,28 +17,32 @@
 
 		.item {
 			display: inline-block;
-			min-width: 3em;
 			max-width: 100%;
 			margin: .125em .0625em;
 			border: 1px solid transparent;
 			outline: none;
+		}
+
+		.entry {
+			background: none;
+			min-width: 3em;
+			padding: 0 .25em;
+			line-height: 2em;
 
 			&:only-child { width: 100%; }
+		}
 
-			&.done {
-				@extend %fadein;
+		.segment {
+			border-radius: $roundness;
+			background-color: $accent-color;
+			color: $light-color;
 
-				border-radius: $roundness;
-				background-color: $accent-color;
-				color: $light-color;
-			}
-
-			.item-text {
+			.segment-text {
 				padding: 0 .75em;
 				line-height: 2em;
 			}
 
-			.item-remove {
+			.segment-remove {
 				@extend %snappy;
 
 				float: right;

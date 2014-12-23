@@ -156,11 +156,11 @@ registerPlugin("multientry", null, {
 	items: function(element) {
 		var $element = element ? $(element) : this.element ? $(this.element) : $(".multientry"),
 			elems = $element.find(".item-text"),
-			items = new Array(elems.length); // We already know the no. of elements, so we can make it faster
+			items = [];
 
 		// Get the items from the multientry
 		for (var i = 0; i < elems.length; i++) {
-			items[i] = $(elems[i]).text();
+			items.push($(elems[i]).text());
 		}
 
 		// Return the items

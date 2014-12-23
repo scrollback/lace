@@ -1,5 +1,6 @@
 // Load plugins and declare variables
 var gulp = require("gulp"),
+	del = require("del"),
 	bower = require("bower"),
 	browserify = require("browserify"),
 	source = require("vinyl-source-stream"),
@@ -7,15 +8,17 @@ var gulp = require("gulp"),
 	es = require("event-stream"),
 	qunit = require("node-qunit-phantomjs"),
 	gutil = require("gulp-util"),
+	sourcemaps = require("gulp-sourcemaps"),
 	plumber = require("gulp-plumber"),
-	concat = require("gulp-concat"),
+	gitmodified = require("gulp-gitmodified"),
+	jshint = require("gulp-jshint"),
+	jscs = require("gulp-jscs"),
 	uglify = require("gulp-uglify"),
 	rename = require("gulp-rename"),
 	sass = require("gulp-ruby-sass"),
+	combinemq = require("gulp-combine-mq"),
 	prefix = require("gulp-autoprefixer"),
-	minify = require("gulp-minify-css"),
-	jshint = require("gulp-jshint"),
-	jscs = require("gulp-jscs");
+	minify = require("gulp-minify-css");
 
 // Make browserify bundle
 function bundle(files, opts) {
@@ -53,44 +56,61 @@ gulp.task("bower", function() {
 	.on("error", gutil.log);
 });
 
+// Lint JavaScript files
+gulp.task("lint", function() {
+	return gulp.src([ "src/js/**/*.js", "test/**/*.js" ])
+	.pipe(plumber())
+	.pipe(gitmodified("modified"))
+	.pipe(jshint())
+	.pipe(jshint.reporter("jshint-stylish"))
+	.pipe(jshint.reporter("fail"))
+	.pipe(jscs())
+	.on("error", gutil.log);
+});
+
 // Combine and minify scripts
 gulp.task("scripts", [ "bower" ], function() {
-	return bundle("test/test.js", { debug: !gutil.env.production })
+	return bundle("test/test.js", { debug: true })
+	.pipe(sourcemaps.init({ loadMaps: true }))
 	.pipe(plumber())
 	.pipe(gutil.env.production ? uglify() : gutil.noop())
-	.pipe(rename("test.min.js"))
+	.pipe(rename({ suffix: ".min" }))
+	.pipe(sourcemaps.write("."))
 	.pipe(gulp.dest("dist/scripts"))
 	.on("error", gutil.log);
 });
 
 // Generate styles
 gulp.task("styles", function() {
-	return gulp.src("test/test.scss")
-	.pipe(plumber())
-	.pipe(sass({
+	return sass("test", {
 		style: gutil.env.production ? "compressed" : "expanded",
-		sourcemapPath: "../src/scss"
-	}))
-	.on("error", function(e) { gutil.log(e.message); })
-	.pipe(prefix())
+		lineNumbers: !gutil.env.production,
+		sourcemap: true
+	})
+	.pipe(plumber())
+	.pipe(combinemq())
+	.pipe(gutil.env.production ? autoprefixer() : gutil.noop())
 	.pipe(gutil.env.production ? minify() : gutil.noop())
+	.pipe(rename({ suffix: ".min" }))
+	.pipe(sourcemaps.write("."))
 	.pipe(gulp.dest("dist/styles"))
 	.on("error", gutil.log);
 });
 
-// Lint JavaScript files
-gulp.task("lint", function() {
-	return gulp.src([ "src/js/**/*.js", "test/**/*.js" ])
-	.pipe(plumber())
-	.pipe(jshint())
-	.pipe(jshint.reporter("jshint-stylish"))
-	.pipe(jscs())
-	.on("error", gutil.log);
+// Clean up generated files
+gulp.task("clean", function() {
+	return del([ "dist" ]);
 });
 
+// Build scripts and styles
+gulp.task("build", [ "scripts", "styles" ]);
+
 // Run unit tests with phantom.js
-gulp.task("test", [ "scripts", "styles" ], function() {
-	return qunit("./test/index.html");
+gulp.task("test", [ "build" ], function() {
+	return qunit("./test/index.html", {
+		verbose: true,
+		timeout: 10
+	});
 });
 
 gulp.task("watch", function() {
@@ -99,4 +119,4 @@ gulp.task("watch", function() {
 });
 
 // Default Task
-gulp.task("default", [ "lint", "test", "scripts", "styles" ]);
+gulp.task("default", [ "lint", "build", "test" ]);

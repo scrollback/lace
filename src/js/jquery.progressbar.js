@@ -37,6 +37,11 @@ registerPlugin("progressbar", {
 	set: function(element, amount) {
 		var $element = (element && amount) ? $(element) : this.element ? $(this.element).closest(".progressbar") : $(".progressbar");
 
+		// Element doesn't exist
+		if (!$element.length) {
+			return;
+		}
+
 		// The first argument is not element, but a value to set
 		if (!amount && (typeof element === "number" || /^[0-9]+%$/.test(element))) {
 			amount = element;

@@ -92,6 +92,11 @@ registerPlugin("multientry", null, {
 			content = element;
 		}
 
+		// Element doesn't exist
+		if (!$element.length) {
+			return;
+		}
+
 		// No content given
 		if (!content) {
 			return;
@@ -138,6 +143,11 @@ registerPlugin("multientry", null, {
 			content = element;
 		}
 
+		// Element doesn't exist
+		if (!$element.length) {
+			return;
+		}
+
 		// No content given
 		if (!content) {
 			return;
@@ -171,6 +181,11 @@ registerPlugin("multientry", null, {
 		var $element = element ? $(element) : this.element ? $(this.element) : $(".multientry"),
 			elems = $element.find(".item-text"),
 			items = [];
+
+		// Element doesn't exist
+		if (!$element.length) {
+			return;
+		}
 
 		// Get the items from the multientry
 		for (var i = 0; i < elems.length; i++) {

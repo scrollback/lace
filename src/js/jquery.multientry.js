@@ -75,7 +75,7 @@ registerPlugin("multientry", null, {
 
 		// The first argument is not element, but content to add
 		if (!content && (typeof element === "string" || element instanceof Array)) {
-		    content = element;
+			content = element;
 		}
 
 		// No content given

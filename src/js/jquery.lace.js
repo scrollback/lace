@@ -30,13 +30,20 @@ function registerPlugin(pluginName, defaults, methods) {
 			var args = arguments,
 				returns, instance;
 
-			if (options === undefined || typeof options === "object") {
+			if (!this.length) {
+				// No element exists, don't do anything
+				return;
+			}
+
+			if (typeof options === "undefined" || typeof options === "object") {
+				// Initialize the plugin and return the element
 				return this.each(function() {
 					if (!$.data(this, "plugin_" + pluginName)) {
 						$.data(this, "plugin_" + pluginName, new Plugin(this, options));
 					}
 				});
 			} else if (typeof options === "string" && options !== "init" && !(/^_/).test(options)) {
+				// Trying to call a plugin method
 				this.each(function() {
 					instance = $.data(this, "plugin_" + pluginName);
 
@@ -49,18 +56,21 @@ function registerPlugin(pluginName, defaults, methods) {
 					}
 				});
 
-				return returns !== undefined ? returns : this;
+				return (typeof returns !== "undefined") ? returns : this;
 			}
 		};
 
 		$[pluginName] = function(element, options) {
-			var $element = element ? $(element) : $("<div>"),
-				args = arguments;
+			var args = arguments,
+				$element;
 
-			// Check if plugin called with a method instead of an element
 			if (!options && typeof element === "string" && typeof methods[element] === "function") {
+				// Plugin is called with a method instead of an element
 				return methods[element].apply(new Plugin(), Array.prototype.slice.call(args, 1));
 			} else {
+				// Create an empty jQuery object if no element exists
+				$element = element ? $(element) : $();
+
 				return $element[pluginName](options);
 			}
 		};

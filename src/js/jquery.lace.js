@@ -61,17 +61,17 @@ function registerPlugin(pluginName, defaults, methods) {
 		};
 
 		$[pluginName] = function(element, options) {
-			var args = arguments,
+			var params = Array.prototype.slice.call(arguments, 1),
 				$element;
 
 			if (typeof element === "string" && typeof methods[element] === "function") {
 				// Plugin is called with a method instead of an element
-				return methods[element].apply(new Plugin(), Array.prototype.slice.call(args, 1));
+				return methods[element].apply(new Plugin(), params);
 			} else {
 				// Create an empty jQuery object if no element exists
 				$element = element ? $(element) : $();
 
-				return $element[pluginName](options);
+				$element[pluginName].apply($element, params);
 			}
 		};
 

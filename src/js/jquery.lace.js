@@ -64,7 +64,7 @@ function registerPlugin(pluginName, defaults, methods) {
 			var args = arguments,
 				$element;
 
-			if (!options && typeof element === "string" && typeof methods[element] === "function") {
+			if (typeof element === "string" && typeof methods[element] === "function") {
 				// Plugin is called with a method instead of an element
 				return methods[element].apply(new Plugin(), Array.prototype.slice.call(args, 1));
 			} else {

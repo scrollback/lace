@@ -53,8 +53,8 @@ registerPlugin("alertbar", {
 	 * @constructor
 	 * @param {String} [element]
 	 */
-	dismiss: function(element) {
-		var $element = element ? $(element) : this.element ? $(this.element).closest(".alert-bar") : $(".alert-bar"),
+	dismiss: function() {
+		var $element = this.element ? $(this.element).closest(".alert-bar") : $(".alert-bar"),
 			$container = $(".alert-container"),
 			triggerEvents = function() {
 				// No alertbars left, safe to remove the container

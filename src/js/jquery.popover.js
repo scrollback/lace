@@ -149,8 +149,8 @@ registerPlugin("popover", {
 	 * Dismiss popover.
 	 * @constructor
 	 */
-	dismiss: function(element) {
-		var $element = element ? $(element) : this.element ? $(this.element).closest(".popover-body") : $(".popover-body"),
+	dismiss: function() {
+		var $element = this.element ? $(this.element).closest(".popover-body") : $(".popover-body"),
 			$el, id,
 			triggerEvents = function() {
 				// Popover is now dismissed

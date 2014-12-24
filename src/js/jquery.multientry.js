@@ -13,7 +13,7 @@ registerPlugin("multientry", null, {
 			var $entry = $(this).find(".entry");
 
 			// When focus moves out of multientry, add the text to multientry
-			self.add(this, $entry.text());
+			self.add($entry.text());
 
 			$entry.empty();
 		}).off("keydown.multientryitem").on("keydown.multientryitem", ".multientry .entry", function(e) {
@@ -25,7 +25,7 @@ registerPlugin("multientry", null, {
 				// Prevent default action and add the text to multientry
 				e.preventDefault();
 
-				self.add($this.parent(".multientry"), $this.text());
+				self.add($this.text());
 
 				$this.empty();
 			} else if (e.which === 8 && $this.text().match(/^\s*$/)) {
@@ -59,7 +59,7 @@ registerPlugin("multientry", null, {
 
 			var items = e.originalEvent.clipboardData.getData("Text");
 
-			self.add($(this).parent(".multientry"), items);
+			self.add(items);
 		}).off("click.multientryremove").on("click.multientryremove", ".multientry .segment-remove", function() {
 			// Remove the multientry item
 			self.remove($(this).parent().text());
@@ -90,14 +90,9 @@ registerPlugin("multientry", null, {
 	 * @param {String} element
 	 * @param {String[]} content
 	 */
-	add: function(element, content) {
-		var $element = (element && content) ? $(element) : this.element ? $(this.element) : $(".multientry"),
+	add: function(content) {
+		var $element = this.element ? $(this.element) : $(".multientry"),
 			items;
-
-		// The first argument is not element, but content to add
-		if (!content && (typeof element === "string" || element instanceof Array)) {
-			content = element;
-		}
 
 		// Element doesn't exist
 		if (!$element.length) {
@@ -150,13 +145,8 @@ registerPlugin("multientry", null, {
 	 * @constructor
 	 * @param {String[]} [content]
 	 */
-	remove: function(element, content) {
-		var $element = (element && content) ? $(element) : this.element ? $(this.element) : $(".multientry");
-
-		// The first argument is not element, but content to remove
-		if (!content && (typeof element === "string" || element instanceof Array)) {
-			content = element;
-		}
+	remove: function(content) {
+		var $element = this.element ? $(this.element) : $(".multientry");
 
 		// Element doesn't exist
 		if (!$element.length) {
@@ -196,8 +186,8 @@ registerPlugin("multientry", null, {
 	 * @param {String} [element]
 	 * @return {String[]}
 	 */
-	items: function(element) {
-		var $element = element ? $(element) : this.element ? $(this.element) : $(".multientry"),
+	items: function() {
+		var $element = this.element ? $(this.element) : $(".multientry"),
 			elems = $element.find(".segment-text"),
 			items = [];
 

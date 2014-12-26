@@ -6,17 +6,28 @@ registerPlugin("multientry", null, {
 	 * @constructor
 	 */
 	init: function() {
-		var self = this;
+		var self = this,
+			$element = self.element ? $(self.element) : $(".multientry");
 
-		// Add event listeners for mutlientry to the document
-		$(document).off("blur.multientry").on("blur.multientry", ".multientry", function() {
+		// Add event listeners for mutlientry
+		$element.on("blur", function() {
 			var $entry = $(this).find(".entry");
 
 			// When focus moves out of multientry, add the text to multientry
 			self.add($entry.text());
 
 			$entry.empty();
-		}).off("keydown.multientryitem").on("keydown.multientryitem", ".multientry .entry", function(e) {
+		}).on("click", function(e) {
+			var $close = $(e.target).closest(".segment-remove");
+
+			if ($close.length) {
+				// Remove the multientry item
+				self.remove($close.parent().text());
+			}
+
+			// Focus the editable part of multientry
+			$(this).find(".entry").focus();
+		}).on("keydown", ".entry", function(e) {
 			var range, selection,
 				$this = $(this);
 
@@ -52,7 +63,7 @@ registerPlugin("multientry", null, {
 					range.select();
 				}
 			}
-		}).off("paste.multientryitem").on("paste.multientryitem", ".multientry .item", function(e) {
+		}).on("paste", ".entry", function(e) {
 			// Text is pasted into multientry
 			// Prevent default action and manually add the clipboard text
 			e.preventDefault();
@@ -60,16 +71,10 @@ registerPlugin("multientry", null, {
 			var items = e.originalEvent.clipboardData.getData("Text");
 
 			self.add(items);
-		}).off("click.multientryremove").on("click.multientryremove", ".multientry .segment-remove", function() {
-			// Remove the multientry item
-			self.remove($(this).parent().text());
-		}).off("click.multientry").on("click.multientry", ".multientry", function() {
-			// Focus the editable part of multientry
-			$(this).find(".entry").focus();
 		});
 
 		// Multientry is now initialized
-		$.event.trigger("multientryInited", [ $(self.element) ]);
+		$.event.trigger("multientryInited", [ $element ]);
 	},
 
 	/**
@@ -87,7 +92,6 @@ registerPlugin("multientry", null, {
 	/**
 	 * Add items to multientry.
 	 * @constructor
-	 * @param {String} element
 	 * @param {String[]} content
 	 */
 	add: function(content) {
@@ -183,7 +187,6 @@ registerPlugin("multientry", null, {
 	/**
 	 * Get items from multientry.
 	 * @constructor
-	 * @param {String} [element]
 	 * @return {String[]}
 	 */
 	items: function() {

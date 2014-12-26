@@ -33,7 +33,7 @@ registerPlugin("alertbar", {
 		$elem.appendTo($container);
 
 		// Add a close button to dismiss the alertbar
-		$elem.find(".alert-remove").on("click", function() {
+		$elem.on("click.alertbar", ".alert-remove", function() {
 			self.dismiss();
 		});
 
@@ -49,21 +49,42 @@ registerPlugin("alertbar", {
 	},
 
 	/**
+	 * Cleanup alertbar.
+	 * @constructor
+	 */
+	destroy: function() {
+		var $element = this.element ? $(this.element) : $(".alert-bar").find(".alert-content");
+
+		// The element doesn't exist
+		if (!$element.length) {
+			return;
+		}
+
+		$element.removeClass("alert-content");
+	},
+
+	/**
 	 * Dismiss alert message(s).
 	 * @constructor
 	 * @param {String} [element]
 	 */
 	dismiss: function() {
-		var $element = this.element ? $(this.element).closest(".alert-bar") : $(".alert-bar"),
+		var self = this,
+			$element = self.element ? $(self.element).closest(".alert-bar") : $(".alert-bar"),
 			$container = $(".alert-container"),
-			triggerEvents = function() {
+			cleanup = function() {
+				// Remove the alertbar
+				$element.remove();
+
 				// No alertbars left, safe to remove the container
 				if (!$container.children().length) {
 					$container.remove();
 				}
 
+				self.destroy();
+
 				// Alertbar is now dismissed
-				$.event.trigger("alertbarDismissed", [ $element ]);
+				$.event.trigger("alertbarDismissed", [ $(self.element) ]);
 			};
 
 		// Element doesn't exist
@@ -84,12 +105,10 @@ registerPlugin("alertbar", {
 				marginTop: 0,
 				marginBottom: 0
 			}, 150, function() {
-				$element.remove();
-				triggerEvents();
+				cleanup();
 			});
 		} else {
-			$element.remove();
-			triggerEvents();
+			cleanup();
 		}
 	}
 });

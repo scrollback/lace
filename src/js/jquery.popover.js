@@ -32,8 +32,8 @@ registerPlugin("popover", {
 		}
 
 		// Add info to popover so that we can properly remove events
-		$popover.data("id", id);
-		$popover.data("origin", $origin);
+		$popover.data("popover-id", id);
+		$popover.data("popover-origin", $origin);
 
 		// Add popover info to origin so that we can know when it has a popover
 		$origin.data("popover", $popover);
@@ -137,12 +137,48 @@ registerPlugin("popover", {
 
 		// Add the necessary positioning styles
 		$popover.addClass(classnames).css({
-			"top": spacetop,
-			"left": spaceleft
+			top: spacetop,
+			left: spaceleft
 		});
 
 		// Popover is now initialized
-		$.event.trigger("popoverInited", [ $(self.element) ]);
+		$.event.trigger("popoverInited", [ $popover ]);
+	},
+
+	/**
+	 * Cleanup popover.
+	 * @constructor
+	 */
+	destroy: function() {
+		var $element = self.element ? $(self.element) : $(".popover-body");
+
+		// The element doesn't exist
+		if (!$element.length) {
+			return;
+		}
+
+		// Loop through all elements and cleanup one by one
+		$element.each(function() {
+			var $this = $(this),
+				origin = $this.data("popover-origin"),
+				id = $this.data("popover-id"),
+				classList = $this.attr("class").trim() || "";
+
+			// Remove added classes
+			classList = classList.replace(/\b(arrow-|popover-)\S+/g, "").trim();
+
+			// Remove event listeners
+			$(document).off("click.popover-" + id + " keydown.popover-" + id);
+
+			// Cleanup data and styles
+			$(origin).removeData("popover");
+
+			$this.removeData("popover-id").removeData("popover-origin").css({
+				top: "",
+				left: "",
+				opacity: ""
+			}).addClass(classList);
+		});
 	},
 
 	/**
@@ -150,9 +186,16 @@ registerPlugin("popover", {
 	 * @constructor
 	 */
 	dismiss: function() {
-		var $element = this.element ? $(this.element).closest(".popover-body") : $(".popover-body"),
+		var self = this,
+			$element = self.element ? $(self.element) : $(".popover-body"),
 			$el, id,
-			triggerEvents = function() {
+			cleanup = function() {
+				// Remove the popover
+				$element.remove();
+
+				// Cleanup
+				self.destroy();
+
 				// Popover is now dismissed
 				$.event.trigger("popoverDismissed", [ $element ]);
 			};
@@ -162,25 +205,13 @@ registerPlugin("popover", {
 			return;
 		}
 
-		// Loop through all elements and cleanup one by one
-		for (var i = 0, l = $element.length; i < l; i++) {
-			$el = $element.eq(i);
-
-			id = $el.data("id");
-
-			$(document).off("click.popover-" + id + " keydown.popover-" + id);
-			$($el.data("origin")).data("popover", false);
-		}
-
 		// Remove the element from DOM
 		if ($.fn.velocity) {
 			$element.velocity("fadeOut", 150, function() {
-				$element.remove();
-				triggerEvents();
+				cleanup();
 			});
 		} else {
-			$element.remove();
-			triggerEvents();
+			cleanup();
 		}
 	}
 });

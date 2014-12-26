@@ -30,12 +30,28 @@ registerPlugin("progressbar", {
 	},
 
 	/**
+	 * Cleanup progressbar.
+	 * @constructor
+	 */
+	destroy: function() {
+		var $element = this.element ? $(this.element) : $(".progressbar");
+
+		// The element doesn't exist
+		if (!$element.length) {
+			return;
+		}
+
+		// Remove classes
+		$element.removeClass("progressbar loading").css({ width: "" });
+	},
+
+	/**
 	 * Set progress by percentage
 	 * @constructor
 	 * @param {Number} amount
 	 */
 	set: function(amount) {
-		var $element = this.element ? $(this.element).closest(".progressbar") : $(".progressbar");
+		var $element = this.element ? $(this.element) : $(".progressbar");
 
 		// Element doesn't exist
 		if (!$element.length) {
@@ -65,7 +81,8 @@ registerPlugin("progressbar", {
 	 * @constructor
 	 */
 	dismiss: function() {
-		var $element = this.element ? $(this.element).closest(".progressbar") : $(".progressbar");
+		var self = this,
+			$element = self.element ? $(self.element) : $(".progressbar");
 
 		// Element doesn't exist
 		if (!$element.length) {
@@ -73,11 +90,13 @@ registerPlugin("progressbar", {
 		}
 
 		// Set the progress to "100%"
-		this.set(100);
+		self.set(100);
 
 		// Remove the element from DOM
 		setTimeout(function() {
 			$element.remove();
+
+			self.destroy();
 
 			// Progressbar is now dismissed
 			$.event.trigger("progressbarDismissed", [ $element ]);

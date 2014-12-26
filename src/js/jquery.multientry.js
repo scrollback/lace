@@ -10,14 +10,14 @@ registerPlugin("multientry", null, {
 			$element = self.element ? $(self.element) : $(".multientry");
 
 		// Add event listeners for mutlientry
-		$element.on("blur", function() {
+		$element.on("blur.multientry", function() {
 			var $entry = $(this).find(".entry");
 
 			// When focus moves out of multientry, add the text to multientry
 			self.add($entry.text());
 
 			$entry.empty();
-		}).on("click", function(e) {
+		}).on("click.multientry", function(e) {
 			var $close = $(e.target).closest(".segment-remove");
 
 			if ($close.length) {
@@ -27,7 +27,7 @@ registerPlugin("multientry", null, {
 
 			// Focus the editable part of multientry
 			$(this).find(".entry").focus();
-		}).on("keydown", ".entry", function(e) {
+		}).on("keydown.multientry", ".entry", function(e) {
 			var range, selection,
 				$this = $(this);
 
@@ -63,7 +63,7 @@ registerPlugin("multientry", null, {
 					range.select();
 				}
 			}
-		}).on("paste", ".entry", function(e) {
+		}).on("paste.multientry", ".entry", function(e) {
 			// Text is pasted into multientry
 			// Prevent default action and manually add the clipboard text
 			e.preventDefault();
@@ -75,6 +75,22 @@ registerPlugin("multientry", null, {
 
 		// Multientry is now initialized
 		$.event.trigger("multientryInited", [ $element ]);
+	},
+
+	/**
+	 * Cleanup multientry.
+	 * @constructor
+	 */
+	destroy: function() {
+		var $element = this.element ? $(this.element) : $(".multientry");
+
+		// The element doesn't exist
+		if (!$element.length) {
+			return;
+		}
+
+		// Remove event listeners
+		$element.off("blur.multientry click.multientry keydown.multientry paste.multientry");
 	},
 
 	/**

@@ -58,12 +58,13 @@ registerPlugin("modal", {
 	 * @constructor
 	 */
 	dismiss: function(replacing, callback) {
-		var $element = $(".modal, .backdrop"),
+		var $modal = $(".modal"),
+			$backdrop = $(".backdrop"),
 			triggerEvents = function(callback) {
 				var type = (replacing === true) ? "previousModalDismissed" : "modalDismissed";
 
 				// Modal is now dismissed
-				$.event.trigger(type, [ $element ]);
+				$.event.trigger(type, [ $modal ]);
 
 				// Remove event listeners
 				$(document).off("keydown.modal");
@@ -74,22 +75,30 @@ registerPlugin("modal", {
 		callback = (typeof callback === "function") ? callback : function() {};
 
 		// Element doesn't exist
-		if (!$element.length) {
+		if (!($modal.length || $backdrop.length)) {
 			return callback();
 		}
 
 		// Remove the element from DOM
 		if ($.fn.velocity) {
-			$element.not(".modal").velocity("fadeOut", 150);
-			$element.not(".backdrop").velocity({
+			if ($backdrop.length) {
+				$backdrop.velocity("fadeOut", 150, function() {
+					$backdrop.remove();
+				});
+			}
+
+			$modal.velocity({
 				opacity: 0,
 				scale: (replacing === true) ? "120%" : "70%"
 			}, 150, function() {
-				$element.remove();
+				$modal.remove();
+
 				triggerEvents(callback);
 			});
 		} else {
-			$element.remove();
+			$backdrop.remove();
+			$modal.remove();
+
 			triggerEvents(callback);
 		}
 	}

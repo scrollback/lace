@@ -138,7 +138,7 @@ registerPlugin("multientry", null, {
 		});
 
 		// Get already existing items
-		items = this.items($element);
+		items = this.items();
 
 		// Add each word as a new multientry item
 		content.forEach(function(text) {

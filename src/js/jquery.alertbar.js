@@ -66,7 +66,6 @@ registerPlugin("alertbar", {
 	/**
 	 * Dismiss alert message(s).
 	 * @constructor
-	 * @param {String} [element]
 	 */
 	dismiss: function() {
 		var self = this,

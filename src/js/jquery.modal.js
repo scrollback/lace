@@ -86,8 +86,10 @@ registerPlugin("modal", {
 
 		// Cleanup event listeners
 		$modal.off("click.modal").css({
-			transform: "",
-			opacity: ""
+			"margin-top": "",
+			"margin-left": "",
+			"transform": "",
+			"opacity": ""
 		}).removeClass("modal");
 
 		// Remove event listeners

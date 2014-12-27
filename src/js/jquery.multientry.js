@@ -207,7 +207,7 @@ registerPlugin("multientry", null, {
 	 */
 	items: function() {
 		var $element = this.element ? $(this.element) : $(".multientry"),
-			elems = $element.find(".segment-text"),
+			$elems = $element.find(".segment-text"),
 			items = [];
 
 		// Element doesn't exist
@@ -216,9 +216,9 @@ registerPlugin("multientry", null, {
 		}
 
 		// Get the items from the multientry
-		for (var i = 0; i < elems.length; i++) {
-			items.push($(elems[i]).text());
-		}
+		$elems.each(function() {
+			items.push($(this).text());
+		});
 
 		// Return the items
 		return items;

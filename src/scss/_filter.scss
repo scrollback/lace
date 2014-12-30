@@ -12,11 +12,12 @@
             }
         }
 
-        &[class*=#{$filter}-] {
+        // Should ideally use #{filter}-, but then libsass doesn't work
+        &[class*=#{$filter}] {
             [data-#{$filter}=none] { display: none; }
         }
 
-        &:not([class*=#{$filter}-]) {
+        &:not([class*=#{$filter}]) {
             [data-#{$filter}]:not([data-#{$filter}=none]) { display: none; }
         }
     }

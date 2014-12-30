@@ -67,8 +67,21 @@ $rem-base: 10px;
              url("#{$font-filepath}/#{$font-filename}.woff") format("woff"),
              url("#{$font-filepath}/#{$font-filename}.ttf") format("truetype"),
              url("#{$font-filepath}/#{$font-filename}.svg##{$font-family}") format("svg");
+
         font-weight: $font-weight;
         font-style: $font-style;
         font-stretch: $font-stretch;
+    }
+}
+
+@mixin font-smoothing($value) {
+    -webkit-font-smoothing: $value;
+
+    @if $value == antialiased {
+        -moz-osx-font-smoothing: grayscale;
+    } @else if $value == subpixel-antialiased or $value == auto {
+        -moz-osx-font-smoothing: auto;
+    } @else {
+        -moz-osx-font-smoothing: $value;
     }
 }

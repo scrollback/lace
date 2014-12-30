@@ -15,9 +15,9 @@ var gulp = require("gulp"),
 	jscs = require("gulp-jscs"),
 	uglify = require("gulp-uglify"),
 	rename = require("gulp-rename"),
-	sass = require("gulp-ruby-sass"),
+	sass = require("gulp-sass"),
 	combinemq = require("gulp-combine-mq"),
-	prefix = require("gulp-autoprefixer"),
+	autoprefixer = require("gulp-autoprefixer"),
 	minify = require("gulp-minify-css");
 
 // Make browserify bundle
@@ -82,12 +82,14 @@ gulp.task("scripts", [ "bower" ], function() {
 
 // Generate styles
 gulp.task("styles", function() {
-	return sass("test", {
+	return gulp.src("test/**/*.scss")
+	.pipe(plumber())
+	.pipe(sourcemaps.init())
+	.pipe(sass({
 		style: gutil.env.production ? "compressed" : "expanded",
 		lineNumbers: !gutil.env.production,
 		sourcemap: true
-	})
-	.pipe(plumber())
+	}))
 	.pipe(combinemq())
 	.pipe(gutil.env.production ? autoprefixer() : gutil.noop())
 	.pipe(gutil.env.production ? minify() : gutil.noop())

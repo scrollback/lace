@@ -86,9 +86,9 @@ gulp.task("styles", function() {
 	.pipe(plumber())
 	.pipe(sourcemaps.init())
 	.pipe(sass({
-		style: gutil.env.production ? "compressed" : "expanded",
+		outputStyle: "expanded",
 		lineNumbers: !gutil.env.production,
-		sourcemap: true
+		sourceMap: true
 	}))
 	.pipe(combinemq())
 	.pipe(gutil.env.production ? autoprefixer() : gutil.noop())

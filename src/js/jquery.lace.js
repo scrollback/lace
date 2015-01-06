@@ -5,6 +5,7 @@
  */
 
 function registerPlugin(pluginName, defaults, methods) {
+	"use strict";
 
 	(function($, window, document, undefined) {
 

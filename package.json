@@ -29,6 +29,7 @@
     "gulp-combine-mq": "latest",
     "gulp-concat": "latest",
     "gulp-git": "latest",
+    "gulp-gitmodified": "latest",
     "gulp-jscs": "latest",
     "gulp-jshint": "latest",
     "gulp-minify-css": "latest",

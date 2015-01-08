@@ -10,6 +10,8 @@ var gulp = require("gulp"),
 	gutil = require("gulp-util"),
 	sourcemaps = require("gulp-sourcemaps"),
 	plumber = require("gulp-plumber"),
+	bump = require("gulp-bump"),
+	git = require("gulp-git"),
 	gitmodified = require("gulp-gitmodified"),
 	jshint = require("gulp-jshint"),
 	jscs = require("gulp-jscs"),
@@ -56,6 +58,29 @@ gulp.task("bower", function() {
 	.on("error", gutil.log);
 });
 
+// Bump version and do a new release
+gulp.task("bump", function() {
+	return gulp.src("*.json")
+	.pipe(plumber())
+	.pipe(bump())
+	.pipe(gulp.dest("."));
+});
+
+gulp.task("release", [ "bump" ], function() {
+	var version = require("./package.json").version,
+		message = "Release " + version;
+
+	return gulp.src("*.json")
+	.pipe(plumber())
+	.pipe(git.add())
+	.pipe(git.commit(message))
+	.on("end", function() {
+		git.tag("v" + version, message, function() {
+			git.push("origin", "master", { args: "--tags" }, function() {});
+		});
+	});
+});
+
 // Lint JavaScript files
 gulp.task("lint", function() {
 	return gulp.src([ "src/js/**/*.js", "test/**/*.js" ])
@@ -64,8 +89,7 @@ gulp.task("lint", function() {
 	.pipe(jshint())
 	.pipe(jshint.reporter("jshint-stylish"))
 	.pipe(jshint.reporter("fail"))
-	.pipe(jscs())
-	.on("error", gutil.log);
+	.pipe(jscs());
 });
 
 // Combine and minify scripts
@@ -76,8 +100,7 @@ gulp.task("scripts", [ "bower" ], function() {
 	.pipe(gutil.env.production ? uglify() : gutil.noop())
 	.pipe(rename({ suffix: ".min" }))
 	.pipe(sourcemaps.write("."))
-	.pipe(gulp.dest("dist/scripts"))
-	.on("error", gutil.log);
+	.pipe(gulp.dest("dist/scripts"));
 });
 
 // Generate styles
@@ -95,8 +118,7 @@ gulp.task("styles", function() {
 	.pipe(gutil.env.production ? minify() : gutil.noop())
 	.pipe(rename({ suffix: ".min" }))
 	.pipe(sourcemaps.write("."))
-	.pipe(gulp.dest("dist/styles"))
-	.on("error", gutil.log);
+	.pipe(gulp.dest("dist/styles"));
 });
 
 // Clean up generated files

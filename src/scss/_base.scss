@@ -65,18 +65,6 @@ code {
     line-height: 1.2em;
 }
 
-.google { @include buttons(#4285f4, #fff); }
-
-.googleplus { @include buttons(#d34836, #fff); }
-
-.twitter { @include buttons(#55acee, #fff); }
-
-.facebook { @include buttons(#3b5998, #fff); }
-
-.persona { @include buttons(#e66000, #fff); }
-
-.openid { @include buttons(#f78c40, #fff); }
-
 .fadeout {
     @include opacity(0);
     @extend %transition;

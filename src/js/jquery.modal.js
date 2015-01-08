@@ -105,14 +105,12 @@ registerPlugin("modal", {
 			$modal = this.element ? $(this.element) : $(".modal"),
 			$backdrop = $modal.data("modal-backdrop"),
 			cleanup = function() {
-				// Remove modal and backdrop
+				self.destroy();
+				$modal.remove();
+
 				if ($backdrop.length) {
 					$backdrop.remove();
 				}
-
-				$modal.remove();
-
-				self.destroy();
 
 				// Modal is now dismissed
 				$.event.trigger("modalDismissed", [ $modal ]);

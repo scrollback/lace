@@ -72,15 +72,13 @@ registerPlugin("alertbar", {
 			$element = self.element ? $(self.element).closest(".alert-bar") : $(".alert-bar"),
 			$container = $(".alert-container"),
 			cleanup = function() {
-				// Remove the alertbar
+				self.destroy();
 				$element.remove();
 
 				// No alertbars left, safe to remove the container
 				if (!$container.children().length) {
 					$container.remove();
 				}
-
-				self.destroy();
 
 				// Alertbar is now dismissed
 				$.event.trigger("alertbarDismissed", [ $(self.element) ]);

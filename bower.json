@@ -1,6 +1,6 @@
 {
   "name": "Lace",
-  "version": "0.0.9",
+  "version": "0.1.3",
   "homepage": "https://github.com/scrollback/lace",
   "authors": [
     "Satyajit Sahoo <satya@scrollback.io>"
@@ -12,6 +12,7 @@
     "plugin"
   ],
   "license": "GPL",
+  "main": "src/js/jquery.lace.js",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -21,7 +22,7 @@
   ],
   "dependencies": {
     "jquery": "1",
-    "velocity": "~1.1.0"
+    "velocity": "~1.2.1"
   },
   "devDependencies": {
     "qunit": "~1.16.0"

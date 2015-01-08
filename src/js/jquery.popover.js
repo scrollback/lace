@@ -205,6 +205,17 @@ registerPlugin("popover", {
 			return;
 		}
 
+		// FIXME: should be done in destroy
+		// Loop through all elements and cleanup one by one
+		for (var i = 0, l = $element.length; i < l; i++) {
+			$el = $element.eq(i);
+
+			id = $el.data("popover-id");
+
+			$(document).off("click.popover-" + id + " keydown.popover-" + id);
+			$($el.data("popover-origin")).data("popover", false);
+		}
+
 		// Remove the element from DOM
 		if ($.fn.velocity) {
 			$element.velocity("fadeOut", 150, function() {

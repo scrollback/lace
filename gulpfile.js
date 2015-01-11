@@ -60,7 +60,7 @@ gulp.task("bower", function() {
 
 // Bump version and do a new release
 gulp.task("bump", function() {
-	return gulp.src("*.json")
+	return gulp.src([ "package.json", "bower.json" ])
 	.pipe(plumber())
 	.pipe(bump())
 	.pipe(gulp.dest("."));
@@ -70,7 +70,7 @@ gulp.task("release", [ "bump" ], function() {
 	var version = require("./package.json").version,
 		message = "Release " + version;
 
-	return gulp.src("*.json")
+	return gulp.src([ "package.json", "bower.json" ])
 	.pipe(plumber())
 	.pipe(git.add())
 	.pipe(git.commit(message))

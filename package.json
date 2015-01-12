@@ -33,6 +33,7 @@
     "gulp-jscs": "latest",
     "gulp-jshint": "latest",
     "gulp-minify-css": "latest",
+    "gulp-notify": "latest",
     "gulp-plumber": "latest",
     "gulp-rename": "latest",
     "gulp-sass": "latest",

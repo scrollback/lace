@@ -10,6 +10,7 @@ var gulp = require("gulp"),
 	gutil = require("gulp-util"),
 	sourcemaps = require("gulp-sourcemaps"),
 	plumber = require("gulp-plumber"),
+	notify = require("gulp-notify"),
 	bump = require("gulp-bump"),
 	git = require("gulp-git"),
 	gitmodified = require("gulp-gitmodified"),
@@ -61,7 +62,7 @@ gulp.task("bower", function() {
 // Bump version and do a new release
 gulp.task("bump", function() {
 	return gulp.src([ "package.json", "bower.json" ])
-	.pipe(plumber())
+	.pipe(plumber({ errorHandler: notify.onError("Error: <%= error.message %>") }))
 	.pipe(bump())
 	.pipe(gulp.dest("."));
 });
@@ -71,7 +72,7 @@ gulp.task("release", [ "bump" ], function() {
 		message = "Release " + version;
 
 	return gulp.src([ "package.json", "bower.json" ])
-	.pipe(plumber())
+	.pipe(plumber({ errorHandler: notify.onError("Error: <%= error.message %>") }))
 	.pipe(git.add())
 	.pipe(git.commit(message))
 	.on("end", function() {
@@ -84,7 +85,7 @@ gulp.task("release", [ "bump" ], function() {
 // Lint JavaScript files
 gulp.task("lint", function() {
 	return gulp.src([ "src/js/**/*.js", "test/**/*.js" ])
-	.pipe(plumber())
+	.pipe(plumber({ errorHandler: notify.onError("Error: <%= error.message %>") }))
 	.pipe(gitmodified("modified"))
 	.pipe(jshint())
 	.pipe(jshint.reporter("jshint-stylish"))
@@ -96,7 +97,7 @@ gulp.task("lint", function() {
 gulp.task("scripts", [ "bower" ], function() {
 	return bundle("test/test.js", { debug: true })
 	.pipe(sourcemaps.init({ loadMaps: true }))
-	.pipe(plumber())
+	.pipe(plumber({ errorHandler: notify.onError("Error: <%= error.message %>") }))
 	.pipe(gutil.env.production ? uglify() : gutil.noop())
 	.pipe(rename({ suffix: ".min" }))
 	.pipe(sourcemaps.write("."))
@@ -106,7 +107,7 @@ gulp.task("scripts", [ "bower" ], function() {
 // Generate styles
 gulp.task("styles", function() {
 	return gulp.src("test/**/*.scss")
-	.pipe(plumber())
+	.pipe(plumber({ errorHandler: notify.onError("Error: <%= error.message %>") }))
 	.pipe(sourcemaps.init())
 	.pipe(sass({
 		outputStyle: "expanded",

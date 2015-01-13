@@ -21,7 +21,8 @@ var gulp = require("gulp"),
 	sass = require("gulp-sass"),
 	combinemq = require("gulp-combine-mq"),
 	autoprefixer = require("gulp-autoprefixer"),
-	minify = require("gulp-minify-css");
+	minify = require("gulp-minify-css"),
+	onerror = notify.onError("Error: <%= error.message %>");
 
 // Make browserify bundle
 function bundle(files, opts) {
@@ -30,8 +31,9 @@ function bundle(files, opts) {
 			opts.entries = "./" + file;
 
 			return browserify(opts).bundle()
-			.on("error", function(err) {
-				gutil.log(err);
+			.on("error", function(error) {
+				onerror(error);
+
 				// End the stream to prevent gulp from crashing
 				this.end();
 			})
@@ -56,13 +58,13 @@ function bundle(files, opts) {
 // Install and copy third-party libraries
 gulp.task("bower", function() {
 	return bower.commands.install([], { save: true }, {})
-	.on("error", gutil.log);
+	.on("error", onerror);
 });
 
 // Bump version and do a new release
 gulp.task("bump", function() {
 	return gulp.src([ "package.json", "bower.json" ])
-	.pipe(plumber({ errorHandler: notify.onError("Error: <%= error.message %>") }))
+	.pipe(plumber({ errorHandler: onerror }))
 	.pipe(bump())
 	.pipe(gulp.dest("."));
 });
@@ -72,7 +74,7 @@ gulp.task("release", [ "bump" ], function() {
 		message = "Release " + version;
 
 	return gulp.src([ "package.json", "bower.json" ])
-	.pipe(plumber({ errorHandler: notify.onError("Error: <%= error.message %>") }))
+	.pipe(plumber({ errorHandler: onerror }))
 	.pipe(git.add())
 	.pipe(git.commit(message))
 	.on("end", function() {
@@ -85,7 +87,7 @@ gulp.task("release", [ "bump" ], function() {
 // Lint JavaScript files
 gulp.task("lint", function() {
 	return gulp.src([ "src/js/**/*.js", "test/**/*.js" ])
-	.pipe(plumber({ errorHandler: notify.onError("Error: <%= error.message %>") }))
+	.pipe(plumber({ errorHandler: onerror }))
 	.pipe(gitmodified("modified"))
 	.pipe(jshint())
 	.pipe(jshint.reporter("jshint-stylish"))
@@ -96,8 +98,8 @@ gulp.task("lint", function() {
 // Combine and minify scripts
 gulp.task("scripts", [ "bower" ], function() {
 	return bundle("test/test.js", { debug: true })
+	.pipe(plumber({ errorHandler: onerror }))
 	.pipe(sourcemaps.init({ loadMaps: true }))
-	.pipe(plumber({ errorHandler: notify.onError("Error: <%= error.message %>") }))
 	.pipe(gutil.env.production ? uglify() : gutil.noop())
 	.pipe(rename({ suffix: ".min" }))
 	.pipe(sourcemaps.write("."))
@@ -107,7 +109,7 @@ gulp.task("scripts", [ "bower" ], function() {
 // Generate styles
 gulp.task("styles", function() {
 	return gulp.src("test/**/*.scss")
-	.pipe(plumber({ errorHandler: notify.onError("Error: <%= error.message %>") }))
+	.pipe(plumber({ errorHandler: onerror }))
 	.pipe(sourcemaps.init())
 	.pipe(sass({
 		outputStyle: "expanded",

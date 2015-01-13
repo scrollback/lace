@@ -3,6 +3,7 @@
 @import "animations";
 @import "dropshadow";
 @import "flexbox";
+@import "icons";
 
 @include exports("alert") {
 	.alert-container {
@@ -64,6 +65,7 @@
 		@include flex-wrap(nowrap);
 		@include align-items(center);
 		@include align-content(center);
+		@include icon(close);
 		@extend %snappy;
 
 		padding: 1em 1.25em;
@@ -75,11 +77,9 @@
 
 		&:active { background-color: rgba(0,0,0,.3); }
 
-		&:after {
+		&:before {
 			display: block;
-			content: "\00d7";
-			font-weight: bold;
-			font-size: 2em;
+			font-weight: 700;
 		}
 	}
 }

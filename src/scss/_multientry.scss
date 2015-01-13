@@ -2,6 +2,7 @@
 @import "global";
 @import "animations";
 @import "entry";
+@import "icons";
 
 @include exports("multientry") {
 	.multientry {
@@ -43,6 +44,7 @@
 			}
 
 			.segment-remove {
+				@include icon(close);
 				@extend %snappy;
 
 				float: right;
@@ -54,12 +56,10 @@
 
 				&:active { background-color: rgba(0,0,0,.3); }
 
-				&:after {
+				&:before {
 					display: block;
-					content: "\00d7";
 					font-weight: 700;
-					font-size: 1.5em;
-					padding: .17em .5em;
+					padding: .5em;
 				}
 			}
 		}

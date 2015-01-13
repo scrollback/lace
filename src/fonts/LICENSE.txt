@@ -10,6 +10,15 @@ Font license info
    Homepage:  http://fontello.com
 
 
+## Iconic
+
+   Copyright (C) 2012 by P.J. Onori
+
+   Author:    P.J. Onori
+   License:   SIL (http://scripts.sil.org/OFL)
+   Homepage:  http://somerandomdude.com/work/iconic/
+
+
 ## Font Awesome
 
    Copyright (C) 2012 by Dave Gandy
@@ -17,6 +26,15 @@ Font license info
    Author:    Dave Gandy
    License:   SIL ()
    Homepage:  http://fortawesome.github.com/Font-Awesome/
+
+
+## Typicons
+
+   (c) Stephen Hutchings 2012
+
+   Author:    Stephen Hutchings
+   License:   SIL (http://scripts.sil.org/OFL)
+   Homepage:  http://typicons.com/
 
 
 ## Elusive
@@ -37,13 +55,13 @@ Font license info
    Homepage:  http://www.mfglabs.com/
 
 
-## Iconic
+## Entypo
 
-   Copyright (C) 2012 by P.J. Onori
+   Copyright (C) 2012 by Daniel Bruce
 
-   Author:    P.J. Onori
+   Author:    Daniel Bruce
    License:   SIL (http://scripts.sil.org/OFL)
-   Homepage:  http://somerandomdude.com/work/iconic/
+   Homepage:  http://www.entypo.com
 
 
 ## Material

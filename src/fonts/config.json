@@ -3777,7 +3777,7 @@
       "css": "link",
       "code": 59427,
       "src": "custom_icons",
-      "selected": true,
+      "selected": false,
       "svg": {
         "path": "M162.5 500C162.5 428.8 220.4 370.8 291.7 370.8H458.3V291.7H291.7C176.7 291.7 83.3 385 83.3 500S176.7 708.3 291.7 708.3H458.3V629.2H291.7C220.4 629.2 162.5 571.2 162.5 500ZM333.3 541.7H666.7V458.3H333.3V541.7ZM708.3 291.7H541.7V370.8H708.3C779.6 370.8 837.5 428.8 837.5 500S779.6 629.2 708.3 629.2H541.7V708.3H708.3C823.3 708.3 916.7 615 916.7 500S823.3 291.7 708.3 291.7Z",
         "width": 1000
@@ -10435,12 +10435,6 @@
       "src": "fontawesome"
     },
     {
-      "uid": "c1f1975c885aa9f3dad7810c53b82074",
-      "css": "lock",
-      "code": 59461,
-      "src": "fontawesome"
-    },
-    {
       "uid": "3db5347bd219f3bce6025780f5d9ef45",
       "css": "tag",
       "code": 59464,
@@ -10579,9 +10573,87 @@
       "src": "fontawesome"
     },
     {
-      "uid": "c6ecc52b6db2a649a08ff54e5ea62886",
-      "css": "key-inv",
-      "code": 59488,
+      "uid": "3626b3f3a0b284e7f4166b815719aece",
+      "css": "list",
+      "code": 59513,
+      "src": "entypo"
+    },
+    {
+      "uid": "p57wgnf4glngbchbucdi029iptu8oxb8",
+      "css": "pin",
+      "code": 59502,
+      "src": "typicons"
+    },
+    {
+      "uid": "pdnk53e9ff0ck5q3b16vcm1hh1447j7e",
+      "css": "chart",
+      "code": 59503,
+      "src": "typicons"
+    },
+    {
+      "uid": "6f8cc29884d86ad170e2a6e7544fdced",
+      "css": "command",
+      "code": 59459,
+      "src": "typicons"
+    },
+    {
+      "uid": "754557fa790629b8df53349af508af41",
+      "css": "link",
+      "code": 59514,
+      "src": "iconic"
+    },
+    {
+      "uid": "661bd5ba1dad15ad9acbfcd8b8af76f3",
+      "css": "quote-left",
+      "code": 59461,
+      "src": "iconic"
+    },
+    {
+      "uid": "bc0af4824c8eedcad7bc0d35911dac2a",
+      "css": "quote-right",
+      "code": 59479,
+      "src": "iconic"
+    },
+    {
+      "uid": "e34c1d65ed4ecd53aec3687f0e5b1cf0",
+      "css": "comment",
+      "code": 59403,
+      "src": "iconic"
+    },
+    {
+      "uid": "cc8beaf58a46ee4186e7aa51209a9b53",
+      "css": "chat",
+      "code": 59509,
+      "src": "iconic"
+    },
+    {
+      "uid": "7cf0c6fefa5327473dec91427434ae26",
+      "css": "block",
+      "code": 59508,
+      "src": "iconic"
+    },
+    {
+      "uid": "524f670504958d3e32ef887b99d8aca2",
+      "css": "down-circle",
+      "code": 59504,
+      "src": "iconic"
+    },
+    {
+      "uid": "a263473d2d406881ea08f991c1b38694",
+      "css": "left-circle",
+      "code": 59510,
+      "src": "iconic"
+    },
+    {
+      "uid": "ccee648b9e12a533f6957967e29ebdef",
+      "css": "right-circle",
+      "code": 59511,
+      "src": "iconic"
+    },
+    {
+      "uid": "55ba7d8f711ce265df7de4ab7f148e65",
+      "css": "up-circle",
+      "code": 59512,
       "src": "iconic"
     },
     {
@@ -10609,6 +10681,24 @@
       "src": "mfglabs"
     },
     {
+      "uid": "018571e697f22ca41803de480e10ed10",
+      "css": "home",
+      "code": 59507,
+      "src": "mfglabs"
+    },
+    {
+      "uid": "7997220c4eb58edae98e04de570089c2",
+      "css": "lock",
+      "code": 59506,
+      "src": "mfglabs"
+    },
+    {
+      "uid": "e67bcab050d99eb04d44027139ae05f5",
+      "css": "lock-open",
+      "code": 59505,
+      "src": "mfglabs"
+    },
+    {
       "uid": "d9be617b7f2fe7843118ca2d3a1b8cca",
       "css": "down-open",
       "code": 59484,
@@ -10633,6 +10723,12 @@
       "src": "mfglabs"
     },
     {
+      "uid": "f08fd9b6b61b3670cf88ed64da891cae",
+      "css": "cloud",
+      "code": 59488,
+      "src": "mfglabs"
+    },
+    {
       "uid": "874694a9126e8193bca844356d1b6328",
       "css": "at",
       "code": 59483,
@@ -10649,12 +10745,6 @@
       "css": "spinner",
       "code": 59500,
       "src": "mfglabs"
-    },
-    {
-      "uid": "34e5d8943b23023d2a9515cfa9173506",
-      "css": "quote",
-      "code": 59479,
-      "src": "elusive"
     },
     {
       "uid": "dea46bc85920f9a05bf7c7251fb10f10",

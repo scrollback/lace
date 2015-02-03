@@ -6,6 +6,11 @@
     "Satyajit Sahoo <satya@scrollback.io>"
   ],
   "description": "A collection of jquery plugins and stylesheets",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
   "keywords": [
     "framework",
     "jquery",

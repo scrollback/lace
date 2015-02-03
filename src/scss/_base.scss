@@ -32,17 +32,18 @@ img {
 
 h1, h2, h3, h4 {
     font-family: $font-family-headings;
-    font-weight: 400;
+    font-weight: 700;
+    margin-top: .25em;
     margin-bottom: .5em;
 }
 
-h1 { font-size: 2.5em; }
+h1 { font-size: 1.8em; }
 
-h2 { font-size: 2em; }
+h2 { font-size: 1.5em; }
 
-h3 { font-size: 1.5em; }
+h3 { font-size: 1.2em; }
 
-h4 { font-size: 1.2em; }
+h4 { font-size: 1em; }
 
 p { margin: .5em 0; }
 

@@ -31,7 +31,6 @@
 				line-height: $line-height;
 				color: $light-color;
 				border-radius: $roundness;
-				background-color: lighten($error-color, 15%);
 			}
 
 			&:before {
@@ -42,6 +41,7 @@
 				padding: ( ( $switch-font-size + .2 ) / 4 ) ( ( $switch-font-size - .2 ) / 2 );
 				text-align: right;
 				box-shadow: inset 0 1px 0 rgba(0,0,0,.15);
+				background-color: $error-color;
 			}
 
 			&:after {
@@ -60,7 +60,7 @@
 
 			&:before {
 				text-align: left;
-				background-color: $accent-color;
+				background-color: $success-color;
 			}
 
 			&:after { left: $switch-trough-size + ( ( $switch-trough-size - $switch-slider-size ) / 2 ); }

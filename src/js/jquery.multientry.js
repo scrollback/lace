@@ -197,11 +197,11 @@ registerPlugin("multientry", null, {
 
 	/**
 	 * Get items from multientry.
+	 * @param {Boolean} entered
 	 * @return {String[]}
 	 */
-	items: function() {
+	items: function(entered) {
 		var $element = this.element ? $(this.element) : $(".multientry"),
-			$elems = $element.find(".segment-text"),
 			items = [];
 
 		// Element doesn't exist
@@ -210,9 +210,14 @@ registerPlugin("multientry", null, {
 		}
 
 		// Get the items from the multientry
-		$elems.each(function() {
+		$element.find(".segment-text").each(function() {
 			items.push($(this).text());
 		});
+
+		// Include entered text also
+		if (entered === true) {
+			items.push($element.find(".entry").text());
+		}
 
 		// Return the items
 		return items;

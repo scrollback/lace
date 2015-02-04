@@ -3,7 +3,6 @@ var registerPlugin = require("./jquery.lace.js");
 registerPlugin("multientry", null, {
 	/**
 	 * Initialize multientry.
-	 * @constructor
 	 */
 	init: function() {
 		var self = this,
@@ -79,7 +78,6 @@ registerPlugin("multientry", null, {
 
 	/**
 	 * Cleanup multientry.
-	 * @constructor
 	 */
 	destroy: function() {
 		var $element = this.element ? $(this.element) : $(".multientry");
@@ -95,7 +93,6 @@ registerPlugin("multientry", null, {
 
 	/**
 	 * Create the markup required for multientry.
-	 * @constructor
 	 * @return {Object}
 	 */
 	create: function() {
@@ -107,7 +104,6 @@ registerPlugin("multientry", null, {
 
 	/**
 	 * Add items to multientry.
-	 * @constructor
 	 * @param {String[]} content
 	 */
 	add: function(content) {
@@ -162,7 +158,6 @@ registerPlugin("multientry", null, {
 
 	/**
 	 * Remove items from multientry.
-	 * @constructor
 	 * @param {String[]} [content]
 	 */
 	remove: function(content) {
@@ -202,7 +197,6 @@ registerPlugin("multientry", null, {
 
 	/**
 	 * Get items from multientry.
-	 * @constructor
 	 * @return {String[]}
 	 */
 	items: function() {

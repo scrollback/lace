@@ -6,7 +6,6 @@ registerPlugin("progressbar", {
 
 	/**
 	 * Show a progress indicator.
-	 * @constructor
 	 */
 	init: function() {
 		var settings = this.settings,
@@ -31,7 +30,6 @@ registerPlugin("progressbar", {
 
 	/**
 	 * Cleanup progressbar.
-	 * @constructor
 	 */
 	destroy: function() {
 		var $element = this.element ? $(this.element) : $(".progressbar");
@@ -47,7 +45,6 @@ registerPlugin("progressbar", {
 
 	/**
 	 * Set progress by percentage
-	 * @constructor
 	 * @param {Number} amount
 	 */
 	set: function(amount) {
@@ -78,7 +75,6 @@ registerPlugin("progressbar", {
 
 	/**
 	 * Dismiss progress indicator.
-	 * @constructor
 	 */
 	dismiss: function() {
 		var self = this,

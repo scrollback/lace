@@ -6,7 +6,6 @@ registerPlugin("popover", {
 
 	/**
 	 * Show a popover.
-	 * @constructor
 	 */
 	init: function() {
 		var self = this,
@@ -147,7 +146,6 @@ registerPlugin("popover", {
 
 	/**
 	 * Cleanup popover.
-	 * @constructor
 	 */
 	destroy: function() {
 		var $element = self.element ? $(self.element) : $(".popover-body");
@@ -183,7 +181,6 @@ registerPlugin("popover", {
 
 	/**
 	 * Dismiss popover.
-	 * @constructor
 	 */
 	dismiss: function() {
 		var self = this,

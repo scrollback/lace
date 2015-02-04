@@ -6,7 +6,6 @@ registerPlugin("alertbar", {
 }, {
 	/**
 	 * Show an alert message.
-	 * @constructor
 	 */
 	init: function() {
 		var self = this,
@@ -50,7 +49,6 @@ registerPlugin("alertbar", {
 
 	/**
 	 * Cleanup alertbar.
-	 * @constructor
 	 */
 	destroy: function() {
 		var $element = this.element ? $(this.element) : $(".alert-bar").find(".alert-content");
@@ -65,7 +63,6 @@ registerPlugin("alertbar", {
 
 	/**
 	 * Dismiss alert message(s).
-	 * @constructor
 	 */
 	dismiss: function() {
 		var self = this,

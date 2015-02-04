@@ -8,7 +8,6 @@ registerPlugin("modal", {
 
 	/**
 	 * Show a modal dialog.
-	 * @constructor
 	 */
 	init: function() {
 		var self = this,
@@ -74,7 +73,6 @@ registerPlugin("modal", {
 
 	/**
 	 * Cleanup modal dialog.
-	 * @constructor
 	 */
 	destroy: function() {
 		var $modal = this.element ? $(this.element) : $(".modal");
@@ -98,7 +96,6 @@ registerPlugin("modal", {
 
 	/**
 	 * Dismiss modal dialog.
-	 * @constructor
 	 */
 	dismiss: function() {
 		var self = this,

@@ -137,8 +137,8 @@
 %icon-youtube-play { content: '\e856'; } /* '' */
 
 @mixin icon($name) {
-	&:before {
-		@extend %icon;
-		@extend %icon-#{$name};
-	}
+    &:before {
+        @extend %icon;
+        @extend %icon-#{$name};
+    }
 }

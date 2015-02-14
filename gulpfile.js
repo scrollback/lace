@@ -146,4 +146,6 @@ gulp.task("watch", function() {
 });
 
 // Default Task
-gulp.task("default", [ "lint", "build", "test" ]);
+gulp.task("default", [ "lint", "clean" ], function() {
+    gulp.start("build");
+});

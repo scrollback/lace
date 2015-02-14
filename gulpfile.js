@@ -96,7 +96,7 @@ gulp.task("lint", function() {
 });
 
 // Combine and minify scripts
-gulp.task("scripts", [ "bower" ], function() {
+gulp.task("bundle", function() {
     return bundle("test/test.js", { debug: true })
     .pipe(plumber({ errorHandler: onerror }))
     .pipe(sourcemaps.init({ loadMaps: true }))
@@ -105,6 +105,8 @@ gulp.task("scripts", [ "bower" ], function() {
     .pipe(sourcemaps.write("."))
     .pipe(gulp.dest("dist/scripts"));
 });
+
+gulp.task("scripts", [ "bower", "bundle" ]);
 
 // Generate styles
 gulp.task("styles", function() {

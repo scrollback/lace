@@ -38,7 +38,10 @@
         );
 
         @each $type, $color in $types {
-            &.#{$type} { border-color: $color; }
+            &.#{$type} {
+                background-color: mix($color, $light-color, 10%);
+                border-color: $color;
+            }
         }
     }
 

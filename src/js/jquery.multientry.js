@@ -98,7 +98,10 @@ registerPlugin("multientry", null, {
     create: function() {
         // Create and initialize as multientry
         return $("<div>").addClass("multientry").append(
-            $("<span>").attr("contenteditable", true).addClass("item entry")
+            $("<span>").attr({
+                tabindex: 1,
+                contenteditable: true
+            }).addClass("item entry")
         ).multientry();
     },
 

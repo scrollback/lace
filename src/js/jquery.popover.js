@@ -1,7 +1,9 @@
 var registerPlugin = require("./jquery.lace.js");
 
 registerPlugin("popover", {
-    parent: "body"
+    parent: "body",
+    origin: null,
+    arrow: true
 }, {
 
     /**
@@ -14,7 +16,7 @@ registerPlugin("popover", {
             $popover = $(self.element).addClass("popover-body"),
             winheight, winwidth,
             originoffset, originheight, originwidth,
-            popoverheight, popoverwidth, popovermargin,
+            popoverheight, popoverwidth,
             spacetop, spacebottom, spaceleft, spaceright,
             classnames = "",
             id = new Date().getTime();
@@ -69,10 +71,8 @@ registerPlugin("popover", {
         // Which is needed for calculating position
         $popover.appendTo(settings.parent);
 
-        // Let's also include the margin in the height and width (flag: true)
-        popoverwidth = $popover.outerWidth(true);
-        popoverheight = $popover.outerHeight(true);
-        popovermargin = popoverwidth - $popover.outerWidth();
+        popoverwidth = $popover.outerWidth();
+        popoverheight = $popover.outerHeight();
 
         if (originoffset.left < 0 || originoffset.left > winwidth) {
             // Origin is outside of visible area, towards left/right
@@ -132,6 +132,10 @@ registerPlugin("popover", {
             }
 
             spacetop += originheight / 2;
+        }
+
+        if (!self.settings.arrow) {
+            classnames += " arrow-none";
         }
 
         // Add the necessary positioning styles

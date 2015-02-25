@@ -153,7 +153,7 @@
         }
 
         .popover-section {
-            border-bottom: 1px solid darken($light-color, 10%);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
 
             &:only-of-type, &:last-of-type { border-bottom: none; }
         }
@@ -177,20 +177,19 @@
             margin: 0;
 
             li {
-                border-bottom: 1px solid darken($light-color, 10%);
+                border-bottom: 1px solid rgba(0,0,0,0.1);
 
                 &:only-child, &:last-child { border-bottom: none; }
 
                 a {
                     display: block;
-                    color: $dark-color;
                     padding: 1em;
                     font-weight: 700;
+                    color: $dark-color;
 
-                    &:hover, &:focus {
-                        background-color: darken($light-color, 2.5%);
-                        color: darken($dark-color, 30%);
-                    }
+                    &:hover, &:focus {background-color: rgba(0,0,0,0.05); }
+
+                    &:active { background-color: rgba(0,0,0,0.075); }
                 }
             }
         }

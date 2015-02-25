@@ -37,7 +37,7 @@ registerPlugin("popover", {
         $popover.data("popover-origin", $origin);
 
         // Add popover info to origin so that we can know when it has a popover
-        $origin.data("popover", $popover);
+        $origin.data("popover", $popover).addClass("popover-active");
 
         // Get various height, width and offset values
         winheight = $(window).height();
@@ -173,7 +173,7 @@ registerPlugin("popover", {
             $(document).off("click.popover-" + id + " keydown.popover-" + id);
 
             // Cleanup data and styles
-            $(origin).removeData("popover");
+            $(origin).removeData("popover").removeClass("popover-active");
 
             $this.removeData("popover-id").removeData("popover-origin").css({
                 top: "",

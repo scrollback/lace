@@ -1,4 +1,4 @@
-@mixin filter($map, $multi) {
+@mixin filter($map, $multi: ()) {
     @each $filter, $states in $map {
         @each $state in $states {
             $selector: unquote(".#{$filter}-#{$state}");

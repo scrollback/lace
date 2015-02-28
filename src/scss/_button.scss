@@ -4,7 +4,7 @@
 @import "linked";
 @import "spinner";
 
-@mixin buttons($bg: $accent-color, $fg: $light-color) {
+@mixin button($bg: $accent-color, $fg: $light-color) {
     @extend %snappy;
 
     display: inline-block;
@@ -51,7 +51,7 @@
 
 @include exports("button") {
     .button {
-        @include buttons;
+        @include button;
 
         &.secondary {
             background-color: transparent;
@@ -83,19 +83,19 @@
             }
         }
 
-        &.linked { @extend .linked; }
+        &.linked { @extend %linked; }
 
-        &.google { @include buttons(#4285f4, #fff); }
+        &.google { @include button(#4285f4, #fff); }
 
-        &.googleplus { @include buttons(#d34836, #fff); }
+        &.googleplus { @include button(#d34836, #fff); }
 
-        &.twitter { @include buttons(#55acee, #fff); }
+        &.twitter { @include button(#55acee, #fff); }
 
-        &.facebook { @include buttons(#3b5998, #fff); }
+        &.facebook { @include button(#3b5998, #fff); }
 
-        &.persona { @include buttons(#e66000, #fff); }
+        &.persona { @include button(#e66000, #fff); }
 
-        &.openid { @include buttons(#f78c40, #fff); }
+        &.openid { @include button(#f78c40, #fff); }
     }
 
     button, input[type="submit"], input[type="button"] {

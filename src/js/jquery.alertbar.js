@@ -11,28 +11,28 @@ registerPlugin("alertbar", {
         var self = this,
             settings = self.settings,
             $alert = settings.id ? $("#" + settings.id) : $(),
-            $container = $(".alert-container"),
-            $wrapper = $("<div>").addClass("alert-bar " + settings.type),
+            $container = $(".alertbar-container"),
+            $wrapper = $("<div>").addClass("alertbar " + settings.type),
             $elem = $wrapper.append(
-                $(self.element).addClass("alert-content"),
-                $("<span>").addClass("alert-remove")
-            ).attr("id", settings.id || ("alert-bar-" + new Date().getTime()));
+                $(self.element).addClass("alertbar-content"),
+                $("<span>").addClass("alertbar-remove")
+            ).attr("id", settings.id || ("alertbar-" + new Date().getTime()));
 
         // If a container doesn't exist, create a new one
         if (!$container.length) {
-            $container = $("<div>").addClass("alert-container");
+            $container = $("<div>").addClass("alertbar-container");
             $container.appendTo(settings.parent);
         }
 
         // If an alertbar with same ID exists, remove it
-        if ($alert.length && $alert.hasClass("alert-bar")) {
+        if ($alert.length && $alert.hasClass("alertbar")) {
             $alert.remove();
         }
 
         $elem.appendTo($container);
 
         // Add a close button to dismiss the alertbar
-        $elem.on("click.alertbar", ".alert-remove", function() {
+        $elem.on("click.alertbar", ".alertbar-remove", function() {
             self.dismiss();
         });
 
@@ -51,14 +51,14 @@ registerPlugin("alertbar", {
      * Cleanup alertbar.
      */
     destroy: function() {
-        var $element = this.element ? $(this.element) : $(".alert-bar").find(".alert-content");
+        var $element = this.element ? $(this.element) : $(".alertbar").find(".alertbar-content");
 
         // The element doesn't exist
         if (!$element.length) {
             return;
         }
 
-        $element.removeClass("alert-content");
+        $element.removeClass("alertbar-content");
     },
 
     /**
@@ -66,8 +66,8 @@ registerPlugin("alertbar", {
      */
     dismiss: function() {
         var self = this,
-            $element = self.element ? $(self.element).closest(".alert-bar") : $(".alert-bar"),
-            $container = $(".alert-container"),
+            $element = self.element ? $(self.element).closest(".alertbar") : $(".alertbar"),
+            $container = $(".alertbar-container"),
             cleanup = function() {
                 self.destroy();
                 $element.remove();

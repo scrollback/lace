@@ -10,14 +10,14 @@ registerPlugin("multientry", null, {
 
         // Add event listeners for mutlientry
         $element.on("blur.multientry", function() {
-            var $entry = $(this).find(".entry");
+            var $entry = $(this).find(".multientry-input");
 
             // When focus moves out of multientry, add the text to multientry
             self.add($entry.text());
 
             $entry.empty();
         }).on("click.multientry", function(e) {
-            var $close = $(e.target).closest(".segment-remove");
+            var $close = $(e.target).closest(".multientry-segment-remove");
 
             if ($close.length) {
                 // Remove the multientry item
@@ -25,8 +25,8 @@ registerPlugin("multientry", null, {
             }
 
             // Focus the editable part of multientry
-            $(this).find(".entry").focus();
-        }).on("keydown.multientry", ".entry", function(e) {
+            $(this).find(".multientry-input").focus();
+        }).on("keydown.multientry", ".multientry-input", function(e) {
             var range, selection,
                 $this = $(this);
 
@@ -43,7 +43,7 @@ registerPlugin("multientry", null, {
                 // Prevent default action and make previous text editable
                 e.preventDefault();
 
-                $this.text($this.prev().find(".segment-text").text());
+                $this.text($this.prev().find(".multientry-segment-text").text());
                 $this.prev().remove();
 
                 // Move caret to end of input
@@ -62,7 +62,7 @@ registerPlugin("multientry", null, {
                     range.select();
                 }
             }
-        }).on("paste.multientry", ".entry", function(e) {
+        }).on("paste.multientry", ".multientry-input", function(e) {
             // Text is pasted into multientry
             // Prevent default action and manually add the clipboard text
             e.preventDefault();
@@ -101,7 +101,7 @@ registerPlugin("multientry", null, {
             $("<span>").attr({
                 tabindex: 1,
                 contenteditable: true
-            }).addClass("item entry")
+            }).addClass("multientry-item multientry-input")
         ).multientry();
     },
 
@@ -149,10 +149,10 @@ registerPlugin("multientry", null, {
             }
 
             $("<span>")
-            .addClass("item segment")
-            .append($("<span>").addClass("segment-text").text(text))
-            .append($("<span>").addClass("segment-remove"))
-            .insertBefore($element.find(".entry"));
+            .addClass("multientry-item multientry-segment")
+            .append($("<span>").addClass("multientry-segment-text").text(text))
+            .append($("<span>").addClass("multientry-segment-remove"))
+            .insertBefore($element.find(".multientry-input"));
         });
 
         // New multientry items are now added
@@ -189,9 +189,9 @@ registerPlugin("multientry", null, {
                 return;
             }
 
-            $element.find(".segment-text").filter(function() {
+            $element.find(".multientry-segment-text").filter(function() {
                 return $(this).text().trim() === text;
-            }).parent(".item").remove();
+            }).parent(".multientry-item").remove();
         });
 
         // Multientry items are now removed
@@ -213,13 +213,13 @@ registerPlugin("multientry", null, {
         }
 
         // Get the items from the multientry
-        $element.find(".segment-text").each(function() {
+        $element.find(".multientry-segment-text").each(function() {
             items.push($(this).text());
         });
 
         // Include entered text also
         if (entered === true) {
-            items.push($element.find(".entry").text());
+            items.push($element.find(".multientry-input").text());
         }
 
         // Return the items

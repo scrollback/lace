@@ -66,11 +66,6 @@ code {
     line-height: 1.2em;
 }
 
-.fadeout {
-    @include opacity(0);
-    @extend %transition;
-}
-
 /* browser specific styles */
 ::selection {
     background-color: $accent-color;

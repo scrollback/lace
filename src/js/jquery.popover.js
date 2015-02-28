@@ -13,7 +13,7 @@ registerPlugin("popover", {
         var self = this,
             settings = self.settings,
             $origin = $(self.settings.origin),
-            $popover = $(self.element).addClass("popover-body"),
+            $popover = $(self.element).addClass("popover"),
             winheight, winwidth,
             originoffset, originheight, originwidth,
             popoverheight, popoverwidth,
@@ -152,7 +152,7 @@ registerPlugin("popover", {
      * Cleanup popover.
      */
     destroy: function() {
-        var $element = self.element ? $(self.element) : $(".popover-body");
+        var $element = self.element ? $(self.element) : $(".popover");
 
         // The element doesn't exist
         if (!$element.length) {
@@ -188,7 +188,7 @@ registerPlugin("popover", {
      */
     dismiss: function() {
         var self = this,
-            $element = self.element ? $(self.element) : $(".popover-body"),
+            $element = self.element ? $(self.element) : $(".popover"),
             $el, id,
             cleanup = function() {
                 self.destroy();

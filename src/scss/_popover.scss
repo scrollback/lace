@@ -16,7 +16,7 @@
         z-index: 800;
     }
 
-    .popover-body {
+    .popover {
         @include dropshadow(4);
 
         position: absolute;
@@ -58,7 +58,7 @@
             }
         }
 
-        &.popover-top {
+        &-top {
             @extend %slideup;
 
             &:before {
@@ -68,7 +68,7 @@
             }
         }
 
-        &.popover-left {
+        &-left {
             @extend %slideleft;
 
             &:before {
@@ -78,7 +78,7 @@
             }
         }
 
-        &.popover-bottom {
+        &-bottom {
             @extend %slidedown;
 
             &:before {
@@ -88,7 +88,7 @@
             }
         }
 
-        &.popover-right {
+        &-right {
             @extend %slideright;
 
             &:before {
@@ -152,24 +152,24 @@
             &.popover-right { margin-left: -8px; }
         }
 
-        .popover-section {
+        &-section {
             border-bottom: 1px solid rgba(0,0,0,0.1);
 
             &:only-of-type, &:last-of-type { border-bottom: none; }
         }
 
-        .popover-title {
+        &-title {
             padding: 1em;
             font-weight: 700;
         }
 
-        .popover-buttons {
+        &-buttons {
             padding: 1em;
 
             .button { width: 100%; }
         }
 
-        .popover-content { padding: 1em; }
+        &-content { padding: 1em; }
 
         ul {
             list-style: none;

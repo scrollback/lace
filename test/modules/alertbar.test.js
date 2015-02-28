@@ -33,7 +33,7 @@ QUnit.asyncTest("should dismiss on click on close", function(assert) {
             parent: $fixture
         });
 
-    $alertbar.parent().find(".alert-remove").click();
+    $alertbar.parent().find(".alertbar-remove").click();
 
     setTimeout(function() {
         assert.equal($alertbar.is(":visible"), false, "dismissed successfully!");

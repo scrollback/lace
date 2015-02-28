@@ -28,7 +28,7 @@
             }
         }
 
-        &.linked { @extend .linked; }
+        &.linked { @extend %linked; }
 
         $types: (
             info: $info-color,

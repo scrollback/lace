@@ -5,6 +5,27 @@
 @import "flexbox";
 @import "icons";
 
+
+/**
+ * Alertbar:
+ * An alertbar can be shown using the jQuery plugin,
+ *
+ * ```
+ * $("<div>Hello world!</div>").alertbar({ type: "info" })
+ * ```
+ *
+ * Possible types are,
+ * - info
+ * - success
+ * - warning
+ * - error
+ *
+ *     @example
+ *     div.alertbar.info
+ *       div.alertbar-content Hello world!
+ *       div.alertbar-remove
+ */
+
 @include exports("alertbar") {
     .alertbar-container {
         position: fixed;

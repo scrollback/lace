@@ -4,6 +4,23 @@
 @import "linked";
 @import "spinner";
 
+
+/**
+ * Button:
+ *
+ *     @example
+ *     a.button Primary button
+ *     a.button.secondary Secondary button
+ *     a.button.disabled Disabled button
+ *     a.button.working Working
+ *     a.button.google Google
+ *     a.button.googleplus Google+
+ *     a.button.twitter Twitter
+ *     a.button.facebook Facebook
+ *     a.button.persona Persona
+ *     a.button.openid OpenID
+ */
+
 @mixin button($bg: $accent-color, $fg: $light-color) {
     @extend %snappy;
 
@@ -32,20 +49,6 @@
         background-color: darken($bg, 10%);
         border-color: darken($bg, 10%);
         color: $fg;
-    }
-
-    &.working {
-        @include spinner;
-
-        padding-left: 0;
-
-        &, &:hover, &:focus, &:active {
-            background-color: darken($bg, 10%);
-            border-color: darken($bg, 10%);
-            color: mix($bg, $fg, 30%);
-            cursor: wait;
-            pointer-events: none;
-        }
     }
 }
 
@@ -83,7 +86,16 @@
             }
         }
 
-        &.linked { @extend %linked; }
+        &.working {
+            @include spinner;
+
+            padding-left: 0;
+
+            &, &:hover, &:focus, &:active {
+                cursor: wait;
+                pointer-events: none;
+            }
+        }
 
         &.google { @include button(#4285f4, #fff); }
 
@@ -96,6 +108,8 @@
         &.persona { @include button(#e66000, #fff); }
 
         &.openid { @include button(#f78c40, #fff); }
+
+        &.linked { @extend %linked; }
     }
 
     button, input[type="submit"], input[type="button"] {

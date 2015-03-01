@@ -5,74 +5,126 @@
 @import "button";
 @import "entry";
 
-/* base styles */
-body {
-    background: $light-color;
-    color: $dark-color;
-    font: #{$font-size}/($font-line-height) $font-family-normal;
+@include exports("base") {
+    body {
+        background: $light-color;
+        color: $dark-color;
+        font: #{$font-size}/($font-line-height) $font-family-normal;
 
-    @media #{$mobile-break-point} { font-size: #{$font-size-mobile}; }
+        @media #{$mobile-break-point} { font-size: #{$font-size-mobile}; }
+    }
+
+
+    /**
+     * Link:
+     *
+     *     @example
+     *     a(href="#") A sample link
+     */
+
+    a {
+        @extend %snappy;
+
+        color: $link-color;
+        text-decoration: none;
+
+        &:hover, &:focus { color: darken($link-color, 15%); }
+
+        &:active { color: darken($link-color, 30%); }
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+
+    /**
+     * Headings:
+     * Different levels of headings represent hierarchy in content
+     *
+     *     @example
+     *     h1 Heading 1
+     *     h2 Heading 2
+     *     h3 Heading 3
+     *     h4 heading 4
+     */
+
+    h1, h2, h3, h4 {
+        font-family: $font-family-headings;
+        font-weight: 700;
+        margin-top: .2em;
+        margin-bottom: .5em;
+    }
+
+    h1 { font-size: 1.8em; }
+
+    h2 { font-size: 1.5em; }
+
+    h3 { font-size: 1.2em; }
+
+    h4 { font-size: 1em; }
+
+
+    /**
+     * Paragraph:
+     *
+     *     @example
+     *     p This is just a sample paragraph. Paragraphs can contain multiple sentences.
+     */
+
+    p { margin: .5em 0; }
+
+    li { margin-left: 1.5em; }
+
+    input[type="checkbox"], input[type="radio"] {
+        width: 1.5em;
+        height: 1.5em;
+    }
+
+
+    /**
+     * Code:
+     *
+     *     @example
+     *     <code>.code { display: inline; }</code>
+     */
+
+    code {
+        font-weight: 700;
+        font-family: $font-family-monospace;
+        line-height: 1.2em;
+    }
+
+
+    /**
+     * Preformatted text:
+     *
+     *     @example:
+     *     <pre>
+     *         .text {
+     *             display: block;
+     *         }
+     *     </pre>
+     */
+
+    pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        padding: 1em;
+        margin: 1em 0;
+        border-radius: $roundness;
+        background-color: darken($light-color, 5%);
+    }
+
+    ::selection {
+        background-color: $accent-color;
+        color: $light-color;
+    }
+
+    ::-moz-selection {
+        background-color: $accent-color;
+        color: $light-color;
+    }
 }
 
-a {
-    @extend %snappy;
-
-    color: $link-color;
-    text-decoration: none;
-
-    &:hover, &:focus { color: darken($link-color, 15%); }
-
-    &:active { color: darken($link-color, 30%); }
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-h1, h2, h3, h4 {
-    font-family: $font-family-headings;
-    font-weight: 700;
-    margin-top: .25em;
-    margin-bottom: .5em;
-}
-
-h1 { font-size: 1.8em; }
-
-h2 { font-size: 1.5em; }
-
-h3 { font-size: 1.2em; }
-
-h4 { font-size: 1em; }
-
-p { margin: .5em 0; }
-
-input[type="checkbox"], input[type="radio"] {
-    width: 1.5em;
-    height: 1.5em;
-}
-
-pre {
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    padding: 1em;
-    border-radius: $roundness;
-    background-color: darken($light-color, 5%);
-}
-
-code {
-    font-weight: 700;
-    font-family: $font-family-monospace;
-    line-height: 1.2em;
-}
-
-/* browser specific styles */
-::selection {
-    background-color: $accent-color;
-    color: $light-color;
-}
-
-::-moz-selection {
-    background-color: $accent-color;
-    color: $light-color;
-}

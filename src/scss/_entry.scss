@@ -3,6 +3,19 @@
 @import "animations";
 @import "linked";
 
+
+/**
+ * Entry:
+ *
+ *     @example
+ *     input(type="text")
+ *     input(type="text", disabled="disabled")
+ *     input(type="text").info
+ *     input(type="text").success
+ *     input(type="text").warning
+ *     input(type="text").error
+ */
+
 @include exports("entry") {
     .entry {
         @extend %snappy;

@@ -20,6 +20,7 @@ var gulp = require("gulp"),
     uglify = require("gulp-uglify"),
     rename = require("gulp-rename"),
     sass = require("gulp-sass"),
+    bulkimport = require("gulp-sass-bulk-import"),
     combinemq = require("gulp-combine-mq"),
     autoprefixer = require("gulp-autoprefixer"),
     minify = require("gulp-minify-css"),
@@ -114,6 +115,7 @@ gulp.task("styles", function() {
     return gulp.src("test/**/*.scss")
     .pipe(plumber({ errorHandler: onerror }))
     .pipe(sourcemaps.init())
+    .pipe(bulkimport())
     .pipe(sass({
         outputStyle: "expanded",
         lineNumbers: !gutil.env.production,
@@ -128,7 +130,7 @@ gulp.task("styles", function() {
 });
 
 // Generate living styleguide
-gulp.task("styleguide", function() {
+gulp.task("styleguide", [ "styles" ], function() {
     return gulp.src("src/scss/**/*.scss")
     .pipe(styledown({
         config: "styledown.md",

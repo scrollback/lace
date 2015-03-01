@@ -7,6 +7,7 @@ var gulp = require("gulp"),
     buffer = require("vinyl-buffer"),
     es = require("event-stream"),
     qunit = require("node-qunit-phantomjs"),
+    styledown = require("gulp-styledown"),
     gutil = require("gulp-util"),
     sourcemaps = require("gulp-sourcemaps"),
     plumber = require("gulp-plumber"),
@@ -124,6 +125,16 @@ gulp.task("styles", function() {
     .pipe(rename({ suffix: ".min" }))
     .pipe(sourcemaps.write("."))
     .pipe(gulp.dest("dist/styles"));
+});
+
+// Generate living styleguide
+gulp.task("styleguide", function() {
+    return gulp.src("src/scss/**/*.scss")
+    .pipe(styledown({
+        config: "styledown.md",
+        filename: "index.html"
+    }))
+    .pipe(gulp.dest("dist/styleguide"));
 });
 
 // Clean up generated files

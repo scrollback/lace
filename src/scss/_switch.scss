@@ -3,6 +3,19 @@
 @import "animations";
 @import "icons";
 
+
+/**
+ * Switch:
+ *
+ *     @example
+ *     div.switch-container
+ *         input(type="checkbox", name="example").switch
+ *         label(for="example")
+ *     div.switch-container
+ *         input(type="checkbox", name="example", checked).switch
+ *         label(for="example")
+ */
+
 @include exports("switch") {
     $switch-font-size: 1.2em;
     $switch-trough-size: ( 2em / $switch-font-size ) * 1em;
@@ -17,7 +30,7 @@
     .switch {
         display: none;
 
-        & ~ label {
+        ~ label {
             @include icon(close);
 
             cursor: pointer;
@@ -40,7 +53,7 @@
                 width: $switch-trough-size * 2;
                 padding: ( ( $switch-font-size + .2 ) / 4 ) ( ( $switch-font-size - .2 ) / 2 );
                 text-align: right;
-                box-shadow: inset 0 1px 0 rgba(0,0,0,.15);
+                box-shadow: inset 0 1px 0 rgba(0, 0, 0, .15);
                 background-color: $error-color;
             }
 
@@ -51,7 +64,7 @@
                 height: $switch-slider-size;
                 width: $switch-slider-size;
                 background-color: $light-color;
-                box-shadow: 0 -1px 1px rgba(0,0,0,.15);
+                box-shadow: 0 -1px 1px rgba(0, 0, 0, .15);
             }
         }
 

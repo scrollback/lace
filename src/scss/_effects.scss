@@ -1,3 +1,5 @@
+// scss-lint:disable DuplicateProperty
+
 @mixin opacity($opacity: .5) {
     -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=#{$opacity * 100});
     -webkit-opacity: $opacity;

@@ -6,6 +6,8 @@ $large: "only screen and (min-width: 64.063em)" !default;
 
 @include exports("grid") {
     %clearfix {
+        // scss-lint:disable PropertySpelling
+
         *zoom: 1;
 
         &:before, &:after {

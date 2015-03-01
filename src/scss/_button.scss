@@ -53,23 +53,23 @@
 }
 
 @include exports("button") {
-    .button {
+    %button {
         @include button;
 
         &.secondary {
             background-color: transparent;
-            border-color: rgba(0,0,0,0.15);
+            border-color: rgba(0, 0, 0, .15);
             color: currentcolor;
 
             &:hover, &:focus {
-                background-color: rgba(255,255,255,0.3);
-                border-color: rgba(0,0,0,0.3);
+                background-color: rgba(255, 255, 255, .3);
+                border-color: rgba(0, 0, 0, .3);
                 color: currentcolor;
             }
 
             &:active {
-                background-color: rgba(0,0,0,0.05);;
-                border-color: rgba(0,0,0,0.3);
+                background-color: rgba(0, 0, 0, .05);;
+                border-color: rgba(0, 0, 0, .3);
                 color: currentcolor;
             }
         }
@@ -78,8 +78,8 @@
             &, &:hover, &:focus, &:active {
                 @include opacity(.5);
 
-                background-color: rgba(0,0,0,0.05);
-                border-color: rgba(0,0,0,0.3);
+                background-color: rgba(0, 0, 0, .05);
+                border-color: rgba(0, 0, 0, .3);
                 color: currentcolor;
                 cursor: default;
                 pointer-events: none;
@@ -112,9 +112,11 @@
         &.linked { @extend %linked; }
     }
 
-    button, input[type="submit"], input[type="button"] {
-        @extend .button;
+    .button { @extend %button; }
 
-        &:disabled { @extend .button.disabled; }
+    button, [type="submit"], [type="button"] {
+        @extend %button;
+
+        &:disabled { @extend %button.disabled; }
     }
 }

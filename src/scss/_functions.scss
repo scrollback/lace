@@ -37,10 +37,10 @@ $rem-base: 10px;
             $px : append($px, $value);
             $rem: append($rem, $value);
         } @else if type-of(strip-unit($value)) == number {
-            $px : append($px,  $value);
+            $px : append($px, $value);
             $rem: append($rem, rem-calc($value));
         } @else {
-            $px : append($px,  $value);
+            $px : append($px, $value);
             $rem: append($rem, $value);
         }
     }

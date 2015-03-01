@@ -118,6 +118,7 @@
 
     @include keyframes(fadein) {
         0%  { @include opacity(0); }
+
         100%  { @include opacity(1); }
     }
 

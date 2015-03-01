@@ -25,7 +25,7 @@
         margin: .5em;
         border-radius: $roundness;
         font-weight: normal;
-        border: 1px solid rgba(0,0,0,0.1);
+        border: 1px solid rgba(0, 0, 0, .1);
         background-color: $light-color;
         color: $dark-color;
         text-transform: none;
@@ -35,7 +35,7 @@
             @extend %popover-arrow;
 
             background-image: linear-gradient(135deg, $light-color 60%, $light-color 60%, transparent 60%);
-            border-color: rgba(0,0,0,0.1);
+            border-color: rgba(0, 0, 0, .1);
         }
 
         $types: (
@@ -153,9 +153,9 @@
         }
 
         &-section {
-            border-bottom: 1px solid rgba(0,0,0,0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, .1);
 
-            &:only-of-type, &:last-of-type { border-bottom: none; }
+            &:only-of-type, &:last-of-type { border-bottom: 0; }
         }
 
         &-title {
@@ -175,22 +175,22 @@
             list-style: none;
             padding: 0;
             margin: 0;
+        }
 
-            li {
-                border-bottom: 1px solid rgba(0,0,0,0.1);
+        li {
+            border-bottom: 1px solid rgba(0, 0, 0, .1);
 
-                &:only-child, &:last-child { border-bottom: none; }
+            &:only-child, &:last-child { border-bottom: 0; }
 
-                a {
-                    display: block;
-                    padding: 1em;
-                    font-weight: 700;
-                    color: $dark-color;
+            a {
+                display: block;
+                padding: 1em;
+                font-weight: 700;
+                color: $dark-color;
 
-                    &:hover, &:focus {background-color: rgba(0,0,0,0.05); }
+                &:hover, &:focus {background-color: rgba(0, 0, 0, .05); }
 
-                    &:active { background-color: rgba(0,0,0,0.075); }
-                }
+                &:active { background-color: rgba(0, 0, 0, .075); }
             }
         }
     }

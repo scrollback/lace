@@ -5,6 +5,8 @@
  */
 
 @include exports("reset") {
+    // scss-lint:disable QualifyingElement
+
     /* set the viewport properties (limited browser support) */
     @viewport {
         width: device-width;
@@ -28,8 +30,8 @@
         /* set default font family to sans-serif */
         font-family: sans-serif;
         /* remove iOS text size adjust without disabling user zoom */
-        -webkit-text-size-adjust:100%;
-        -ms-text-size-adjust:100%;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
         /* eliminate 300ms click delay */
         -ms-touch-action: manipulation; /* IE10 */
         touch-action: manipulation; /* IE11 */
@@ -62,8 +64,8 @@
     footer, header, hgroup, menu, nav, section { display: block; }
 
     audio, canvas, progress, video {
-      display: inline-block;
-      vertical-align: baseline;
+        display: inline-block;
+        vertical-align: baseline;
     }
 
      /* address "[hidden]"" styling not present in IE */
@@ -137,10 +139,7 @@
     blockquote, q { quotes: none; }
 
     blockquote:before, blockquote:after,
-    q:before, q:after {
-        content: "";
-        content: none;
-    }
+    q:before, q:after { content: ""; }
 
     /* remove most spacing between table cells */
     table {

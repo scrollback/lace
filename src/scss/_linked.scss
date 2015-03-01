@@ -2,7 +2,7 @@
 @import "global";
 
 %linked {
-    &:not(:only-of-type):not(:last-of-type) { border-right: none; }
+    &:not(:only-of-type):not(:last-of-type) { border-right: 0; }
 
     &:first-of-type { border-radius: $roundness 0 0 $roundness; }
 

@@ -76,7 +76,26 @@
 
     p { margin: .5em 0; }
 
-    li { margin-left: 1.5em; }
+
+    /**
+     * Lists:
+     *
+     *     @example
+     *     h4 Ordered lists
+     *     p
+     *       ol
+     *         li Item 1
+     *         li Item 2
+     *         li Item 3
+     *     h4 Unordered lists
+     *     p
+     *       ul
+     *         li Item 1
+     *         li Item 2
+     *         li Item 3
+     */
+
+    ul, ol { margin-left: 1.5em; }
 
     [type="checkbox"], [type="radio"] {
         width: 1.5em;

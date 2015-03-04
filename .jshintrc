@@ -1,6 +1,5 @@
 {
     "browser": true,
-    "predef" : [ "define" ],
     "globals": {
         "jQuery": true
     }

@@ -49,7 +49,7 @@ registerPlugin("popover", {
 
         spacetop = originoffset.top - $(document).scrollTop() + (originheight / 2);
         spacebottom = winheight - spacetop;
-        spaceleft = originoffset.left - $(document).scrollLeft() + ( originwidth / 2 );
+        spaceleft = originoffset.left - $(document).scrollLeft() + (originwidth / 2);
         spaceright = winwidth - spaceleft;
 
         // Add event listeners to the document for dismissing the popover
@@ -98,7 +98,7 @@ registerPlugin("popover", {
 
             if (spaceleft < originwidth / 2) {
                 classnames += " arrow-left";
-            } else if (spaceright < originwidth / 2) {
+            } else if (spaceright < (originwidth / 2)) {
                 classnames += " arrow-right";
             }
 
@@ -125,13 +125,11 @@ registerPlugin("popover", {
 
             if (popoverheight >= spacebottom) {
                 classnames += " popover-top";
-                spacetop = spacetop - originheight - popoverheight;
+                spacetop = spacetop - popoverheight - (originheight / 2);
             } else {
                 classnames += " popover-bottom";
                 spacetop = (originheight <= winheight) ? spacetop : (winheight / 2);
             }
-
-            spacetop += originheight / 2;
         }
 
         if (!self.settings.arrow) {
@@ -152,7 +150,7 @@ registerPlugin("popover", {
      * Cleanup popover.
      */
     destroy: function() {
-        var $element = self.element ? $(self.element) : $(".popover");
+        var $element = this.element ? $(this.element) : $(".popover");
 
         // The element doesn't exist
         if (!$element.length) {
@@ -189,7 +187,6 @@ registerPlugin("popover", {
     dismiss: function() {
         var self = this,
             $element = self.element ? $(self.element) : $(".popover"),
-            $el, id,
             cleanup = function() {
                 self.destroy();
                 $element.remove();

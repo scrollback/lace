@@ -29,6 +29,8 @@
         color: $link-color;
         text-decoration: none;
 
+        &:link { border-bottom: 1px solid currentColor; }
+
         &:hover, &:focus { color: darken($link-color, 15%); }
 
         &:active { color: darken($link-color, 30%); }
@@ -95,7 +97,7 @@
      *         li Item 3
      */
 
-    ul, ol { margin-left: 1.5em; }
+    ul, ol { margin: 1em 0 1em 2em; }
 
     [type="checkbox"], [type="radio"] {
         width: 1.5em;
@@ -107,7 +109,7 @@
      * Code:
      *
      *     @example
-     *     <code>.code { display: inline; }</code>
+     *     code .code { display: inline; }
      */
 
     code {
@@ -121,11 +123,7 @@
      * Preformatted text:
      *
      *     @example:
-     *     <pre>
-     *         .text {
-     *             display: block;
-     *         }
-     *     </pre>
+     *     pre |    1    |    2    |    3    |
      */
 
     pre {
@@ -135,6 +133,39 @@
         margin: 1em 0;
         border-radius: $roundness;
         background-color: darken($light-color, 5%);
+    }
+
+
+    /**
+     * Blockquote:
+     *
+     *     @example:
+     *     blockquote Math is easy, design is hard
+     */
+
+    blockquote {
+        font-size: 1.5em;
+        font-style: italic;
+        margin: 1em 0;
+        padding-left: 1em;
+        border-left: 2px solid darken($light-color, 10%);
+    }
+
+
+    /**
+     * Horizontal ruler:
+     *
+     *     @example:
+     *     hr
+     */
+
+    hr {
+        @include opacity(.3);
+
+        border: 0;
+        height: 1px;
+        margin: 1em 0;
+        background-color: currentColor;
     }
 
     ::selection {

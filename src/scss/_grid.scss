@@ -46,10 +46,7 @@ $large: "only screen and (min-width: 64.063em)" !default;
         margin-bottom: 0;
     }
 
-    .col {
-        padding-right: $gutter;
-        padding-left: $gutter;
-    }
+    .col { padding: $gutter; }
 
     @media #{$small} {
         @include grid-classes($size: small, $columns: $columns);
@@ -69,8 +66,7 @@ $large: "only screen and (min-width: 64.063em)" !default;
             vertical-align: top;
             width: $i * $block-size;
             max-width: 100%;
-            padding-right: $gutter;
-            padding-left: $gutter;
+            padding: $gutter;
         }
     }
 }

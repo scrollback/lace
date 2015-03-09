@@ -17,6 +17,7 @@
     }
 
     .popover {
+        @include fadein(.3s ease);
         @include dropshadow(4);
 
         position: absolute;
@@ -59,8 +60,6 @@
         }
 
         &-top {
-            @extend %slideup;
-
             &:before {
                 @include transform(rotate(225deg));
 
@@ -69,8 +68,6 @@
         }
 
         &-left {
-            @extend %slideleft;
-
             &:before {
                 @include transform(rotate(135deg));
 
@@ -79,8 +76,6 @@
         }
 
         &-bottom {
-            @extend %slidedown;
-
             &:before {
                 @include transform(rotate(45deg));
 
@@ -89,8 +84,6 @@
         }
 
         &-right {
-            @extend %slideright;
-
             &:before {
                 @include transform(rotate(315deg));
 

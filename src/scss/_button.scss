@@ -117,6 +117,8 @@
     button, [type="submit"], [type="button"] {
         @extend %button;
 
+        -webkit-appearance: none; /* reset default styling */
+
         &:disabled { @extend %button.disabled; }
     }
 }

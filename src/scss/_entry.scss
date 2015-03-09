@@ -63,6 +63,8 @@
     input, textarea {
         @extend %entry;
 
+        -webkit-appearance: none; /* reset default styling */
+
         margin: .5em 0;
         padding: .5em;
         font-size: 1em;

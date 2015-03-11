@@ -3,7 +3,7 @@ $font-family-normal: "Open Sans", "Myriad Pro", Helvetica, Tahoma, "Nimbus Sans"
 $font-family-headings: "Open Sans", Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif !default;
 $font-family-monospace: Consolas, "Andale Mono", "Lucida Console", "Nimbus Mono", "Courier New", monospace !default;
 $font-size: 14px !default;
-$font-size-mobile: 13px !default;
+$font-size-mobile: $font-size !default;
 $font-line-height: 1.625 !default;
 
 // Colors

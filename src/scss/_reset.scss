@@ -140,9 +140,6 @@
 
     blockquote, q { quotes: none; }
 
-    blockquote:before, blockquote:after,
-    q:before, q:after { content: ""; }
-
     /* remove most spacing between table cells */
     table {
         border-collapse: collapse;

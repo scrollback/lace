@@ -13,6 +13,10 @@
  *     a.button.secondary Secondary button
  *     a.button.disabled Disabled button
  *     a.button.working Working
+ *     a.button.info Info
+ *     a.button.warning Warning
+ *     a.button.error Error
+ *     a.button.facebook Facebook
  *     a.button.google Google
  *     a.button.googleplus Google+
  *     a.button.twitter Twitter
@@ -108,7 +112,7 @@
             google: #4285f4,
             googleplus: #d34836,
             twitter: #55acee,
-            facebook: #fff,
+            facebook: #3b5998,
             persona: #e66000,
             openid: #f78c40
         );

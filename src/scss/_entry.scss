@@ -63,13 +63,13 @@
     input, textarea {
         @extend %entry;
 
-        -webkit-appearance: none; /* reset default styling */
-
         margin: .5em 0;
         padding: .5em;
         font-size: 1em;
         outline: none;
 
         &:disabled { @extend %entry.disabled; }
+
+        &[type=text], &[type=search] { -webkit-appearance: none; /* reset default styling */ }
     }
 }

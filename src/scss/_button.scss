@@ -2,7 +2,6 @@
 @import "global";
 @import "animations";
 @import "linked";
-@import "spinner";
 
 
 /**
@@ -16,7 +15,6 @@
  *     a.button.info Info
  *     a.button.warning Warning
  *     a.button.error Error
- *     a.button.facebook Facebook
  *     a.button.google Google
  *     a.button.googleplus Google+
  *     a.button.twitter Twitter
@@ -24,6 +22,12 @@
  *     a.button.persona Persona
  *     a.button.openid OpenID
  */
+
+@include keyframes(working) {
+    0% { background-position: 0 0; }
+
+    100% { background-position: 1em 0; }
+}
 
 @mixin button($bg: $accent-color, $fg: $light-color) {
     @if (hue($bg) > 0) {
@@ -79,7 +83,7 @@
 
         &.disabled {
             &, &:hover, &:focus, &:active {
-                @include opacity(.5);
+                @include opacity(.75);
 
                 background-color: rgba(0, 0, 0, .2);
                 color: currentcolor;
@@ -89,9 +93,16 @@
         }
 
         &.working {
-            @include spinner;
+            @include prefix(animation, working .3s linear infinite);
 
-            padding-left: 0;
+            background-image: linear-gradient(-45deg, rgba(0, 0, 0, .1) 25%,
+                                              transparent 25%,
+                                              transparent 50%,
+                                              rgba(0, 0, 0, .1) 50%,
+                                              rgba(0, 0, 0, .1) 75%,
+                                              transparent 75%,
+                                              transparent);
+            background-size: 1em 1em;
 
             &, &:hover, &:focus, &:active {
                 cursor: wait;

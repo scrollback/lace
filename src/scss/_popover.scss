@@ -3,6 +3,16 @@
 @import "animations";
 @import "dropshadow";
 
+
+/**
+ * Popover:
+ * A popover can be shown using the jQuery plugin,
+ *
+ * ```
+ * $("<div>Hello world!</div>").popover({ origin: e.currentTarget })
+ * ```
+ */
+
 @include exports("popover") {
     %popover-arrow {
         position: absolute;

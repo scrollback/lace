@@ -3,6 +3,14 @@
 @import "animations";
 @import "dropshadow";
 
+
+/**
+ * Tooltip:
+ *
+ *     @example
+ *     span(data-tooltip="I'm a tooltip :D") Hover me!
+ */
+
 @include exports("tooltip") {
     [data-tooltip] {
         position: relative;

@@ -3,6 +3,16 @@
 @import "animations";
 @import "dropshadow";
 
+
+/**
+ * Modal:
+ * A modal can be shown using the jQuery plugin,
+ *
+ * ```
+ * $("<div>Hello world!</div>").modal()
+ * ```
+ */
+
 @include exports("modal") {
     .backdrop {
         @extend %fadein;

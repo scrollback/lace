@@ -2,6 +2,14 @@
 @import "global";
 @import "animations";
 
+
+/**
+ * Spinner:
+ *
+ *     @example
+ *     div.spinner
+ */
+
 @mixin spinner($size: 1em) {
     &:before {
         @extend %spin;
@@ -17,4 +25,8 @@
         border-left: 2px solid transparent;
         border-radius: 50%;
     }
+}
+
+@include exports("spinner") {
+    .spinner { @include spinner; }
 }

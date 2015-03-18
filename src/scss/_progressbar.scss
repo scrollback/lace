@@ -2,6 +2,16 @@
 @import "global";
 @import "animations";
 
+
+/**
+ * Progressbar:
+ * A progressbar can be shown using the jQuery plugin,
+ *
+ * ```
+ * $("<div>").progressbar()
+ * ```
+ */
+
 @include exports("progressbar") {
     .progressbar {
         @extend %transition;

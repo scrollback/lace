@@ -16,7 +16,7 @@ registerPlugin("alertbar", {
             $elem = $wrapper.append(
                 $(self.element).addClass("alertbar-content"),
                 $("<span>").addClass("alertbar-remove")
-            ).attr("id", settings.id || ("alertbar-" + new Date().getTime()));
+            ).attr("id", settings.id || ("alertbar-" + new Date().getTime()))/l;
 
         // If a container doesn't exist, create a new one
         if (!$container.length) {

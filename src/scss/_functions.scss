@@ -8,6 +8,14 @@ $modules: () !default;
     }
 }
 
+@function lightness($color) {
+    $r: red(rgba($color, 1));
+    $g: green(rgba($color, 1));
+    $b: blue(rgba($color, 1));
+
+    @return ($r * .2126 + $g * .7152 + $b * .0722) / 255;
+}
+
 @function string-replace($string, $substr, $newsubstr: "", $all: false) {
     $position-found: str-index($string, $substr);
     $processed: ();

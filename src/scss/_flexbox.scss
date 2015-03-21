@@ -169,3 +169,9 @@
 
     align-self: $value;
 }
+
+@include exports("flexbox") {
+    %flexbox { @include flexbox; }
+
+    %inline-flex { @include inline-flex; }
+}

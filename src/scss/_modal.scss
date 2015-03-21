@@ -9,7 +9,7 @@
  * A modal can be shown using the jQuery plugin,
  *
  * ```
- * $("<div>Hello world!</div>").modal()
+ * $("<div>").html("<div class='modal-content'>Hello world!</div>").modal()
  * ```
  */
 
@@ -41,7 +41,6 @@
         overflow: auto;
         background: $light-color;
         border-radius: $roundness;
-        padding: 2em;
 
         @media #{$mobile-break-point} {
             // scss-lint:disable ImportantRule
@@ -56,8 +55,13 @@
             min-width: 100%;
             max-height: 100%;
             width: 100%;
-            padding: 1.5em;
             border-radius: 0;
+        }
+
+        &-content {
+            padding: 2em;
+
+            @media #{$mobile-break-point} { padding: 1.5em; }
         }
     }
 }

@@ -4,7 +4,7 @@ QUnit.module("modal");
 
 QUnit.test("should show", function(assert) {
     var $fixture = $("#qunit-fixture"),
-        $modal = $("<div>").text("A test modal").modal({
+        $modal = $("<div>").html("<div class='modal-content'>A test modal</div>").modal({
             parent: $fixture
         });
 
@@ -14,7 +14,7 @@ QUnit.test("should show", function(assert) {
 
 QUnit.asyncTest("should dismiss", function(assert) {
     var $fixture = $("#qunit-fixture"),
-        $modal = $("<div>").text("A test modal").modal({
+        $modal = $("<div>").html("<div class='modal-content'>A test modal</div>").modal({
             parent: $fixture
         });
 
@@ -29,7 +29,7 @@ QUnit.asyncTest("should dismiss", function(assert) {
 
 QUnit.asyncTest("should dismiss on click on backdrop", function(assert) {
     var $fixture = $("#qunit-fixture"),
-        $modal = $("<div>").text("A test modal").modal({
+        $modal = $("<div>").html("<div class='modal-content'>A test modal</div>").modal({
             parent: $fixture,
             dismiss: true
         });
@@ -45,7 +45,7 @@ QUnit.asyncTest("should dismiss on click on backdrop", function(assert) {
 
 QUnit.asyncTest("should not dismiss on click on backdrop", function(assert) {
     var $fixture = $("#qunit-fixture"),
-        $modal = $("<div>").text("A test modal").modal({
+        $modal = $("<div>").html("<div class='modal-content'>A test modal</div>").modal({
             parent: $fixture,
             dismiss: false
         });
@@ -61,7 +61,7 @@ QUnit.asyncTest("should not dismiss on click on backdrop", function(assert) {
 
 QUnit.asyncTest("should dismiss on escape", function(assert) {
     var $fixture = $("#qunit-fixture"),
-        $modal = $("<div>").text("A test modal").modal({
+        $modal = $("<div>").html("<div class='modal-content'>A test modal</div>").modal({
             parent: $fixture,
             dismiss: true
         });
@@ -77,7 +77,7 @@ QUnit.asyncTest("should dismiss on escape", function(assert) {
 
 QUnit.asyncTest("should not dismiss on escape", function(assert) {
     var $fixture = $("#qunit-fixture"),
-        $modal = $("<div>").text("A test modal").modal({
+        $modal = $("<div>").html("<div class='modal-content'>A test modal</div>").modal({
             parent: $fixture,
             dismiss: false
         });
@@ -93,7 +93,7 @@ QUnit.asyncTest("should not dismiss on escape", function(assert) {
 
 QUnit.test("should have backdrop", function(assert) {
     var $fixture = $("#qunit-fixture"),
-        $modal = $("<div>").text("A test modal").modal({
+        $modal = $("<div>").html("<div class='modal-content'>A test modal</div>").modal({
             parent: $fixture,
             backdrop: true
         });
@@ -103,7 +103,7 @@ QUnit.test("should have backdrop", function(assert) {
 
 QUnit.test("should not have backdrop", function(assert) {
     var $fixture = $("#qunit-fixture"),
-        $modal = $("<div>").text("A test modal").modal({
+        $modal = $("<div>").html("<div class='modal-content'>A test modal</div>").modal({
             parent: $fixture,
             backdrop: false
         });

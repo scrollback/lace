@@ -44,10 +44,6 @@
     @include prefix(animation, fadein $args);
 }
 
-@mixin progressbar($args: 3s ease) {
-    @include prefix(animation, progressbar $args);
-}
-
 @mixin transition($args: .3s ease) {
     @include prefix(transition, $args);
 }
@@ -122,18 +118,6 @@
         100%  { @include opacity(1); }
     }
 
-    @include keyframes(progressbar) {
-        0% { width: 0; }
-
-        10% { width: 30%; }
-
-        30% { width: 50%; }
-
-        40% { width: 70%; }
-
-        100% { width: 80%; }
-    }
-
     %spin { @include spin; }
 
     %slideup { @include slideup; }
@@ -147,8 +131,6 @@
     %appear { @include appear; }
 
     %fadein { @include fadein; }
-
-    %progressbar { @include progressbar; }
 
     %transition { @include transition; }
 

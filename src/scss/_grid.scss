@@ -4,21 +4,6 @@ $small: "only screen" !default;
 $medium: "only screen and (min-width: 40.063em)" !default;
 $large: "only screen and (min-width: 64.063em)" !default;
 
-@include exports("grid") {
-    %clearfix {
-        // scss-lint:disable PropertySpelling
-
-        *zoom: 1;
-
-        &:before, &:after {
-            content: "";
-            display: table;
-        }
-
-        &:after { clear: both; }
-    }
-}
-
 @mixin grid-classes($size, $columns) {
     $dirs: left, right;
 
@@ -69,4 +54,21 @@ $large: "only screen and (min-width: 64.063em)" !default;
             padding: $gutter;
         }
     }
+}
+
+@mixin clearfix {
+    // scss-lint:disable PropertySpelling
+
+    *zoom: 1;
+
+    &:before, &:after {
+        content: "";
+        display: table;
+    }
+
+    &:after { clear: both; }
+}
+
+@include exports("grid") {
+    %clearfix { @include clearfix; }
 }

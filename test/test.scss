@@ -1,6 +1,8 @@
 @import "../src/scss/*";
 
-#qunit, { padding: 1em; }
+// scss-lint:disable QualifyingElement IdSelector
+
+#qunit { padding: 1em; }
 
 body.sg {
     width: 50em;
@@ -11,7 +13,7 @@ body.sg {
 
 .sg-block {
     padding: 1em 0;
-    border-top: 1px solid rgba(0,0,0,0.1);
+    border-top: 1px solid rgba(0, 0, 0, .1);
 }
 
 .sg-code { font-family: $font-family-monospace; }

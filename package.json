@@ -17,6 +17,9 @@
     "url": "https://github.com/scrollback/lace/issues"
   },
   "homepage": "https://github.com/scrollback/lace",
+  "scripts": {
+    "test": "node_modules/.bin/gulp test"
+  },
   "devDependencies": {
     "bower": "latest",
     "browserify": "latest",

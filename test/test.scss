@@ -1,5 +1,7 @@
 @import "../src/scss/*";
 
+#testhound { foo: bar; }
+
 // scss-lint:disable QualifyingElement IdSelector
 
 #qunit { padding: 1em; }

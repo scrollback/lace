@@ -1,0 +1,16 @@
+@mixin clearfix {
+    // scss-lint:disable PropertySpelling
+
+    *zoom: 1;
+
+    &:before, &:after {
+        content: "";
+        display: table;
+    }
+
+    &:after { clear: both; }
+}
+
+@include exports("clearfix") {
+    %clearfix { @include clearfix; }
+}

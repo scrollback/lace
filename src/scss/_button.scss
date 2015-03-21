@@ -23,12 +23,6 @@
  *     a.button.openid OpenID
  */
 
-@include keyframes(working) {
-    0% { background-position: 0 0; }
-
-    100% { background-position: 1em 0; }
-}
-
 @mixin button($bg: $accent-color, $fg: $light-color) {
     @if (hue($bg) > 0) {
         @include font-smoothing(antialiased); /* Fix blurry text on Mac OS X */
@@ -50,6 +44,12 @@
 }
 
 @include exports("button") {
+    @include keyframes(working) {
+        0% { background-position: 0 0; }
+
+        100% { background-position: 1em 0; }
+    }
+
     %button {
         @extend %snappy;
         @include button;

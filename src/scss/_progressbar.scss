@@ -36,6 +36,6 @@
         z-index: 900;
         background-color: $accent-color;
 
-        &.loading { @include prefix(animation, progressbar $args); }
+        &.loading { @include prefix(animation, progressbar); }
     }
 }

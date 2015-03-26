@@ -28,8 +28,7 @@
 
         color: $link-color;
         text-decoration: none;
-
-        &:link { border-bottom: 1px solid currentColor; }
+        border-bottom: 1px solid currentColor;
 
         &:hover, &:focus { color: darken($link-color, 15%); }
 

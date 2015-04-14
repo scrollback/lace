@@ -75,8 +75,7 @@ registerPlugin("modal", {
      * Cleanup modal dialog.
      */
     destroy: function() {
-        var $modal = this.element ? $(this.element) : $(".modal"),
-            $backdrop = $modal.data("modal-backdrop") || $(".backdrop");
+        var $modal = this.element ? $(this.element) : $(".modal");
 
         // The element doesn't exist
         if (!$modal.length) {
@@ -89,9 +88,7 @@ registerPlugin("modal", {
             "margin-left": "",
             "transform": "",
             "opacity": ""
-        }).removeClass("modal, out");
-
-        $backdrop.off("click.modal").removeClass('"out');
+        }).removeClass("modal");
 
         // Remove event listeners
         $(document).off("keydown.modal");
@@ -106,40 +103,29 @@ registerPlugin("modal", {
             $backdrop = $modal.data("modal-backdrop"),
             cleanup = function() {
                 self.destroy();
-                $modal.remove();
+                $modal.remove().removeClass("out");
 
                 if ($backdrop.length) {
-                    $backdrop.remove();
+                    $backdrop.remove().removeClass("out");
                 }
 
                 // Modal is now dismissed
                 $.event.trigger("modalDismissed", [ $modal ]);
-            },
-            animate;
+            };
 
         $backdrop = ($backdrop && $backdrop.length) ? $backdrop : $(".backdrop");
 
         // Element doesn't exist
-        if (!($modal.length && $backdrop.length)) {
+        if (!$modal.length) {
             return;
         }
 
-        // Set the correct animation
-        if ($(window).width() < (27 * 16)) {
-            animate = {
-                opacity: 0,
-                translateY: "10%"
-            };
-        } else {
-            animate = {
-                opacity: 0,
-                scale: "70%"
-            };
-        }
-
         // Animate out and remove the element from DOM
-        $backdrop.addClass("out");
         $modal.addClass("out");
+
+        if ($backdrop.length) {
+            $backdrop.addClass("out");
+        }
 
         setTimeout(function() {
             cleanup();

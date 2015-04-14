@@ -189,7 +189,7 @@ registerPlugin("popover", {
             $element = self.element ? $(self.element) : $(".popover"),
             cleanup = function() {
                 self.destroy();
-                $element.remove();
+                $element.remove().removeClass("out");
 
                 // Popover is now dismissed
                 $.event.trigger("popoverDismissed", [ $element ]);

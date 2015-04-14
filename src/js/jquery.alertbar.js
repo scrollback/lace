@@ -70,7 +70,7 @@ registerPlugin("alertbar", {
             $container = $(".alertbar-container"),
             cleanup = function() {
                 self.destroy();
-                $element.remove();
+                $element.remove().removeClass("out");
 
                 // No alertbars left, safe to remove the container
                 if (!$container.children().length) {

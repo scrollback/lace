@@ -26,10 +26,9 @@
     "gulpfile.js"
   ],
   "dependencies": {
-    "jquery": "1",
-    "velocity": "~1.2.1"
+    "jquery": "latest"
   },
   "devDependencies": {
-    "qunit": "~1.16.0"
+    "qunit": "latest"
   }
 }

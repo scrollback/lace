@@ -141,3 +141,14 @@ $rem-base: 10px;
         -moz-osx-font-smoothing: $value;
     }
 }
+
+@mixin keyframes($animation) {
+    @-webkit-keyframes #{$animation} { @content; }
+
+    @-moz-keyframes #{$animation} { @content; }
+
+    @-ms-keyframes #{$animation} { @content; }
+
+    @keyframes #{$animation} { @content; }
+}
+

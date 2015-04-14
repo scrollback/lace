@@ -1,0 +1,16 @@
+@import "../functions";
+@import "../easings";
+
+@mixin fadeout($args: .3s $easeOutSine) {
+    animation: fadeout #{$args};
+}
+
+@include exports("animations/fadeout") {
+    @include keyframes(fadeout) {
+        0% { opacity: 1; }
+
+        100% { opacity: 0; }
+    }
+
+    %fadeout { @include fadeout; }
+}

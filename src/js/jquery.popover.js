@@ -200,13 +200,11 @@ registerPlugin("popover", {
             return;
         }
 
-        // Remove the element from DOM
-        if ($.fn.velocity) {
-            $element.velocity("fadeOut", 150, function() {
-                cleanup();
-            });
-        } else {
+        // Animate out and remove the element from DOM
+        $element.addClass("out");
+
+        setTimeout(function() {
             cleanup();
-        }
+        }, 300);
     }
 });

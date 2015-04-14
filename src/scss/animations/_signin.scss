@@ -1,0 +1,25 @@
+@import "../functions";
+@import "../easings";
+
+@mixin signin($args: .3s $easeInSine) {
+    perspective: 1300px;
+    transform-style: preserve-3d;
+    transform-origin: 50% 0;
+    animation: signin #{$args};
+}
+
+@include exports("animations/signin") {
+    @include keyframes(signin) {
+        0% {
+            transform: rotateX(-60deg);
+            opacity: 0;
+        }
+
+        100% {
+            transform: rotateX(0deg);
+            opacity: 1;
+        }
+    }
+
+    %signin { @include signin; }
+}

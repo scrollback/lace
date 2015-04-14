@@ -1,6 +1,11 @@
 {
+    "boss": true,
     "browser": true,
-    "globals": {
-        "jQuery": true
-    }
+    "eqeqeq": true,
+    "jquery": true,
+    "noarg": true,
+    "node": true,
+    "predef": [ "define" ],
+    "unused": true,
+    "undef": true
 }

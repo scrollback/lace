@@ -1,7 +1,7 @@
 @import "functions";
 @import "global";
-@import "animations";
 @import "dropshadow";
+@import "animations/transition";
 
 
 /**
@@ -38,7 +38,6 @@
 
         &:before, &:after {
             @extend %transition;
-            @include transform(translate3d(0, -.5em, 0));
 
             position: absolute;
             z-index: 300;
@@ -52,8 +51,7 @@
 
         &:hover, &:active {
             &:before, &:after {
-                @include transform(translate3d(0, 0, 0));
-
+                transform: translate3d(0, 0, 0);
                 opacity: 1;
             }
         }

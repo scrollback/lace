@@ -118,7 +118,7 @@ gulp.task("styles", function() {
     .pipe(bulkimport())
     .pipe(sass())
     .pipe(combinemq())
-    .pipe(gutil.env.production ? autoprefixer() : gutil.noop())
+    .pipe(autoprefixer())
     .pipe(gutil.env.production ? minify() : gutil.noop())
     .pipe(rename({ suffix: ".min" }))
     .pipe(sourcemaps.write("."))

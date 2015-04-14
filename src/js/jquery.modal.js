@@ -75,7 +75,8 @@ registerPlugin("modal", {
      * Cleanup modal dialog.
      */
     destroy: function() {
-        var $modal = this.element ? $(this.element) : $(".modal");
+        var $modal = this.element ? $(this.element) : $(".modal"),
+            $backdrop = $modal.data("modal-backdrop") || $(".backdrop");
 
         // The element doesn't exist
         if (!$modal.length) {
@@ -88,7 +89,9 @@ registerPlugin("modal", {
             "margin-left": "",
             "transform": "",
             "opacity": ""
-        }).removeClass("modal");
+        }).removeClass("modal, out");
+
+        $backdrop.off("click.modal").removeClass('"out');
 
         // Remove event listeners
         $(document).off("keydown.modal");
@@ -134,17 +137,12 @@ registerPlugin("modal", {
             };
         }
 
-        // Remove the element from DOM
-        if ($.fn.velocity) {
-            if ($backdrop.length) {
-                $backdrop.velocity("fadeOut", 150);
-            }
+        // Animate out and remove the element from DOM
+        $backdrop.addClass("out");
+        $modal.addClass("out");
 
-            $modal.velocity(animate, 150, function() {
-                cleanup();
-            });
-        } else {
+        setTimeout(function() {
             cleanup();
-        }
+        }, 300);
     }
 });

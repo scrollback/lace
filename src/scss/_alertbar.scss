@@ -1,9 +1,11 @@
 @import "functions";
 @import "global";
-@import "animations";
 @import "dropshadow";
 @import "flexbox";
 @import "icons";
+@import "animations/transition";
+@import "animations/slidedownin";
+@import "animations/fadeout";
 
 
 /**
@@ -27,6 +29,15 @@
  */
 
 @include exports("alertbar") {
+    @include keyframes(remove) {
+        50% { opacity: 0; }
+
+        100% {
+            margin: 0;
+            max-height: 0;
+        }
+    }
+
     .alertbar-container {
         position: fixed;
         top: 0;
@@ -40,13 +51,15 @@
         @include flex-direction(row);
         @include justify-content(space-between);
         @include align-items(stretch);
-        @include slidedown;
+        @include slidedownin;
         @include dropshadow(3);
 
         margin: 1em;
         padding: 0;
         text-align: center;
         border-radius: $roundness;
+        max-height: 14em;
+        overflow: hidden;
 
         $types: (
             info: $info-color,
@@ -102,5 +115,7 @@
                 font-weight: 700;
             }
         }
+
+        &.out { animation: remove .3s ease-out; }
     }
 }

@@ -1,10 +1,9 @@
 @import "functions";
 @import "global";
 @import "reset";
-@import "animations";
-@import "effects";
 @import "button";
 @import "entry";
+@import "animations/transition";
 
 @include exports("base") {
     body {

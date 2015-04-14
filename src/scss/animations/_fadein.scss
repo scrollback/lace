@@ -1,0 +1,16 @@
+@import "../functions";
+@import "../easings";
+
+@mixin fadein($args: .3s $easeInSine) {
+    animation: fadein #{$args};
+}
+
+@include exports("animations/fadein") {
+    @include keyframes(fadein) {
+        0% { opacity: 0; }
+
+        100% { opacity: 1; }
+    }
+
+    %fadein { @include fadein; }
+}

@@ -1,0 +1,22 @@
+@import "../functions";
+@import "../easings";
+
+@mixin slideleftout($args: .3s $easeOutSine) {
+    animation: slideleftout #{$args};
+}
+
+@include exports("animations/slideleftout") {
+    @include keyframes(slideleftout) {
+        0% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translate3d(-15%, 0, 0);
+            opacity: 0;
+        }
+    }
+
+    %slideleftout { @include slideleftout; }
+}

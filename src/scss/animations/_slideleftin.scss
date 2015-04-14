@@ -1,0 +1,22 @@
+@import "../functions";
+@import "../easings";
+
+@mixin slideleftin($args: .3s $easeInSine) {
+    animation: slideleftin #{$args};
+}
+
+@include exports("animations/slideleftin") {
+    @include keyframes(slideleftin) {
+        0% {
+            transform: translate3d(15%, 0, 0);
+            opacity: 0;
+        }
+
+        100% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+    }
+
+    %slideleftin { @include slideleftin; }
+}

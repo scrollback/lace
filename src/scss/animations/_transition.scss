@@ -1,0 +1,16 @@
+@import "../functions";
+@import "../easings";
+
+@mixin transition($args: .3s ease) {
+    @include prefix(transition, $args);
+}
+
+@include exports("animations/transition") {
+    %transition { @include transition; }
+
+    %snappy {
+        @include transition(.3s $easeOutQuad);
+
+        &:focus, &:hover, &:active { @include transition(none); }
+    }
+}

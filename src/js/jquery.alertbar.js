@@ -87,22 +87,10 @@ registerPlugin("alertbar", {
         }
 
         // Remove the lement from DOM
-        if ($.fn.velocity) {
-            // Fade out the alertbar, then remove margin, padding and animate height to 0
-            // So that other alertbars don't jump to top, but smoothly move
-            $element.velocity({
-                opacity: 0
-            }, 150).velocity({
-                height: 0,
-                paddingTop: 0,
-                paddingBottom: 0,
-                marginTop: 0,
-                marginBottom: 0
-            }, 150, function() {
-                cleanup();
-            });
-        } else {
+        $element.addClass("out");
+
+        setTimeout(function() {
             cleanup();
-        }
+        }, 300);
     }
 });

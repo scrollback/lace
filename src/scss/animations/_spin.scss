@@ -1,0 +1,13 @@
+@import "../functions";
+
+@mixin spin($args: 1s linear infinite) {
+    animation: spin #{$args};
+}
+
+@include exports("animations/spin") {
+    @include keyframes(spin) {
+        to  { transform: rotate(1turn); }
+    }
+
+    %spin { @include spin; }
+}

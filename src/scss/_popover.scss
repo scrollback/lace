@@ -1,7 +1,7 @@
 @import "functions";
 @import "global";
-@import "animations";
 @import "dropshadow";
+@import "animations/fadein";
 
 
 /**
@@ -70,35 +70,33 @@
 
         &-top {
             &:before {
-                @include transform(rotate(225deg));
-
+                transform: rotate(225deg);
                 bottom: -8px;
             }
         }
 
         &-left {
             &:before {
-                @include transform(rotate(135deg));
-
+                transform: rotate(135deg);
                 right: -8px;
             }
         }
 
         &-bottom {
             &:before {
-                @include transform(rotate(45deg));
-
+                transform: rotate(45deg);
                 top: -8px;
             }
         }
 
         &-right {
             &:before {
-                @include transform(rotate(315deg));
-
+                transform: rotate(315deg);
                 left: -8px;
             }
         }
+
+        &.out { @extend %fadeout; }
 
         &.arrow-x {
             &:before {

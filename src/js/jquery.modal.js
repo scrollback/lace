@@ -19,7 +19,7 @@ registerPlugin("modal", {
             $backdrop;
 
         // Add event listener to buttons which can dismiss the modal
-        $modal.on("click.modal", ".modal-remove", function() {
+        $modal.on("click.modal", ".modal-dismiss, .modal-close", function() {
             self.dismiss();
         });
 

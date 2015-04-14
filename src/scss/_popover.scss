@@ -36,7 +36,6 @@
         margin: .5em;
         border-radius: $roundness;
         font-weight: normal;
-        border: 1px solid rgba(0, 0, 0, .1);
         background-color: $light-color;
         color: $dark-color;
         text-transform: none;
@@ -164,12 +163,6 @@
         &-title {
             padding: 1em;
             font-weight: 700;
-        }
-
-        &-buttons {
-            padding: 1em;
-
-            .button { width: 100%; }
         }
 
         &-content { padding: 1em; }

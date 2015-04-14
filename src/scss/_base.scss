@@ -159,12 +159,11 @@
      */
 
     hr {
-        @include opacity(.3);
-
         border: 0;
         height: 1px;
         margin: 1em 0;
         background-color: currentColor;
+        opacity: .3;
     }
 
     ::selection {

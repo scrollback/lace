@@ -38,7 +38,6 @@
 
         &:before, &:after {
             @extend %transition;
-            @include opacity(0);
             @include transform(translate3d(0, -.5em, 0));
 
             position: absolute;
@@ -48,12 +47,14 @@
             pointer-events: none;
             font-size: $font-size;
             font-weight: 400;
+            opacity: 0;
         }
 
         &:hover, &:active {
             &:before, &:after {
-                @include opacity(1);
                 @include transform(translate3d(0, 0, 0));
+
+                opacity: 1;
             }
         }
     }

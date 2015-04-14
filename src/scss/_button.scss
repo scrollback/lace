@@ -28,7 +28,6 @@
         @include font-smoothing(antialiased); /* Fix blurry text on Mac OS X */
     }
 
-    border-radius: $roundness;
     background-color: $bg;
     color: $fg;
 
@@ -83,12 +82,11 @@
 
         &.disabled {
             &, &:hover, &:focus, &:active {
-                @include opacity(.75);
-
                 background-color: rgba(0, 0, 0, .2);
                 color: currentcolor;
                 cursor: default;
                 pointer-events: none;
+                opacity: .75;
             }
         }
 

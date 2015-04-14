@@ -4,6 +4,8 @@
 @import "icons";
 @import "animations/transition";
 @import "animations/fadein";
+@import "animations/signin";
+@import "animations/signout";
 @import "animations/slideupin";
 @import "animations/slidedownout";
 
@@ -34,7 +36,7 @@
     }
 
     .modal {
-        @extend %slideupin;
+        @extend %signin;
         @include dropshadow(3);
 
         display: block;
@@ -50,6 +52,8 @@
 
         @media #{$mobile-break-point} {
             // scss-lint:disable ImportantRule
+
+            @include slideupin;
 
             top: auto;
             left: 0;
@@ -87,6 +91,10 @@
             @media #{$mobile-break-point} { padding: 1.5em; }
         }
 
-        &.out { @extend %slidedownout; }
+        &.out {
+            @extend %signout;
+
+            @media #{$mobile-break-point} { @include slidedownout; }
+        }
     }
 }

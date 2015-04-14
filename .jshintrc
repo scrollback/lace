@@ -5,7 +5,7 @@
     "jquery": true,
     "noarg": true,
     "node": true,
-    "predef": [ "define" ],
+    "qunit": true,
     "unused": true,
     "undef": true
 }

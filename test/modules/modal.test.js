@@ -27,6 +27,21 @@ QUnit.asyncTest("should dismiss", function(assert) {
     }, 500);
 });
 
+QUnit.asyncTest("should dismiss on click on close button", function(assert) {
+    var $fixture = $("#qunit-fixture"),
+        $modal = $("<div>").html("<span class='modal-close'></span><div class='modal-content'>A test modal</div>").modal({
+            parent: $fixture
+        });
+
+    $modal.find(".modal-close").click();
+
+    setTimeout(function() {
+        assert.equal($modal.is(":visible"), false, "dismissed successfully!");
+
+        QUnit.start();
+    }, 500);
+});
+
 QUnit.asyncTest("should dismiss on click on backdrop", function(assert) {
     var $fixture = $("#qunit-fixture"),
         $modal = $("<div>").html("<div class='modal-content'>A test modal</div>").modal({
@@ -92,21 +107,23 @@ QUnit.asyncTest("should not dismiss on escape", function(assert) {
 });
 
 QUnit.test("should have backdrop", function(assert) {
-    var $fixture = $("#qunit-fixture"),
-        $modal = $("<div>").html("<div class='modal-content'>A test modal</div>").modal({
-            parent: $fixture,
-            backdrop: true
-        });
+    var $fixture = $("#qunit-fixture");
+
+    $("<div>").html("<div class='modal-content'>A test modal</div>").modal({
+        parent: $fixture,
+        backdrop: true
+    });
 
     assert.equal($($(".backdrop"), $fixture).length, 1, "has backdrop!");
 });
 
 QUnit.test("should not have backdrop", function(assert) {
-    var $fixture = $("#qunit-fixture"),
-        $modal = $("<div>").html("<div class='modal-content'>A test modal</div>").modal({
-            parent: $fixture,
-            backdrop: false
-        });
+    var $fixture = $("#qunit-fixture");
+
+    $("<div>").html("<div class='modal-content'>A test modal</div>").modal({
+        parent: $fixture,
+        backdrop: false
+    });
 
     assert.equal($($(".backdrop"), $fixture).length, 0, "doesn't have backdrop!");
 });

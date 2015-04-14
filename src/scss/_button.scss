@@ -32,6 +32,7 @@
     color: $fg;
 
     &:hover, &:focus {
+        outline: 0;
         background-color: darken($bg, 5%);
         color: $fg;
     }

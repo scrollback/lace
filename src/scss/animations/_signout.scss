@@ -1,0 +1,25 @@
+@import "../functions";
+@import "../easings";
+
+@mixin signout($args: .3s $easeOutSine) {
+    perspective: 1300px;
+    transform-style: preserve-3d;
+    transform-origin: 50% 0;
+    animation: signout #{$args};
+}
+
+@include exports("animations/signout") {
+    @include keyframes(signout) {
+        0% {
+            transform: rotateX(0deg);
+            opacity: 1;
+        }
+
+        100% {
+            transform: rotateX(-60deg);
+            opacity: 0;
+        }
+    }
+
+    %signout { @include signout; }
+}

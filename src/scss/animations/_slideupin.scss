@@ -1,7 +1,7 @@
 @import "../functions";
 @import "../easings";
 
-@mixin slideupin($args: .3s $easeInSine) {
+@mixin slideupin($args: .3s $easeOutSine) {
     animation: slideupin #{$args};
 }
 

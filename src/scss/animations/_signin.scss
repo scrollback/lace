@@ -1,7 +1,7 @@
 @import "../functions";
 @import "../easings";
 
-@mixin signin($args: .3s $easeInSine) {
+@mixin signin($args: .3s $easeOutSine) {
     perspective: 1300px;
     transform-style: preserve-3d;
     transform-origin: 50% 0;

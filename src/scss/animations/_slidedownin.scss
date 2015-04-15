@@ -1,7 +1,7 @@
 @import "../functions";
 @import "../easings";
 
-@mixin slidedownin($args: .3s $easeInSine) {
+@mixin slidedownin($args: .3s $easeOutSine) {
     animation: slidedownin #{$args};
 }
 

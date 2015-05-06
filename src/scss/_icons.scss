@@ -3,6 +3,8 @@
 
 $icons: (
     add: "\e81e", /* "" */
+    alert-off: "\e837", /* "" */
+    alert: "\e838", /* "" */
     arrow-left: "\e841", /* "" */
     arrow-right: "\e840", /* "" */
     asterisk: "\e858", /* "" */
@@ -81,12 +83,6 @@ $icons: (
     more-horiz: "\e802", /* "" */
     more: "\e83c", /* "" */
     move: "\e86d", /* "" */
-
-    // FIXME
-    // https://github.com/sass/libsass/issues/873
-    // notifications-off: "\e837", /* "" */
-    // notifications: "\e838", /* "" */
-
     off: "\e867", /* "" */
     ok-circled: "\e86b", /* "" */
     open-new: "\e811", /* "" */

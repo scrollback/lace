@@ -47,7 +47,7 @@ registerPlugin("popover", {
         originheight = $origin.outerHeight();
         originwidth = $origin.outerWidth();
 
-        spacetop = originoffset.top - $(document).scrollTop() + (originheight / 2);
+        spacetop = originoffset.top - $(document).scrollTop() + originheight;
         spacebottom = winheight - spacetop;
         spaceleft = originoffset.left - $(document).scrollLeft() + (originwidth / 2);
         spaceright = winwidth - spaceleft;

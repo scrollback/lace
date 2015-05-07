@@ -18,8 +18,8 @@
 
 @include exports("switch") {
     $switch-font-size: 1.2em;
-    $switch-trough-size: ( 2em / $switch-font-size ) * 1em;
-    $switch-slider-size: ( 1.6em / $switch-font-size ) * 1em;
+    $switch-trough-size: ( 2 / strip-unit($switch-font-size) ) * 1em;
+    $switch-slider-size: ( 1.6 / strip-unit($switch-font-size) ) * 1em;
     $line-height: 1.6 * $switch-font-size;
 
     .switch-container {

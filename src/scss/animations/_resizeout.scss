@@ -1,0 +1,20 @@
+@import "../functions";
+@import "../easings";
+
+@mixin resizeout($args: .3s $easeInSine) {
+    animation: resizeout #{$args};
+}
+
+@include exports("animations/signin") {
+    @include keyframes(resizeout) {
+        50% { opacity: 0; }
+
+        100% {
+            opacity: 0;
+            margin: 0;
+            max-height: 0;
+        }
+    }
+
+    %resizeout { @include resizeout; }
+}

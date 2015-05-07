@@ -6,6 +6,7 @@
 @import "animations/transition";
 @import "animations/slidedownin";
 @import "animations/fadeout";
+@import "animations/resizeout";
 
 
 /**
@@ -29,16 +30,6 @@
  */
 
 @include exports("alertbar") {
-    @include keyframes(remove) {
-        50% { opacity: 0; }
-
-        100% {
-            opacity: 0;
-            margin: 0;
-            max-height: 0;
-        }
-    }
-
     .alertbar-container {
         position: fixed;
         top: 0;
@@ -117,6 +108,6 @@
             }
         }
 
-        &.out { animation: remove .3s ease-out; }
+        &.out { @extend %resizeout; }
     }
 }

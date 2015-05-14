@@ -4,10 +4,10 @@
  * @requires - jQuery
  */
 
-function registerPlugin(pluginName, defaults, methods) {
-    "use strict";
+ "use strict";
 
-    (function($, window, document, undefined) {
+function registerPlugin(pluginName, defaults, methods) {
+    (function($) {
 
         function Plugin(element, options) {
             this.element = element;
@@ -61,7 +61,7 @@ function registerPlugin(pluginName, defaults, methods) {
             }
         };
 
-        $[pluginName] = function(element, options) {
+        $[pluginName] = function(element) {
             var params = Array.prototype.slice.call(arguments, 1),
                 $element;
 
@@ -76,7 +76,7 @@ function registerPlugin(pluginName, defaults, methods) {
             }
         };
 
-    })(jQuery, window, document);
+    })(jQuery);
 }
 
 if (typeof define === "function" && define.amd) {

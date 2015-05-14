@@ -1,3 +1,5 @@
+"use strict";
+
 var registerPlugin = require("./jquery.lace.js");
 
 registerPlugin("modal", {

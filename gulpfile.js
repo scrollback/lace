@@ -1,4 +1,7 @@
 // Load plugins and declare variables
+
+"use strict";
+
 var gulp = require("gulp"),
     del = require("del"),
     bower = require("bower"),
@@ -15,7 +18,7 @@ var gulp = require("gulp"),
     bump = require("gulp-bump"),
     git = require("gulp-git"),
     gitmodified = require("gulp-gitmodified"),
-    jshint = require("gulp-jshint"),
+    eslint = require("gulp-eslint"),
     jscs = require("gulp-jscs"),
     uglify = require("gulp-uglify"),
     rename = require("gulp-rename"),
@@ -91,9 +94,9 @@ gulp.task("lint", function() {
     return gulp.src([ "src/js/**/*.js", "test/**/*.js" ])
     .pipe(plumber({ errorHandler: onerror }))
     .pipe(gitmodified("modified"))
-    .pipe(jshint())
-    .pipe(jshint.reporter("jshint-stylish"))
-    .pipe(jshint.reporter("fail"))
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failOnError())
     .pipe(jscs());
 });
 

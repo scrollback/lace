@@ -34,12 +34,6 @@ registerPlugin("modal", {
             $modal.appendTo($parent);
         }
 
-        // Center the modal in the window
-        $modal.css({
-            "margin-top": $modal.outerHeight() / -2,
-            "margin-left": $modal.outerWidth() / -2
-        });
-
         // Add a dark semi-transparent backdrop if specified
         if (settings.backdrop) {
             if ($oldbackdrop.length) {
@@ -85,12 +79,7 @@ registerPlugin("modal", {
         }
 
         // Cleanup event listeners
-        $modal.off("click.modal").css({
-            "margin-top": "",
-            "margin-left": "",
-            "transform": "",
-            "opacity": ""
-        }).removeClass("modal");
+        $modal.off("click.modal").removeClass("modal");
 
         // Remove event listeners
         $(document).off("keydown.modal");

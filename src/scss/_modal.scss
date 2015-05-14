@@ -36,7 +36,7 @@
     }
 
     .modal {
-        @extend %signin;
+        @extend %fadein;
         @include dropshadow(3);
 
         display: block;
@@ -49,21 +49,17 @@
         overflow: auto;
         background: $light-color;
         border-radius: $roundness;
+        transform: translate3d(-50%, -50%, 0);
 
         @media #{$mobile-break-point} {
-            // scss-lint:disable ImportantRule
-
-            @include slideupin;
-
             top: auto;
             left: 0;
             bottom: 0;
-            margin-top: 0 !important;
-            margin-left: 0 !important;
             min-width: 100%;
             max-height: 100%;
             width: 100%;
             border-radius: 0;
+            transform: translate3d(0, 0, 0);
         }
 
         &-close {
@@ -91,10 +87,6 @@
             @media #{$mobile-break-point} { padding: 1.5em; }
         }
 
-        &.out {
-            @extend %signout;
-
-            @media #{$mobile-break-point} { @include slidedownout; }
-        }
+        &.out { @extend %fadeout; }
     }
 }

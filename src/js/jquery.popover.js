@@ -179,7 +179,7 @@ registerPlugin("popover", {
                 top: "",
                 left: "",
                 opacity: ""
-            }).addClass(classList);
+            }).addClass(classList).removeClass("popover");
         });
     },
 

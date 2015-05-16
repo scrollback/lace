@@ -108,6 +108,10 @@
             }
         }
 
-        &.out { @extend %resizeout; }
+        &.out {
+            @extend %resizeout;
+
+            opacity: 0;
+        }
     }
 }

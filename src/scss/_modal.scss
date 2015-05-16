@@ -4,10 +4,7 @@
 @import "icons";
 @import "animations/transition";
 @import "animations/fadein";
-@import "animations/signin";
-@import "animations/signout";
-@import "animations/slideupin";
-@import "animations/slidedownout";
+@import "animations/fadeout";
 
 
 /**
@@ -37,6 +34,7 @@
 
     .modal {
         @extend %fadein;
+        @extend %transition;
         @include dropshadow(3);
 
         display: block;
@@ -87,6 +85,10 @@
             @media #{$mobile-break-point} { padding: 1.5em; }
         }
 
-        &.out { @extend %fadeout; }
+        &.out {
+            @extend %fadeout;
+
+            opacity: 0;
+        }
     }
 }

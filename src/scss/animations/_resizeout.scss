@@ -7,6 +7,8 @@
 
 @include exports("animations/signin") {
     @include keyframes(resizeout) {
+        0% { opacity: 1; }
+
         50% { opacity: 0; }
 
         100% {

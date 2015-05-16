@@ -89,7 +89,11 @@
             }
         }
 
-        &.out { @extend %fadeout; }
+        &.out {
+            @extend %fadeout;
+
+            opacity: 0;
+        }
 
         &.arrow-x {
             &:before {

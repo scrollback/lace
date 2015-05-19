@@ -1,6 +1,6 @@
 {
   "name": "Lace",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "A collection of jquery plugins and stylesheets",
   "keywords": [
     "framework",
@@ -12,7 +12,7 @@
     "path": "git://github.com/scrollback/lace.git"
   },
   "author": "Satyajit Sahoo <satya@scrollback.io>",
-  "license": "GPL",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/scrollback/lace/issues"
   },

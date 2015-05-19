@@ -1,6 +1,6 @@
 {
   "name": "Lace",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "homepage": "https://github.com/scrollback/lace",
   "authors": [
     "Satyajit Sahoo <satya@scrollback.io>"
@@ -16,7 +16,7 @@
     "jquery",
     "plugin"
   ],
-  "license": "GPL",
+  "license": "GPL-3.0",
   "main": "src/js/jquery.lace.js",
   "ignore": [
     "**/.*",

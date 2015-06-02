@@ -127,7 +127,7 @@ registerPlugin("popover", {
 
             if (popoverheight >= spacebottom) {
                 classnames += " popover-top";
-                spacetop = spacetop - popoverheight - (originheight / 2);
+                spacetop = spacetop - popoverheight - originheight;
             } else {
                 classnames += " popover-bottom";
                 spacetop = (originheight <= winheight) ? spacetop : (winheight / 2);

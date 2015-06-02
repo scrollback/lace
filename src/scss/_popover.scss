@@ -64,28 +64,28 @@
         &-top {
             &:before {
                 transform: rotate(225deg);
-                bottom: -8px;
+                bottom: -7px;
             }
         }
 
         &-left {
             &:before {
                 transform: rotate(135deg);
-                right: -8px;
+                right: -7px;
             }
         }
 
         &-bottom {
             &:before {
                 transform: rotate(45deg);
-                top: -8px;
+                top: -7px;
             }
         }
 
         &-right {
             &:before {
                 transform: rotate(315deg);
-                left: -8px;
+                left: -7px;
             }
         }
 

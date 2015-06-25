@@ -18,7 +18,7 @@ registerPlugin("popover", {
             $popover = $(self.element).addClass("popover"),
             winheight, winwidth,
             originoffset, originheight, originwidth,
-            popoverheight, popoverwidth,
+            popoverheight, popoverwidth, popovermargin,
             spacetop, spacebottom, spaceleft, spaceright,
             classnames = "",
             id = new Date().getTime();
@@ -75,6 +75,7 @@ registerPlugin("popover", {
 
         popoverwidth = $popover.outerWidth();
         popoverheight = $popover.outerHeight();
+        popovermargin = $popover.outerHeight(true) - popoverheight; // Assume margin is same at all sides
 
         if (originoffset.left < 0 || originoffset.left > winwidth) {
             // Origin is outside of visible area, towards left/right
@@ -125,7 +126,7 @@ registerPlugin("popover", {
                 spaceleft = spaceleft - ( popoverwidth / 2 );
             }
 
-            if (popoverheight >= spacebottom) {
+            if (popoverheight >= spacebottom && spacetop >= spacebottom) {
                 classnames += " popover-top";
                 spacetop = spacetop - popoverheight - originheight;
             } else {
@@ -138,10 +139,14 @@ registerPlugin("popover", {
             classnames += " arrow-none";
         }
 
+        console.log(popovermargin);
+
         // Add the necessary positioning styles
         $popover.addClass(classnames).css({
             top: spacetop,
-            left: spaceleft
+            left: spaceleft,
+            maxHeight: "calc(100vh - " + (spacetop + popovermargin) + "px)",
+            maxWidth: "calc(100vw - " + (spaceleft + popovermargin) + "px)"
         });
 
         // Popover is now initialized

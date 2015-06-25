@@ -67,7 +67,7 @@ gulp.task("bower", function() {
 });
 
 // Bump version and do a new release
-gulp.task("bump", function() {
+gulp.task("bump", [ "test" ], function() {
     return gulp.src([ "package.json", "bower.json" ])
     .pipe(plumber({ errorHandler: onerror }))
     .pipe(bump())

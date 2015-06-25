@@ -31,6 +31,9 @@
         position: absolute;
         display: block;
         width: 15em;
+        max-width: 100%;
+        max-height: 100%;
+        overflow: auto;
         margin: .5em;
         border-radius: $roundness;
         font-weight: normal;

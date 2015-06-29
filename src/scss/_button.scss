@@ -134,6 +134,7 @@
     button, [type="submit"], [type="button"] {
         @extend %button;
 
+        background-clip: padding-box; /* prevent leaking of background color in Android < 4.4 */
         -webkit-appearance: none; /* reset default styling */
 
         &:disabled { @extend %button.disabled; }

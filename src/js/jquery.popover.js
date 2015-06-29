@@ -126,7 +126,7 @@ registerPlugin("popover", {
                 spaceleft = spaceleft - ( popoverwidth / 2 );
             }
 
-            if (popoverheight >= spacebottom && spacetop >= spacebottom) {
+            if ((popoverheight + popovermargin) >= spacebottom && spacetop >= spacebottom) {
                 classnames += " popover-top";
                 spacetop = spacetop - popoverheight - originheight;
             } else {
@@ -138,8 +138,6 @@ registerPlugin("popover", {
         if (!self.settings.arrow) {
             classnames += " arrow-none";
         }
-
-        console.log(popovermargin);
 
         // Add the necessary positioning styles
         $popover.addClass(classnames).css({

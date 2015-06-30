@@ -25,7 +25,7 @@
     }
 
     .popover {
-        @include fadein(.3s ease);
+        @include fadein;
         @include dropshadow(3);
 
         position: absolute;

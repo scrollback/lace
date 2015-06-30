@@ -26,14 +26,13 @@
 
     .popover {
         @include fadein(.3s ease);
-        @include dropshadow(4);
+        @include dropshadow(3);
 
         position: absolute;
         display: block;
         width: 15em;
         max-width: 100%;
         max-height: 100%;
-        overflow: auto;
         margin: .5em;
         border-radius: $roundness;
         font-weight: normal;
@@ -141,6 +140,8 @@
         }
 
         &.arrow-none {
+            overflow: auto;
+
             &:before { display: none; }
 
             &.popover-top { margin-bottom: -8px; }

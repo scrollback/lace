@@ -142,7 +142,7 @@ registerPlugin("popover", {
         // Add the necessary positioning styles
         $popover.addClass(classnames).css({
             top: spacetop,
-            left: spaceleft,
+            left: spaceleft - 6,
             maxHeight: "calc(100vh - " + (spacetop + popovermargin) + "px)",
             maxWidth: "calc(100vw - " + (spaceleft + popovermargin) + "px)"
         });

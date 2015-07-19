@@ -19,7 +19,6 @@ var gulp = require("gulp"),
     git = require("gulp-git"),
     gitmodified = require("gulp-gitmodified"),
     eslint = require("gulp-eslint"),
-    jscs = require("gulp-jscs"),
     uglify = require("gulp-uglify"),
     rename = require("gulp-rename"),
     sass = require("gulp-sass"),
@@ -96,8 +95,7 @@ gulp.task("lint", function() {
     .pipe(gitmodified("modified"))
     .pipe(eslint())
     .pipe(eslint.format())
-    .pipe(eslint.failOnError())
-    .pipe(jscs());
+    .pipe(eslint.failOnError());
 });
 
 // Combine and minify scripts

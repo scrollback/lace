@@ -35,7 +35,6 @@
 
 @include exports("multientry") {
     .multientry {
-        @extend %entry;
         @extend %clearfix;
 
         display: inline-block;
@@ -45,6 +44,10 @@
         margin: .5em 0;
         padding: 0 .0625em;
         cursor: text; /* fix firefox showing caret in wrong position */
+        border: 1px solid $info-color;
+        border-radius: $roundness;
+        background-color: $light-color;
+        color: $dark-color;
 
         &-item {
             float: left;
@@ -57,7 +60,7 @@
         &-input {
             background: none;
             min-width: 3em;
-            padding: 0 .25em;
+            padding: 0 .5em;
             line-height: 2em;
 
             &:only-child { width: 100%; }
@@ -65,7 +68,7 @@
 
         &-segment {
             border-radius: $roundness;
-            background-color: $accent-color;
+            background-color: $info-color;
             color: $light-color;
 
             &-text {

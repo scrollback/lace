@@ -1,0 +1,56 @@
+@import "functions";
+@import "global";
+@import "animations/transition";
+
+
+/**
+ * Radio group:
+ *
+ *     @example
+ *     div.radio-group
+ *         label
+ *             input(type="radio", name="rg-example", checked)
+ *             span Good
+ *         label
+ *             input(type="radio", name="rg-example")
+ *             span Bad
+ *         label
+ *             input(type="radio", name="rg-example")
+ *             span Hodor
+ */
+
+@include exports("radiogroup") {
+    .radio-group {
+        padding: .5em 0;
+
+        label {
+            display: block;
+            padding: .5em;
+            cursor: pointer;
+
+            > span:before {
+                content: "";
+                display: inline-block;
+                vertical-align: -.1875em;
+                height: 1em;
+                width: 1em;
+                border-radius: 50%;
+                border: 2px solid rgba(0, 0, 0, .5);
+                margin-right: 1em;
+                transform: scale(1.2);
+            }
+
+            > input:checked + span:before {
+                border-color: $info-color;
+                background-image: radial-gradient(
+                                    circle closest-side,
+                                    $info-color 0%,
+                                    $info-color 50%,
+                                    transparent 50%,
+                                    transparent 100%);
+            }
+
+            > input { display: none; }
+        }
+    }
+}

@@ -1,0 +1,60 @@
+@import "functions";
+@import "global";
+@import "animations/transition";
+
+
+/**
+ * Radio group:
+ *
+ *     @example
+ *     div.toggle-group
+ *         label
+ *             input(type="radio", name="tg-example", checked)
+ *             span Daleks
+ *         label
+ *             input(type="radio", name="tg-example")
+ *             span Cybermen
+ *         label
+ *             input(type="radio", name="tg-example")
+ *             span Master
+ */
+
+@include exports("togglegroup") {
+    .toggle-group {
+        padding: 1em 0;
+
+        &:before, &:after {
+            content: "";
+            display: table;
+        }
+
+        &:after { clear: both; }
+
+        label {
+            float: left;
+            cursor: pointer;
+
+            > span {
+                @include dropshadow(1);
+
+                padding: .375em 1em;
+                background-color: $light-color;
+
+                &:focus, &:hover { color: $info-color; }
+            }
+
+            &:not(:last-of-type) > span { border-right: 0; }
+
+            &:first-of-type > span { border-radius: $roundness 0 0 $roundness; }
+
+            &:last-of-type > span { border-radius: 0 $roundness $roundness 0; }
+
+            > input:checked + span {
+                background-color: $info-color;
+                color: $light-color;
+            }
+
+            > input { display: none; }
+         }
+    }
+}

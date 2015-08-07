@@ -26,8 +26,8 @@
 
             position: relative;
             background-color: rgba(0, 0, 0, .5);
-            height: 1.5em;
-            width: 3.25em;
+            height: 1.25em;
+            width: 3em;
             margin: .5em .25em;
             display: inline-block;
             border-radius: .75em;
@@ -41,8 +41,8 @@
                 left: -.25em;
                 content: "";
                 display: block;
-                height: 2em;
-                width: 2em;
+                height: 1.75em;
+                width: 1.75em;
                 border-radius: 50%;
                 background-color: $light-color;
             }

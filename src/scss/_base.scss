@@ -27,11 +27,17 @@
 
         color: $link-color;
         text-decoration: none;
-        border-bottom: 1px solid currentColor;
+        border-bottom: 1px solid rgba(0, 0, 0, .1);
 
-        &:hover, &:focus { color: darken($link-color, 15%); }
+        &:hover, &:focus {
+            background-color: rgba(0, 0, 0, .05);
+            border-color: currentColor;
+        }
 
-        &:active { color: darken($link-color, 30%); }
+        &:active {
+            background-color: rgba(0, 0, 0, .1);
+            border-color: currentColor;
+        }
     }
 
     img {

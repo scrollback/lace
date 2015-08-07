@@ -20,8 +20,7 @@
     %entry {
         @extend %snappy;
 
-        border: 1px solid darken($light-color, 20%);
-        border-top-color: darken($light-color, 30%);
+        border: 2px solid rgba(0, 0, 0, .3);
         border-radius: $roundness;
         background-image: none; /* fix background in firefox */
         background-color: $light-color;
@@ -29,14 +28,13 @@
 
         &:hover, &:focus, &:active {
             border-color: $accent-color;
-            border-top-color: darken($accent-color, 5%);
             outline: none;
         }
 
         &.disabled {
             &, &:hover, &:focus, &:active {
-                border-color: darken($light-color, 20%);
-                background-color: darken($light-color, 10%);
+                border-color: rgba(0, 0, 0, .1);
+                background-color: rgba(0, 0, 0, .1);
                 pointer-events: none;
             }
         }

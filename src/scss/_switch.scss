@@ -8,77 +8,55 @@
  * Switch:
  *
  *     @example
- *     div.switch-container
- *         input(type="checkbox", name="example").switch
- *         label(for="example")
- *     div.switch-container
- *         input(type="checkbox", name="example", checked).switch
- *         label(for="example")
+ *     label.toggle-switch
+ *         input(type="checkbox", name="example")
+ *         span
+ *     label.toggle-switch
+ *         input(type="checkbox", name="example", checked)
+ *         span
  */
 
-@include exports("switch") {
-    $switch-font-size: 1.2em;
-    $switch-trough-size: ( 2 / strip-unit($switch-font-size) ) * 1em;
-    $switch-slider-size: ( 1.6 / strip-unit($switch-font-size) ) * 1em;
-    $line-height: 1.6 * $switch-font-size;
+@include exports("toggleswitch") {
+    .toggle-switch {
+        margin: 1em 0;
+        cursor: pointer;
 
-    .switch-container {
-        position: relative;
-        margin: 1.25em 0 .25em;
-        height: 1.5em;
-    }
+        > span {
+            @extend %transition;
 
-    .switch {
-        display: none;
+            position: relative;
+            background-color: rgba(0, 0, 0, .5);
+            height: 1.5em;
+            width: 3.25em;
+            margin: .5em .25em;
+            display: inline-block;
+            border-radius: .75em;
 
-        ~ label {
-            @include icon(close);
-
-            cursor: pointer;
-
-            &:before, &:after {
+            &:before {
                 @extend %transition;
+                @include dropshadow(2);
 
                 position: absolute;
-                display: block;
-                font-size: $switch-font-size;
-                line-height: $line-height;
-                color: $light-color;
-                border-radius: $roundness;
-            }
-
-            &:before {
-                top: -( $switch-font-size / 2 );
-                left: 0;
-                height: $switch-trough-size;
-                width: $switch-trough-size * 2;
-                padding: 0 ( ( $switch-font-size - .2 ) / 2 );
-                text-align: right;
-                box-shadow: inset 0 1px 0 rgba(0, 0, 0, .15);
-                background-color: $error-color;
-            }
-
-            &:after {
+                top: -.25em;
+                left: -.25em;
                 content: "";
-                top: -( $switch-font-size - ( $switch-trough-size - $switch-slider-size ) ) / 2;
-                left: ( $switch-trough-size - $switch-slider-size ) / 2;
-                height: $switch-slider-size;
-                width: $switch-slider-size;
+                display: block;
+                height: 2em;
+                width: 2em;
+                border-radius: 50%;
                 background-color: $light-color;
-                box-shadow: 0 -1px 1px rgba(0, 0, 0, .15);
             }
         }
 
-        &:checked ~ label {
-            @include icon(done);
+        > input:checked + span {
+            background-color: fade-out($info-color, .5);
 
             &:before {
-                text-align: left;
-                background-color: $success-color;
-                padding: ( ( $switch-font-size + .2 ) / 4 ) ( ( $switch-font-size - .2 ) / 2 );
+                transform: translate3d(1.75em, 0, 0);
+                background-color: $info-color;
             }
-
-            &:after { left: $switch-trough-size + ( ( $switch-trough-size - $switch-slider-size ) / 2 ); }
         }
+
+        > input { display: none; }
     }
 }

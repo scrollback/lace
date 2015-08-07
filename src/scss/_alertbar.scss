@@ -70,7 +70,7 @@
         &-content {
             @include flex-grow(1);
 
-            padding: 1em;
+            padding: .75em;
 
             a {
                 font-weight: 700;
@@ -93,7 +93,7 @@
             @include align-content(center);
             @include icon(close);
 
-            padding: 1em 1.25em;
+            padding: .75em 1em;
             cursor: pointer;
             background-color: rgba(0, 0, 0, .1);
             border-radius: 0 $roundness $roundness 0;

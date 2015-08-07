@@ -21,6 +21,8 @@
  *     a.button.facebook Facebook
  *     a.button.persona Persona
  *     a.button.openid OpenID
+ *     a.button.primary.flat Primary flat
+ *     a.button.secondary.flat Secondary flat
  */
 
 @mixin button($bg: $accent-color, $fg: $light-color) {
@@ -52,13 +54,14 @@
 
     %button {
         @extend %snappy;
+        @include dropshadow(1);
         @include button;
 
         display: inline-block;
         margin: (.5em / .9) 0;
         padding: (.6em/ .9) (1em / .9) (.5em / .9);
         border-radius: $roundness;
-        border: 1px solid transparent;
+        border: 0;
         background-image: none; /* fix background in firefox */
         text-align: center;
         font-size: .9em;
@@ -88,8 +91,11 @@
                 cursor: default;
                 pointer-events: none;
                 opacity: .75;
+                box-shadow: none;
             }
         }
+
+        &.flat { box-shadow: none; }
 
         &.working {
             @include prefix(animation, working .3s linear infinite);

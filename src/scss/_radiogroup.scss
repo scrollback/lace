@@ -9,14 +9,17 @@
  *     @example
  *     div.radio-group
  *         label
- *             input(type="radio", name="rg-example", checked)
- *             span Good
+ *             input(type="radio", name="rg-example")
+ *             span John Snow
  *         label
  *             input(type="radio", name="rg-example")
- *             span Bad
+ *             span Daenerys Targaryen
  *         label
- *             input(type="radio", name="rg-example")
+ *             input(type="radio", name="rg-example", disabled)
  *             span Hodor
+ *         label
+ *             input(type="radio", name="rg-example", disabled, checked)
+ *             span Melissandre
  */
 
 @include exports("radiogroup") {
@@ -48,6 +51,21 @@
                                     $info-color 50%,
                                     transparent 50%,
                                     transparent 100%);
+            }
+
+            > input:disabled + span {
+                opacity: .5;
+                cursor: default;
+            }
+
+            > input:disabled:checked + span:before {
+                border-color: rgba(0, 0, 0, .5);
+                background-image: radial-gradient(
+                                   circle closest-side,
+                                   rgba(0, 0, 0, .5) 0%,
+                                   rgba(0, 0, 0, .5) 50%,
+                                   transparent 50%,
+                                   transparent 100%);
             }
 
             > input { display: none; }

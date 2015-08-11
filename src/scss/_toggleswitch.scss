@@ -14,6 +14,12 @@
  *     label.toggle-switch
  *         input(type="checkbox", name="example", checked)
  *         span
+ *     label.toggle-switch
+ *         input(type="checkbox", name="example", disabled)
+ *         span
+ *     label.toggle-switch
+ *         input(type="checkbox", name="example", checked, disabled)
+ *         span
  */
 
 @include exports("toggleswitch") {
@@ -56,6 +62,8 @@
                 background-color: $info-color;
             }
         }
+
+        > input:disabled + span { opacity: .5; }
 
         > input { display: none; }
     }

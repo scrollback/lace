@@ -17,6 +17,9 @@
  *         label
  *             input(type="radio", name="tg-example")
  *             span Master
+ *         label
+ *             input(type="radio", name="tg-example", disabled)
+ *             span Donna
  */
 
 @include exports("togglegroup") {
@@ -52,6 +55,22 @@
             > input:checked + span {
                 background-color: $info-color;
                 color: $light-color;
+            }
+
+            > input:disabled + span {
+                font-weight: 700;
+                color: rgba(0, 0, 0, .3);
+                background-color: darken($light-color, 5%);
+                cursor: default;
+            }
+
+            > input:disabled:checked + span {
+                color: rgba(255, 255, 255, .7);
+                background-color: darken($light-color, 30%);
+            }
+
+            > input:not(:disabled):not(:checked) + span {
+                &:focus, &:hover { color: $info-color; }
             }
 
             > input { display: none; }

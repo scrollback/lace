@@ -60,6 +60,38 @@
             transform: translate3d(0, 0, 0);
         }
 
+        &-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        &-wrapper-outer {
+            display: table;
+            table-layout: fixed;
+            height: 100%;
+            margin: auto;
+
+            @media #{$mobile-break-point} { width: 100%; }
+        }
+
+        &-wrapper {
+            position: relative;
+            display: table-cell;
+            vertical-align: middle;
+
+            @media #{$mobile-break-point} { vertical-align: bottom; }
+
+            > .modal {
+                position: relative;
+                top: auto;
+                left: auto;
+                transform: none;
+            }
+        }
+
         &-close {
             @extend %snappy;
             @include icon(close);

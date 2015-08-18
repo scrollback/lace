@@ -58,7 +58,6 @@
             }
 
             > input:disabled + span {
-                font-weight: 700;
                 color: rgba(0, 0, 0, .3);
                 background-color: darken($light-color, 5%);
                 cursor: default;

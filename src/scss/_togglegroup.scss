@@ -1,5 +1,6 @@
 @import "functions";
 @import "global";
+@import "clearfix";
 @import "animations/transition";
 
 
@@ -24,20 +25,16 @@
 
 @include exports("togglegroup") {
     .toggle-group {
-        padding: 1em 0;
+        @extend %clearfix;
 
-        &:before, &:after {
-            content: "";
-            display: table;
-        }
-
-        &:after { clear: both; }
+        margin: 1em 0;
 
         label {
             float: left;
             cursor: pointer;
 
             > span {
+                @extend %snappy;
                 @include dropshadow(1);
 
                 padding: .375em 1em;
@@ -45,8 +42,6 @@
 
                 &:focus, &:hover { color: $info-color; }
             }
-
-            &:not(:last-of-type) > span { border-right: 0; }
 
             &:first-of-type > span { border-radius: $roundness 0 0 $roundness; }
 

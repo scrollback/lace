@@ -27,16 +27,18 @@
     .toggle-group {
         @extend %clearfix;
 
-        margin: 1em 0;
+        margin: .5em 0;
 
         label {
             float: left;
             cursor: pointer;
+            padding: .5em 0;
 
             > span {
                 @extend %snappy;
                 @include dropshadow(1);
 
+                white-space: nowrap;
                 padding: .375em 1em;
                 background-color: $light-color;
 

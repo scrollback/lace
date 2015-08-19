@@ -1,5 +1,8 @@
+/// Exported module list
 $modules: () !default;
 
+/// Ensure a module is exported only once
+/// @param {String} $name - Name of the module
 @mixin exports($name) {
     @if (not index($modules, $name)) {
         $modules: append($modules, $name) !global;
@@ -8,6 +11,9 @@ $modules: () !default;
     }
 }
 
+/// Determine the lightness of a color
+/// @param {Color} $color - Color
+/// @return {Number} - Lightness of the color
 @function lightness($color) {
     $r: red(rgba($color, 1));
     $g: green(rgba($color, 1));
@@ -16,6 +22,71 @@ $modules: () !default;
     @return ($r * .2126 + $g * .7152 + $b * .0722) / 255;
 }
 
+/// Sort a list of numbers with quick sort algorithm
+/// @param {List} $list - List of numbers
+/// @return {List} - Ordered list
+@function quick-sort($list) {
+    $less:  ();
+    $equal: ();
+    $large: ();
+
+    @if length($list) < 2 {
+        @return $list;
+    }
+
+    $seed: nth($list, ceil(length($list) / 2));
+
+    @each $item in $list {
+        @if $item == $seed {
+            $equal: append($equal, $item);
+        } @else if $item < $seed {
+            $less: append($less, $item);
+        } @else if $item > $seed {
+            $large: append($large, $item);
+        }
+    }
+
+    @return join(join(quick-sort($less), $equal), quick-sort($large));
+}
+
+/// Computre the delta between two colors based on Color Quantization
+/// @param {Color} $a - First color
+/// @param {Color} $b - Second color
+/// @return {Number} - Delta between the 2 colors
+/// @link http://en.wikipedia.org/wiki/Color_quantization Color Quantization
+@function compare-color($a, $b) {
+    @return sqrt(
+        pow(hue($a) - hue($b), 2)
+    );
+}
+
+/// Sort a list of colors based on Color Quantization
+/// @param {List} $colors - List of colors
+/// @return {List} - Ordered colors
+@function sort-colors($colors) {
+    $black: #000;
+    $result: ();
+    $map: ();
+
+    @each $color in $colors {
+        $map: map-merge($map, (compare-color($black, $color): $color));
+    }
+
+    $deltas: quick-sort(map-keys($map));
+
+    @each $delta in $deltas {
+        $result: append($result, map-get($map, $delta));
+    }
+
+    @return $result;
+}
+
+/// Replace occurances in a string
+/// @param {String} $string - String to perform the operation on
+/// @param {String} $substr - String to replace
+/// @param {String} $newsubstr - String to replace with
+/// @param {Boolean} $all - If it should replace all instances
+/// @return {String} - Final string
 @function string-replace($string, $substr, $newsubstr: "", $all: false) {
     $position-found: str-index($string, $substr);
     $processed: ();
@@ -47,12 +118,20 @@ $modules: () !default;
     @return $string;
 }
 
+/// Strip the unit from a value
+/// @param {String} $value - Value to strip unit from
+/// @return {String} - Unitless value
 @function strip-unit($value) {
     @return $value / ($value * 0 + 1);
 }
 
+/// Base value of rem unit
 $rem-base: 10px;
 
+/// Calculate the rem values
+/// @param {List} $sizes - Pixel sizes to calculate rem value for
+/// @param {String} $base - Base rem value
+/// @return {List} - Rem values for corresponding pixel sizes
 @function rem-calc($sizes, $base: $rem-base) {
     $rem-vals: ();
 
@@ -68,6 +147,9 @@ $rem-base: 10px;
     }
 }
 
+/// Mixin to add rem value with fallback for pixel
+/// @param {String} $property - CSS property name
+/// @param {Number} $values - Property values
 @mixin rem($property, $values) {
     $px : ();
     $rem: ();
@@ -93,6 +175,32 @@ $rem-base: 10px;
     }
 }
 
+/// Mixin for Quantity Queries to add styles based on number of items
+/// @param {String} $selector - CSS selector
+/// @param {String} $type - Type of the query
+/// @param {Number} $amount - Number of items to match
+/// @param {Number} $max - Maximum number of items to match
+@mixin quantity-query($selector, $type, $amount, $max: null) {
+    @if $type == at-least {
+        #{$selector}:nth-last-child(n+#{$amount}),
+        #{$selector}:nth-last-child(n+#{$amount}) ~ #{$selector} { @content; }
+    } @else if $type == at-most {
+        #{$selector}:nth-last-child(-n+#{$amount}):first-child,
+        #{$selector}:nth-last-child(-n+#{$amount}):first-child ~ #{$selector} { @content; }
+    } @else if $type == between {
+        @if type-of($max) != "number" {
+            @error "Max value must be a number for quantity-query.";
+        }
+
+        #{$selector}:nth-last-child(n+#{$amount}):nth-last-child(-n+#{$max}):first-child,
+        #{$selector}:nth-last-child(-n+#{$amount}):nth-last-child(-n+#{$max}):first-child ~ #{$selector} { @content; }
+    } @else {
+        @error "Invalid type `#{$type}` for quantity-query. Allowed types - at-least, at-most, between.";
+    }
+}
+
+/// Mixin to set styles for retina screens
+/// @param {Number} $ratio - Ratio of screen desnity
 @mixin retina($ratio: 2) {
     @media
     only screen and (-webkit-min-device-pixel-ratio: #{$ratio}),
@@ -105,6 +213,9 @@ $rem-base: 10px;
     }
 }
 
+/// Mixin to add vendor prefixes
+/// @param {String} $property - CSS property to add prefix for
+/// @param {String} $value - Property value
 @mixin prefix($property, $value, $vendors: webkit moz ms o) {
     @if $vendors {
         @each $vendor in $vendors {
@@ -115,6 +226,13 @@ $rem-base: 10px;
     #{$property}: #{$value};
 }
 
+/// Mixin to declare a font face
+/// @param {String} $font-family - Name of the font family
+/// @param {String} $font-filename - Name of the font file
+/// @param {String} $font-filepath - Path to the font file
+/// @param {String} $font-weight - Weight of the font
+/// @param {String} $font-style - Style of the font
+/// @param {String} $font-stretch - Form of the font
 @mixin declare-font-face($font-family, $font-filename, $font-filepath, $font-weight: normal, $font-style: normal, $font-stretch: normal) {
     @font-face {
         font-family: "#{$font-family}";
@@ -130,6 +248,8 @@ $rem-base: 10px;
     }
 }
 
+/// Mixin to decalre font face in a cross browser way
+/// @param {String} $value - Value of font smoothing
 @mixin font-smoothing($value) {
     -webkit-font-smoothing: $value;
 
@@ -142,6 +262,8 @@ $rem-base: 10px;
     }
 }
 
+/// Mixin to declare animation keyframes in a cross browser way
+/// @param {String} $animation - Name of the animation
 @mixin keyframes($animation) {
     @-webkit-keyframes #{$animation} { @content; }
 
@@ -151,4 +273,3 @@ $rem-base: 10px;
 
     @keyframes #{$animation} { @content; }
 }
-

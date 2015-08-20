@@ -1,0 +1,189 @@
+/// Value of PI
+$PI: 3.1415926535897932384626433832795028841971693993751;
+
+/// Calculate the base to the exponent power
+/// @param {Number} $number - Number to calculate
+/// @param {Number} $exp - Value of exponent
+/// @return {Number} - Base exponent
+@function pow($number, $exp) {
+    $value: 1;
+
+    @if $exp > 0 {
+        @for $i from 1 through $exp {
+            $value: $value * $number;
+        }
+    } @else if $exp < 0 {
+        @for $i from 1 through -$exp {
+            $value: $value / $number;
+        }
+    }
+
+    @return $value;
+}
+
+/// Calculate the square root of number
+/// @param {Number} $number - Number to calculate
+/// @return {Number} - Square root
+@function sqrt($num) {
+    $root: 0;
+    $approx: 0;
+    $upperBounds : round($num / 2) + 1; // never need over half the main number. Add one just to be sure!
+
+    @for $test from 2 through $upperBounds {
+        $sq : $test * $test;
+
+        @if $sq <= $num {
+            $approx : $test;
+        }
+    }
+
+    $root: (( $num / $approx ) + $approx) / 2;
+
+    @return $root;
+}
+
+/// Calculate the factorial of a number
+/// @param {Number} $number - Number to calculate
+/// @return {Number} - Factorial value
+@function fact($number) {
+    $value: 1;
+
+    @if $number > 0 {
+        @for $i from 1 through $number {
+            $value: $value * $i;
+        }
+    }
+
+    @return $value;
+}
+
+/// Convert angle to radian
+/// @param {Number} $angle - Angle in degrees
+/// @return {Number} - Angle in radian
+@function rad($angle) {
+    $unit: unit($angle);
+    $unitless: $angle / ($angle * 0 + 1);
+
+    // If the angle has 'deg' as unit, convert to radians.
+    @if $unit == deg {
+        $unitless: $unitless / 180 * $PI;
+    }
+
+    @return $unitless;
+}
+
+/// Calculate sine of an angle
+/// @param {Number} $angle - Angle in degrees
+/// @return {Number} - Value in sine
+@function sin($angle) {
+    $sin: 0;
+    $angle: rad($angle);
+
+    // Iterate a bunch of times.
+    @for $i from 0 through 10 {
+        $sin: $sin + pow(-1, $i) * pow($angle, (2 * $i + 1)) / fact(2 * $i + 1);
+    }
+
+    @return $sin;
+}
+
+/// Calculate cosine of an angle
+/// @param {Number} $angle - Angle in degrees
+/// @return {Number} - Value in cosine
+@function cos($angle) {
+    $cos: 0;
+    $angle: rad($angle);
+
+    // Iterate a bunch of times.
+    @for $i from 0 through 10 {
+        $cos: $cos + pow(-1, $i) * pow($angle, 2 * $i) / fact(2 * $i);
+    }
+
+    @return $cos;
+}
+
+/// Calculate tangent of an angle
+/// @param {Number} $angle - Angle in degrees
+/// @return {Number} - Value in tangent
+@function tan($angle) {
+    @return sin($angle) / cos($angle);
+}
+
+/// Default threshold value for the terms of our sum
+$default-threshold: $PI / 180/ 20;
+
+/// Convert a unitless radian value to a specified unit
+/// @param {Number} $value - Angle in radian
+/// @param {String} $unit-name - Name of the unit
+/// @return {String} - Value with unit
+@function convert-angle($value, $unit-name) {
+    $factors: (
+        rad: 1rad,
+        deg: 180deg / $PI,
+        grad: 200grad / $PI,
+        turn: .5turn / $PI
+    );
+
+    @if not unitless($value) {
+        @warn '`#{$value}` should be unitless';
+        @return false;
+    }
+
+    @if not map-has-key($factors, $unit-name) {
+        @warn 'unit `#{$unit-name}` is not a valid unit - please make sure it is either `deg`, `rad`, `grad` or `turn`';
+        @return false;
+    }
+
+    @return $value * map-get($factors, $unit-name);
+}
+
+/// Calculate arcsine of an angle
+/// @param {Number} $angle - Angle in degrees
+/// @return {Number} - Value in arcsine
+@function asin($z, $unit-name: deg, $threshold: $default-threshold) {
+    $sum: 0;
+    $complement: false;
+    $sign: if($z != 0, $z / abs($z), 1);
+    $z: abs($z);
+
+    @if $z > 1 {
+        @warn 'illegal `#{$z}` value for function';
+        @return false;
+    }
+
+    @if $z > sin($PI / 4) {
+        $complement: true;
+        $z: sqrt(1 - pow($z, 2));
+    }
+
+    $term: $z;
+    $i: 0;
+    $k: 1;
+
+    @while $term > $threshold {
+        $sum: $sum + $term;
+
+        $i: $i + 1;
+        $k: $k * (2 * $i - 1) / (2 * $i);
+        $j: 2 * $i + 1;
+
+        $term: $k * pow($z, $j) / $j;
+    }
+
+    @return convert-angle($sign * (if($complement, $PI / 2 - $sum, $sum)), $unit-name);
+}
+
+
+/// Calculate arccosine of an angle
+/// @param {Number} $angle - Angle in degrees
+/// @return {Number} - Value in arccosine
+@function acos($z, $unit-name: deg, $threshold: $default-threshold) {
+    @return convert-angle($PI / 2, $unit-name) - asin($z, $unit-name, $threshold);
+}
+
+/// Calculate arctangent of an angle
+/// @param {Number} $angle - Angle in degrees
+/// @return {Number} - Value in arctangent
+@function atan($z, $unit-name: deg, $threshold: $default-threshold) {
+    @return asin($z / sqrt(1 + pow($z, 2)), $unit-name, $threshold);
+}

@@ -1,3 +1,5 @@
+@import "math";
+
 /// Exported module list
 $modules: () !default;
 
@@ -55,9 +57,7 @@ $modules: () !default;
 /// @return {Number} - Delta between the 2 colors
 /// @link http://en.wikipedia.org/wiki/Color_quantization Color Quantization
 @function compare-color($a, $b) {
-    @return sqrt(
-        pow(hue($a) - hue($b), 2)
-    );
+    @return abs(strip-unit(hue($a) - hue($b)));
 }
 
 /// Sort a list of colors based on Color Quantization
